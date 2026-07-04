@@ -1,0 +1,121 @@
+__NAV__
+
+  <section class="page-hero">
+    <div class="page-hero__glow"><span class="g1"></span><span class="g2"></span></div>
+    <div class="container">
+      <a class="back-link" href="projects.html">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 7H3M6 3L2 7l4 4"/></svg>
+        Back to Projects
+      </a>
+      <span class="eyebrow eyebrow--yellow">Class Project &middot; Arduino &middot; Servo-Driven</span>
+      <h1>TIDY &mdash; Semi-Automatic T-Shirt Folder</h1>
+      <div class="detail-meta">
+        <span class="meta-tag">Arduino Uno</span>
+        <span class="meta-tag">Servo Control</span>
+        <span class="meta-tag">Mechanical Design</span>
+        <span class="meta-tag">Rapid Prototyping</span>
+        <span class="meta-tag">Product Design</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="detail-hero-image has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+      <img src="assets/images/Econ%20_TIDY_%20T-shirt%20Folder/TIDYBuilt.jpg" alt="TIDY T-shirt folder — completed prototype">
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="detail-layout">
+      <div class="detail-body">
+
+        <h2>The Brief</h2>
+        <p>
+          The class challenge: design a product that makes college students&rsquo; lives easier.
+          Most groups went with apps or digital solutions. Our group went mechanical &mdash;
+          a semi-automatic t-shirt folder that folds a shirt in three steps with a single
+          button press.
+        </p>
+        <p>
+          The result is TIDY: three hinged folding flaps, each driven by its own servo motor
+          and sequenced by an Arduino Uno. Place a shirt flat on the base, press the button,
+          and the flaps fold it into a consistent rectangle every time.
+        </p>
+
+        <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <img src="assets/images/Econ%20_TIDY_%20T-shirt%20Folder/TIDYPrototype.jpg" alt="TIDY early prototype">
+          </div>
+          <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <img src="assets/images/Econ%20_TIDY_%20T-shirt%20Folder/TIDYHingeMech.jpg" alt="TIDY folding hinge mechanism — close-up">
+          </div>
+        </div>
+
+        <h2>How It Works</h2>
+        <p>
+          The machine has a central base panel with three folding flaps mounted on hinges
+          along three of its edges. The left and right flaps fold inward first, tucking the
+          sleeves, then the bottom flap folds up to complete the fold. The sequence is timed
+          so the flaps don&rsquo;t collide mid-cycle.
+        </p>
+        <p>
+          I designed the hinge mechanism to give the servos enough mechanical advantage to
+          push the flaps through a full 90&deg; fold without stalling under the fabric weight.
+          Getting the servo geometry right took a few iterations &mdash; the moment arm between
+          the servo horn and the hinge point had to be long enough to generate torque but short
+          enough to avoid overshooting the fold angle.
+        </p>
+
+        <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <img src="assets/images/Econ%20_TIDY_%20T-shirt%20Folder/TIDYFirstRun.gif" alt="TIDY first successful fold run" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+          <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <video src="assets/images/Econ%20_TIDY_%20T-shirt%20Folder/TIDYWiringDone.MP4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+          </div>
+        </div>
+
+        <h2>First Run</h2>
+        <p>
+          The first successful fold happened before any tuning. The timing was rough and the
+          flaps moved slower than intended, but the shirt came out folded. From there it was
+          refinement: adjusting servo speed, tweaking the fold sequence delays, and improving
+          the fold surface so the fabric lands flat on each flap without bunching.
+        </p>
+
+        <h2>The Ad</h2>
+        <p>
+          Part of the class deliverable was a product pitch. We put together a short
+          advertisement for TIDY as if it were going to market &mdash; naming the product,
+          establishing a brand, and showing it actually working.
+        </p>
+        <div style="margin: 2rem 0; border-radius: 12px; overflow: hidden; border: 1px solid var(--line);">
+          <video src="assets/images/Econ%20_TIDY_%20T-shirt%20Folder/Tidy%20Ad.mov" controls style="width:100%;display:block;background:#000;max-height:480px;object-fit:contain;"></video>
+        </div>
+
+      </div>
+
+      <aside class="detail-sidebar">
+        <div class="sidebar-card">
+          <h4>Quick Facts</h4>
+          <dl class="sidebar-row">
+            <dt>Context</dt><dd>Class project</dd>
+            <dt>Controller</dt><dd>Arduino Uno</dd>
+            <dt>Actuation</dt><dd>3 servo motors</dd>
+            <dt>Flaps</dt><dd>Left, right, bottom</dd>
+          </dl>
+        </div>
+        <div class="sidebar-card">
+          <h4>Results</h4>
+          <dl class="sidebar-row">
+            <dt>First run</dt><dd>Successful fold</dd>
+            <dt>Post-tuning</dt><dd>Consistent folds</dd>
+            <dt>Deliverable</dt><dd>Prototype + product ad</dd>
+          </dl>
+        </div>
+        <a class="btn-outline" href="projects.html">&larr; Projects</a>
+      </aside>
+    </div>
+  </div>
+
+__FOOTER__

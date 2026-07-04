@@ -1,0 +1,3343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Charlie Steinman</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       PORTFOLIO — MASTER STYLESHEET
+       style-apple.css
+
+       This is the ONE stylesheet that controls every page.
+       It's inlined into each HTML page by _build/build.py, so editing this
+       file + running python3 _build/build.py will update every page at once.
+
+       TABLE OF CONTENTS
+       ─────────────────
+       1.  DESIGN TOKENS (CSS custom properties — change colors/fonts here)
+       2.  RESET & BASE
+       3.  LAYOUT UTILITIES (.container, .section, etc.)
+       4.  NAVIGATION (top bar + mobile overlay menu)
+       5.  HERO — HOME PAGE (full-viewport hero with glow blobs)
+       6.  HERO — SUB-PAGES (shorter hero for 3D Scans, Internships, etc.)
+       7.  STATS STRIP ("by the numbers" row)
+       8.  FEATURE ROWS (alternating left/right project sections)
+       9.  TOOLS / SKILLS PILLS
+       10. SUBGRID CARDS (small item grid, e.g. Hendrick fixtures)
+       11. LEGACY GRID CARDS (Older CAD page)
+       12. SHOP PAGE (Print & Buy — Makerworld / Etsy / etc.)
+       13. RESUME TIMELINE
+       14. FOOTER
+       15. SCROLL REVEAL ANIMATION
+       16. BUTTONS & LINKS
+       17. THREE.JS VIEWER
+       18. RESPONSIVE OVERRIDES
+       ========================================================================== */
+
+
+    /* ==========================================================================
+       1. DESIGN TOKENS
+       Change the look of the entire site from this one block.
+       ========================================================================== */
+    :root {
+      /* ── Background layers ─────────────────────────────────────────────────
+         --bg        : true black, used for the page body
+         --bg-soft   : slightly lifted black, for section alternation if needed
+         --bg-elevated: used for cards, panels, viewers — slightly lighter
+      */
+      --bg:           #000000;
+      --bg-soft:      #0a0a0c;
+      --bg-elevated:  #131316;
+
+      /* ── Text ──────────────────────────────────────────────────────────────
+         Three levels of white:
+           --text      : headings, labels, main body
+           --text-dim  : supporting copy, meta text, captions
+           --text-faint: placeholder labels, least-important hints
+      */
+      --text:       #f5f5f7;
+      --text-dim:   #98989d;
+      --text-faint: #6e6e73;
+
+      /* ── Accent colors ─────────────────────────────────────────────────────
+         --yellow : used for eyebrow labels, stat numbers, bullet dots
+         --blue   : used for links, alternate eyebrows, feature links
+         Tip: to shift to a different palette, just swap these two values.
+      */
+      --yellow: #ffd60a;
+      --blue:   #0a84ff;
+
+      /* ── Borders ───────────────────────────────────────────────────────────
+         --line       : subtle hairline border (cards, stats, nav bottom)
+         --line-bright: slightly brighter hairline for hover states
+      */
+      --line:        rgba(255, 255, 255, 0.09);
+      --line-bright: rgba(255, 255, 255, 0.18);
+
+      /* ── Typography ────────────────────────────────────────────────────────
+         Using Inter (loaded from Google Fonts in each page's <head>).
+         system-ui / -apple-system as fallbacks for fast first paint.
+         To switch fonts: change the Google Fonts URL in _build/templates/_head.html
+         AND update --font here to match.
+      */
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+      /* ── Layout ────────────────────────────────────────────────────────────
+         --nav-h     : height of the fixed top nav bar (keep in sync with nav padding)
+         --container : maximum content width before it stops stretching
+      */
+      --nav-h:      52px;
+      --container:  1180px;
+    }
+
+
+    /* ==========================================================================
+       2. RESET & BASE
+       Remove browser defaults so everything starts from a clean slate.
+       ========================================================================== */
+
+    /* Box-sizing: border means padding/borders count inside the declared width,
+       not on top of it. Much easier to reason about layouts. */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Smooth anchor scrolling (e.g. # links). Disabled for users who prefer
+       reduced motion — see the @media block at the bottom of this file. */
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 16px;
+      line-height: 1.5;
+      /* antialiased makes type look crisper on high-DPI screens */
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip; /* prevent horizontal scroll from glow blobs — clip unlike hidden doesn't break position:sticky */
+    }
+
+    img { max-width: 100%; display: block; }
+    a   { color: inherit; text-decoration: none; }
+
+    /* Visible keyboard focus ring — important for accessibility.
+       Change the color to --blue if you prefer. */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--yellow);
+      outline-offset: 3px;
+    }
+
+
+    /* ==========================================================================
+       3. LAYOUT UTILITIES
+       ========================================================================== */
+
+    /* .container: centers content and prevents it hitting the viewport edges.
+       Max width is set by --container (1180px).
+       To make pages wider, increase --container in the tokens above. */
+    .container {
+      max-width: var(--container);
+      margin:  0 auto;
+      padding: 0 1.75rem; /* side padding on smaller viewports */
+    }
+
+    /* .section and .section--tight: vertical breathing room between page sections.
+       Use .section for major sections, .section--tight where you want less space. */
+    .section       { padding: 7rem 0; }
+    .section--tight { padding: 5rem 0; }
+
+    /* .eyebrow: the small ALL-CAPS label that sits above headings.
+       Yellow variant used for "personal" sections; blue for "professional" ones. */
+    .eyebrow {
+      display:     inline-block;
+      font-size:   0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .eyebrow--yellow { color: var(--yellow); }
+    .eyebrow--blue   { color: var(--blue);   }
+
+    /* .section-head: wrapper for the intro heading + blurb at the top of a section */
+    .section-head { max-width: 44rem; margin-bottom: 4rem; }
+    .section-head h2 {
+      font-size: clamp(2.2rem, 5.5vw, 3.6rem); /* scales between min and max */
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+    }
+    .section-head p {
+      margin-top: 1.1rem;
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      max-width: 38rem;
+    }
+
+
+    /* ==========================================================================
+       4. NAVIGATION
+       Fixed top bar with blur backdrop (the "frosted glass" effect).
+       ========================================================================== */
+
+    /* The nav sits in a fixed position so it stays at the top as you scroll.
+       backdrop-filter: blur() creates the frosted glass — only works if the
+       browser supports it (all modern browsers do). */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000; /* make sure it floats above everything */
+      height:  var(--nav-h);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      /* The border starts transparent and appears once you scroll down (.scrolled class) */
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+
+    /* .scrolled is added by JS once the page scrolls more than 8px */
+    .nav.scrolled { border-bottom-color: var(--line); }
+
+    /* Logo / site name in the top-left */
+    .nav__logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    /* The small gradient dot next to "Your Name" */
+    .nav__logo .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--yellow), var(--blue));
+    }
+
+    /* Desktop navigation links */
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 2.25rem;
+    }
+
+    .nav__links a {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      transition: color 0.2s ease;
+    }
+
+    .nav__links a:hover { color: var(--text); }
+
+    /* The "Resume" link has a pill border to make it stand out */
+    .nav__links .nav__cta {
+      color: var(--text);
+      border: 1px solid var(--line);
+      padding: 0.4rem 0.9rem;
+      border-radius: 980px; /* large radius = fully rounded */
+      font-size: 0.78rem;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .nav__cta:hover {
+      border-color: var(--yellow);
+      background: rgba(255, 214, 10, 0.08);
+    }
+
+    /* Active link highlight — added by JS based on current page filename */
+    .nav__links a.active,
+    .mobile-menu a.active { color: var(--text); }
+
+    /* Hamburger button — hidden on desktop, shown on mobile */
+    .nav__toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav__toggle svg { display: block; }
+
+    /* ── Mobile full-screen overlay menu ──────────────────────────────────
+       Hidden by default (translateY(-100%) = slid off the top of the screen).
+       When .open is added by JS, it slides down to fill the screen. */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 999;
+      background: rgba(0, 0, 0, 0.97);
+      backdrop-filter: blur(20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      transform: translateY(-100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-menu.open { transform: translateY(0); }
+
+    .mobile-menu a {
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+    .mobile-menu a:hover { color: var(--yellow); }
+
+
+    /* ==========================================================================
+       5. HERO — HOME PAGE
+       Full-viewport intro section with drifting glow blobs in the background.
+       ========================================================================== */
+    .hero {
+      position: relative;
+      min-height: 100vh; /* fill the viewport on first load */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      /* top padding accounts for the fixed nav bar height */
+      padding: calc(var(--nav-h) + 4rem) 1.5rem 4rem;
+      overflow: hidden;
+    }
+
+    /* ── Glow blobs ─────────────────────────────────────────────────────────
+       Two absolutely-positioned blurred circles that create the background
+       gradient. They animate gently with @keyframes drift1 / drift2.
+       The mouse-parallax effect in reveal.js moves .hero__glow as a whole. */
+    .hero__glow {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none; /* don't interfere with clicks */
+    }
+
+    .hero__glow span {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px); /* the bigger the blur, the softer the glow */
+      opacity: 0.35;
+      will-change: transform; /* hint to browser to promote to GPU layer */
+    }
+
+    /* Yellow blob — top-left */
+    .hero__glow .g1 {
+      width: 46vw; height: 46vw;
+      background: var(--yellow);
+      top: -10%; left: -12%;
+      animation: drift1 22s ease-in-out infinite alternate;
+    }
+
+    /* Blue blob — bottom-right */
+    .hero__glow .g2 {
+      width: 50vw; height: 50vw;
+      background: var(--blue);
+      bottom: -18%; right: -14%;
+      animation: drift2 26s ease-in-out infinite alternate;
+    }
+
+    /* Drift animations — subtle drift back and forth */
+    @keyframes drift1 {
+      from { transform: translate(0, 0) scale(1);      }
+      to   { transform: translate(6vw, 8vh) scale(1.15); }
+    }
+    @keyframes drift2 {
+      from { transform: translate(0, 0) scale(1);       }
+      to   { transform: translate(-7vw, -6vh) scale(1.1); }
+    }
+
+    /* Small ALL-CAPS intro line above the main headline */
+    .hero__eyebrow {
+      position: relative;
+      z-index: 1;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+    }
+
+    /* Main homepage headline — very large, scales with viewport via clamp() */
+    .hero h1 {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(2.8rem, 9vw, 7.2rem); /* min 2.8, preferred 9vw, max 7.2 */
+      font-weight: 700;
+      letter-spacing: -0.04em; /* tighter spacing on large display text = more polish */
+      line-height: 1.04;
+      max-width: 16ch; /* prevents line from stretching too wide */
+    }
+
+    /* Colored accent words in the headline */
+    .hero h1 .accent-y { color: var(--yellow); }
+    .hero h1 .accent-b { color: var(--blue);   }
+
+    /* Supporting paragraph under the headline */
+    .hero p {
+      position: relative;
+      z-index: 1;
+      margin-top: 1.5rem;
+      font-size: clamp(1.05rem, 2.4vw, 1.4rem);
+      color: var(--text-dim);
+      max-width: 46ch;
+      font-weight: 400;
+    }
+
+    /* "SCROLL ↓" indicator at the bottom of the hero — bobs up and down */
+    .hero__scroll {
+      position: absolute;
+      bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-faint);
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      animation: bob 2.4s ease-in-out infinite;
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translate(-50%, 0);  }
+      50%       { transform: translate(-50%, 8px); }
+    }
+
+
+    /* ==========================================================================
+       6. HERO — SUB-PAGES
+       A shorter version of the hero for 3D Scans, Internships, etc.
+       Uses the same glow blobs but the section is not full-viewport height.
+       ========================================================================== */
+    .page-hero {
+      position: relative;
+      padding: calc(var(--nav-h) + 6rem) 0 4rem;
+      overflow: hidden;
+    }
+
+    /* Glow blobs for sub-page heroes — same approach as main hero */
+    .page-hero__glow {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .page-hero__glow span {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(110px);
+      opacity: 0.28;
+    }
+    .page-hero__glow .g1 {
+      width: 38vw; height: 38vw;
+      background: var(--yellow);
+      top: -16%; left: -10%;
+    }
+    .page-hero__glow .g2 {
+      width: 40vw; height: 40vw;
+      background: var(--blue);
+      top: -10%; right: -12%;
+    }
+
+    /* All children of .page-hero need z-index: 1 to sit above the blobs */
+    .page-hero .eyebrow { position: relative; z-index: 1; }
+
+    .page-hero h1 {
+      position: relative;
+      z-index: 1;
+      font-size: clamp(2.6rem, 7vw, 5rem);
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+      max-width: 18ch;
+    }
+
+    .page-hero p {
+      position: relative;
+      z-index: 1;
+      margin-top: 1.25rem;
+      font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+      color: var(--text-dim);
+      max-width: 46ch;
+    }
+
+
+    /* ==========================================================================
+       7. STATS STRIP
+       "By the numbers" row — yellow/blue numbers with labels beneath.
+       Used on the home page and the Internships page.
+
+       To add a stat: copy one <div class="stat"> block and update the
+       data-count-to value (JS animates it counting up on scroll) and label.
+       ========================================================================== */
+    .stats {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    /* CSS grid: 4 equal columns on desktop */
+    .stats__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .stat {
+      padding: 3.5rem 1.5rem;
+      text-align: center;
+      border-left: 1px solid var(--line);
+    }
+    .stat:first-child { border-left: none; }
+
+    /* Large stat number — scales with viewport */
+    .stat .num {
+      font-size: clamp(2.4rem, 6vw, 4.2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    /* Alternate yellow/blue by position — change these selectors to adjust */
+    .stat:nth-child(odd)  .num { color: var(--yellow); }
+    .stat:nth-child(even) .num { color: var(--blue);   }
+
+    .stat .label {
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+
+    /* ==========================================================================
+       8. FEATURE ROWS
+       The main project layout — text left, visual right (or reversed).
+       Used on home page AND all sub-pages.
+
+       To reverse the order (image left, text right):
+       Add class="feature feature--reverse" to the .feature div.
+
+       To add a photo to the .feature__visual:
+       1. Remove the <div class="feature__visual-label"> placeholder inside it.
+       2. Add <img src="assets/images/yourphoto.jpg" alt="..."> instead.
+       3. Add class "has-media" to the .feature__visual div.
+       The .has-media class hides the decorative grid/gradient so the photo
+       shows cleanly.
+       ========================================================================== */
+    .feature {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 6vw, 6rem);
+      align-items: center;
+      padding: 6rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .feature:last-of-type { border-bottom: none; }
+
+    /* Reversed variant — swaps visual and text order */
+    .feature--reverse .feature__visual { order: 2; }
+    .feature--reverse .feature__content { order: 1; }
+
+    /* ── Feature content (text side) ── */
+    .feature__content h3 {
+      font-size: clamp(1.9rem, 4.2vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.15;
+      margin-bottom: 1.1rem;
+    }
+
+    .feature__content p {
+      color: var(--text-dim);
+      font-size: 1.05rem;
+      max-width: 34rem;
+      margin-bottom: 1.75rem;
+    }
+
+    /* "Explore →" link — animates the arrow on hover */
+    .feature__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--blue);
+      transition: gap 0.2s ease, color 0.2s ease;
+    }
+    .feature__link svg       { transition: transform 0.2s ease; }
+    .feature__link:hover     { color: var(--yellow); }
+    .feature__link:hover svg { transform: translateX(4px); }
+
+    /* ── Feature visual (image/viewer side) ── */
+    .feature__visual {
+      position: relative;
+      aspect-ratio: 4 / 3;      /* change this to 16/9 for wider visuals, 1/1 for square */
+      border-radius: 28px;       /* round corners — reduce for sharper look */
+      border: 1px solid var(--line);
+      background: var(--bg-elevated);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s ease;
+    }
+    .feature__visual:hover { transform: translateY(-6px); } /* subtle lift on hover */
+
+    /* Inner glow — uses --glow-a and --glow-b CSS variables set inline on each element.
+       This lets each feature panel have its own color combination.
+       Example: style="--glow-a: var(--yellow); --glow-b: var(--blue);" */
+    .feature__visual::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--glow-a, var(--yellow)) 0%, transparent 45%),
+        radial-gradient(circle at 75% 75%, var(--glow-b, var(--blue))   0%, transparent 50%);
+      opacity: 0.22;
+      filter: blur(40px);
+    }
+
+    /* Subtle dot grid texture over the placeholder panels */
+    .feature__visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 36px 36px;
+      opacity: 0.35;
+    }
+
+    /* Placeholder label shown when no image/viewer is present */
+    .feature__visual-label {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 1.5rem;
+    }
+    .feature__visual-label strong {
+      display: block;
+      font-size: 1.1rem;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      color: var(--text-dim);
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+
+    /* When a real image is present, hide the glow/grid decorations */
+    .feature__visual.has-media::before,
+    .feature__visual.has-media::after { display: none; }
+
+    /* Image fills the panel naturally */
+    .feature__visual img {
+      position: relative;
+      z-index: 1;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+
+
+    /* ==========================================================================
+       9. TOOLS / SKILLS PILLS
+       Pill-shaped skill tags with hover color per group.
+       To add a new skill: add <span class="pill">Skill Name</span>
+       inside any .pill-row. It wraps automatically.
+       ========================================================================== */
+    .tools__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    .tools__group h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 1.1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+
+    .pill {
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      border: 1px solid var(--line);
+      border-radius: 980px;
+      padding: 0.45rem 1rem;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    /* Different hover color per group (1st = yellow, 2nd = blue, 3rd = yellow) */
+    .tools__group:nth-child(1) .pill:hover { border-color: var(--yellow); color: var(--text); background: rgba(255,214,10,0.06);  }
+    .tools__group:nth-child(2) .pill:hover { border-color: var(--blue);   color: var(--text); background: rgba(10,132,255,0.08);  }
+    .tools__group:nth-child(3) .pill:hover { border-color: var(--yellow); color: var(--text); background: rgba(255,214,10,0.06);  }
+    .tools__group:nth-child(4) .pill:hover { border-color: var(--blue);   color: var(--text); background: rgba(10,132,255,0.08);  }
+
+
+    /* ==========================================================================
+       10. SUBGRID CARDS
+       A grid of smaller cards within a section — used for the Hendrick
+       Motorsports fixtures on the Internships page.
+
+       To add a card: copy one .subcard block. To add a photo inside a card,
+       replace the <span> inside .subcard__media with an <img>.
+       ========================================================================== */
+    .subgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+
+    .subcard {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--bg-elevated);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease;
+    }
+    .subcard:hover { transform: translateY(-4px); border-color: var(--line-bright); }
+
+    /* Media area — holds a photo or placeholder text */
+    .subcard__media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Glow inside each subcard — set --glow-a / --glow-b inline on the card */
+    .subcard__media::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--glow-a, var(--yellow)) 0%, transparent 45%),
+        radial-gradient(circle at 75% 75%, var(--glow-b, var(--blue))   0%, transparent 50%);
+      opacity: 0.18;
+      filter: blur(30px);
+    }
+    .subcard__media img {
+      position: relative;
+      z-index: 1;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .subcard__media span {
+      position: relative;
+      z-index: 1;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 1rem;
+      text-align: center;
+    }
+
+    .subcard__body { padding: 1.1rem 1.25rem 1.4rem; }
+    .subcard__body h4 { font-size: 0.98rem; font-weight: 600; margin-bottom: 0.35rem; letter-spacing: -0.01em; }
+    .subcard__body p  { font-size: 0.85rem; color: var(--text-dim); }
+
+
+    /* ==========================================================================
+       11. LEGACY GRID CARDS (Older CAD page)
+       Larger card format than subcards — used for the Older CAD page grid.
+       Same pattern: replace the placeholder <span> with an <img> when you
+       have a screenshot, and add class="has-media" to .legacy-card__media.
+       ========================================================================== */
+    .legacy-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .legacy-card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--bg-elevated);
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease;
+    }
+    .legacy-card:hover { transform: translateY(-6px); border-color: var(--line-bright); }
+
+    .legacy-card__media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* Glow gradient behind each card */
+    .legacy-card__media::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--glow-a, var(--yellow)) 0%, transparent 45%),
+        radial-gradient(circle at 75% 75%, var(--glow-b, var(--blue))   0%, transparent 50%);
+      opacity: 0.2;
+      filter: blur(36px);
+    }
+    /* Grid texture over the placeholder */
+    .legacy-card__media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(var(--line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--line) 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.3;
+    }
+    .legacy-card__media img {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    /* Hide decorations when a real image is present */
+    .legacy-card__media.has-media::before,
+    .legacy-card__media.has-media::after { display: none; }
+
+    .legacy-card__media span {
+      position: relative; z-index: 1;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .legacy-card__body { padding: 1.4rem 1.5rem 1.6rem; }
+    .legacy-card__body .when {
+      display: block;
+      font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 0.5rem;
+    }
+    .legacy-card__body h4 { font-size: 1.1rem; font-weight: 600; letter-spacing: -0.015em; margin-bottom: 0.5rem; }
+    .legacy-card__body p  { font-size: 0.92rem; color: var(--text-dim); }
+
+
+    /* ==========================================================================
+       12. SHOP PAGE — Print & Buy
+       Platform link cards, a listing card grid for individual models,
+       and a "request a custom print" call-to-action section.
+       ========================================================================== */
+
+    /* ── Platform pills / link buttons ──────────────────────────────────── */
+    .shop-platforms {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-bottom: 3.5rem;
+    }
+
+    /* Each platform is a pill linking to your external storefront.
+       To add a new platform: copy one .platform-pill block and update
+       the href, icon color (--accent), name, and handle. */
+    .platform-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      border: 1px solid var(--line);
+      border-radius: 980px;
+      padding: 0.55rem 1.1rem;
+      transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+    .platform-pill:hover {
+      color: var(--text);
+      border-color: var(--accent, var(--yellow));
+      background: rgba(255,255,255,0.04);
+    }
+    .platform-pill .platform-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent, var(--yellow));
+      flex-shrink: 0;
+    }
+    .platform-pill .platform-name { font-weight: 600; color: var(--text); }
+    .platform-pill .platform-handle { color: var(--text-faint); font-size: 0.8rem; }
+
+    /* ── Listing cards ───────────────────────────────────────────────────
+       Grid of individual model/product cards, one per printable design.
+       To add a listing: copy one .listing-card block and update the
+       image src, title, description, and platform links. */
+    .listings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 5rem;
+    }
+
+    .listing-card {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      background: var(--bg-elevated);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease;
+    }
+    .listing-card:hover { transform: translateY(-6px); border-color: var(--line-bright); }
+
+    /* Thumbnail / preview area */
+    .listing-card__media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .listing-card__media::before {
+      content: "";
+      position: absolute; inset: -40%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--glow-a, var(--yellow)) 0%, transparent 45%),
+        radial-gradient(circle at 75% 75%, var(--glow-b, var(--blue))   0%, transparent 50%);
+      opacity: 0.2;
+      filter: blur(36px);
+    }
+    .listing-card__media img {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .listing-card__media.has-media::before { display: none; }
+    .listing-card__media span {
+      position: relative; z-index: 1;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      padding: 1.25rem; text-align: center;
+    }
+
+    /* Card body — title, description, platform badges */
+    .listing-card__body {
+      padding: 1.25rem 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .listing-card__body h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.4rem;
+    }
+    .listing-card__body p {
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      flex: 1; /* push links to the bottom */
+      margin-bottom: 1rem;
+      line-height: 1.55;
+    }
+
+    /* Platform links row at the bottom of each card */
+    .listing-card__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: auto;
+    }
+    /* Each platform link — small pill with platform color */
+    .listing-card__links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      border: 1px solid var(--line);
+      border-radius: 980px;
+      padding: 0.3rem 0.7rem;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+    .listing-card__links a:hover {
+      color: var(--text);
+      border-color: var(--accent, var(--yellow));
+    }
+    .listing-card__links a .btn-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent, var(--yellow));
+      flex-shrink: 0;
+    }
+
+    /* ── Custom print request section ────────────────────────────────────
+       A full-width CTA at the bottom of the Shop page encouraging visitors
+       to reach out for custom orders.
+       To update pricing or turnaround, just edit the text in body-shop.html. */
+    .custom-cta {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--bg-elevated);
+      padding: 3.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .custom-cta__text h3 {
+      font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 0.75rem;
+    }
+    .custom-cta__text p {
+      color: var(--text-dim);
+      font-size: 1.05rem;
+      max-width: 38rem;
+    }
+    /* Yellow CTA button */
+    .btn-yellow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #000;          /* black text on yellow background */
+      background: var(--yellow);
+      border: none;
+      border-radius: 980px;
+      padding: 0.85rem 1.75rem;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      white-space: nowrap;
+    }
+    .btn-yellow:hover { opacity: 0.88; transform: translateY(-2px); }
+
+
+    /* ==========================================================================
+       13. RESUME TIMELINE
+       Clean left/right grid layout for experience entries.
+       To add an entry: copy one .timeline-item block.
+       ========================================================================== */
+    .resume-block { margin-bottom: 4.5rem; }
+    .resume-block .eyebrow { margin-bottom: 1.5rem; }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 9rem 1fr; /* date column | content column */
+      gap: 2rem;
+      padding: 2rem 0;
+      border-top: 1px solid var(--line);
+    }
+    .timeline-item .when {
+      font-size: 0.85rem;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
+      padding-top: 0.2rem;
+    }
+    .timeline-item h4 {
+      font-size: 1.2rem; font-weight: 600;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.2rem;
+    }
+    .timeline-item .sub {
+      font-size: 0.85rem;
+      color: var(--text-faint);
+      letter-spacing: 0.02em;
+      margin-bottom: 0.9rem;
+    }
+    .timeline-item ul { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .timeline-item ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      font-size: 0.96rem;
+      color: var(--text-dim);
+      line-height: 1.55;
+    }
+    /* Yellow bullet dot */
+    .timeline-item ul li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0.6em;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--yellow);
+    }
+    /* Alternate blue dot for every other resume section */
+    .resume-block:nth-of-type(even) .timeline-item ul li::before { background: var(--blue); }
+
+
+    /* ==========================================================================
+       14. FOOTER
+       ========================================================================== */
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 4rem 0 3rem;
+    }
+    .footer__top {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 2.5rem;
+      margin-bottom: 3rem;
+    }
+    .footer__brand h3 {
+      font-size: 1.6rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5rem;
+    }
+    .footer__brand p { color: var(--text-dim); font-size: 0.95rem; max-width: 28rem; }
+    .footer__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 2rem;
+    }
+    .footer__links a { font-size: 0.92rem; color: var(--text-dim); transition: color 0.2s ease; }
+    .footer__links a:hover { color: var(--yellow); }
+    .footer__bottom { font-size: 0.78rem; color: var(--text-faint); letter-spacing: 0.02em; }
+
+
+    /* ==========================================================================
+       15. SCROLL REVEAL ANIMATION
+       Elements start hidden (opacity 0, slightly below) and animate in when
+       scrolled into view. The .is-visible class is added by reveal.js via
+       IntersectionObserver.
+
+       Add class="reveal" to any element you want to animate in.
+       Delay variants: reveal-delay-1, -2, -3, -4 stagger children.
+       ========================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition:
+        opacity   0.9s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+    /* Staggered delay helpers (add alongside .reveal) */
+    .reveal-delay-1 { transition-delay: 0.08s; }
+    .reveal-delay-2 { transition-delay: 0.16s; }
+    .reveal-delay-3 { transition-delay: 0.24s; }
+    .reveal-delay-4 { transition-delay: 0.32s; }
+
+
+    /* ==========================================================================
+       16. BUTTONS & SHARED LINKS
+       ========================================================================== */
+
+    /* Ghost / outline button — used on the Resume page download link */
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.88rem; font-weight: 500;
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 980px;
+      padding: 0.65rem 1.4rem;
+      margin-top: 1.5rem;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+    .btn-outline:hover { border-color: var(--yellow); background: rgba(255,214,10,0.08); }
+
+
+    /* ==========================================================================
+       17. THREE.JS 3D VIEWER
+       The interactive GLB model viewer used on the 3D Scans page (Hokiebird)
+       and the Personal Projects page (BOLT motorcycle).
+       ========================================================================== */
+
+    /* Viewer container sits inside .feature__visual */
+    .viewer {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+    }
+    .viewer canvas {
+      display: block;
+      width: 100%; height: 100%;
+      border-radius: inherit;
+    }
+
+    /* "Drag to rotate" badge — top-left corner of the viewer panel */
+    .viewer__badge {
+      position: absolute;
+      top: 1rem; left: 1rem; z-index: 2;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(8px);
+      padding: 0.3rem 0.7rem;
+      border-radius: 980px;
+      border: 1px solid var(--line);
+    }
+
+    /* "Drop .glb here" hint — shown when no model file is found */
+    .viewer__hint {
+      position: absolute; inset: 0; z-index: 2;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 2rem;
+      pointer-events: none;
+    }
+    .viewer__hint span {
+      font-size: 0.78rem; letter-spacing: 0.06em;
+      color: var(--text-faint); line-height: 1.7;
+    }
+
+
+    /* ==========================================================================
+       18. RESPONSIVE OVERRIDES
+       Adjustments for smaller screens. Generally: collapse grids to 1 column,
+       hide desktop nav, show mobile toggle.
+       ========================================================================== */
+
+    /* Stats: 4 cols → 2 cols below 880px */
+    @media (max-width: 880px) {
+      .stats__grid { grid-template-columns: repeat(2, 1fr); }
+      .stat:nth-child(3) { border-left: none; }
+    }
+
+    /* Stats: 2 cols → 1 col below 520px */
+    @media (max-width: 520px) {
+      .stats__grid { grid-template-columns: 1fr; }
+      .stat { border-left: none; border-top: 1px solid var(--line); }
+      .stat:first-child { border-top: none; }
+    }
+
+    /* Feature rows: 2-col → 1-col below 880px */
+    @media (max-width: 880px) {
+      .feature,
+      .feature--reverse {
+        grid-template-columns: 1fr;
+        padding: 4rem 0;
+      }
+      /* Reset order so visual always comes second (below text) on mobile */
+      .feature--reverse .feature__visual,
+      .feature--reverse .feature__content { order: initial; }
+    }
+
+    /* Tools grid: 3 col → 1 col below 760px */
+    @media (max-width: 760px) {
+      .tools__grid { grid-template-columns: 1fr; gap: 2.25rem; }
+    }
+
+    /* Resume timeline: 2 col → 1 col below 640px */
+    @media (max-width: 640px) {
+      .timeline-item { grid-template-columns: 1fr; gap: 0.4rem; }
+    }
+
+    /* Nav: hide desktop links, show hamburger below 760px */
+    @media (max-width: 760px) {
+      .nav__links { display: none; }
+      .nav__toggle { display: block; }
+    }
+
+    /* Custom print CTA: stack vertically on small screens */
+    @media (max-width: 640px) {
+      .custom-cta { flex-direction: column; padding: 2rem; }
+    }
+
+    /* Respect "prefers reduced motion" accessibility setting:
+       - No smooth scroll
+       - No animations or transitions */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+    }
+
+    /* ==========================================================================
+       19. CURRENTLY WORKING ON STRIP
+       A horizontal scrolling ticker/marquee of active projects shown on the
+       home page just below the hero. Auto-scrolls left continuously, but it's
+       also draggable — grab it with a mouse or finger and it tracks the drag
+       1:1; let go and it resumes auto-scrolling from wherever it was left.
+       All of the actual motion is driven by JS (see reveal.js, section 10) via
+       an inline transform, not a CSS animation — that's what makes it
+       interruptible mid-scroll.
+       To add/remove items: edit the .wip-track div in body-index.html.
+       Items are duplicated in HTML so the loop is seamless.
+       ========================================================================== */
+    .wip-strip {
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 1rem 0;
+      position: relative;
+      cursor: grab;
+      touch-action: pan-y; /* let vertical page scroll through; horizontal drag is ours */
+    }
+
+    .wip-strip.is-dragging { cursor: grabbing; }
+
+    /* Fade masks on left/right edges */
+    .wip-strip::before,
+    .wip-strip::after {
+      content: "";
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 5rem;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .wip-strip::before { left: 0;  background: linear-gradient(to right, var(--bg), transparent); }
+    .wip-strip::after  { right: 0; background: linear-gradient(to left,  var(--bg), transparent); }
+
+    .wip-track {
+      display: flex;
+      gap: 0;
+      width: max-content;
+      will-change: transform;
+    }
+
+    .wip-strip.is-dragging .wip-track { user-select: none; }
+
+    .wip-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0 2rem;
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      white-space: nowrap;
+      border-right: 1px solid var(--line);
+    }
+
+    /* Colored dot before each item — set via inline style on the dot */
+    .wip-item .wip-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .wip-item .wip-label {
+      color: var(--text-faint);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================================================
+       20. VIDEO EMBED
+       Drop a YouTube or Vimeo iframe inside .video-wrap and it will fill
+       the feature visual in a 16:9 ratio with rounded corners.
+       The .feature__visual already handles overflow: hidden and border-radius.
+       ========================================================================== */
+    .video-wrap {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+    }
+
+    .video-wrap iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: inherit;
+    }
+
+    /* When a video is present, suppress the placeholder decorations */
+    .feature__visual.has-video::before,
+    .feature__visual.has-video::after { display: none; }
+
+    /* ==========================================================================
+       21. ABOUT / CONTACT PAGE
+       ========================================================================== */
+
+    /* ── Headshot / profile image ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: clamp(2.5rem, 6vw, 6rem);
+      align-items: start;
+      padding: 4rem 0 6rem;
+    }
+
+    @media (max-width: 760px) {
+      .about-grid { grid-template-columns: 1fr; }
+    }
+
+    .about-photo {
+      position: sticky;
+      top: calc(var(--nav-h) + 2rem);
+    }
+
+    .about-photo__frame {
+      position: relative;
+      aspect-ratio: 3 / 4;   /* portrait — change to 1/1 for square headshot */
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-photo__frame::before {
+      content: "";
+      position: absolute; inset: -40%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--yellow) 0%, transparent 45%),
+        radial-gradient(circle at 75% 75%, var(--blue)   0%, transparent 50%);
+      opacity: 0.18;
+      filter: blur(40px);
+    }
+
+    .about-photo__frame img {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: top center; /* keeps face visible — adjust if needed */
+    }
+
+    .about-photo__placeholder {
+      position: relative; z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      line-height: 1.7;
+    }
+
+    .about-photo__caption {
+      margin-top: 1rem;
+      font-size: 0.8rem;
+      color: var(--text-faint);
+      letter-spacing: 0.04em;
+      text-align: center;
+    }
+
+    /* ── Bio content ── */
+    .about-content h2 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      margin-bottom: 1.5rem;
+      line-height: 1.15;
+    }
+
+    .about-content p {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      line-height: 1.75;
+      max-width: 60ch;
+      margin-bottom: 1.25rem;
+    }
+
+    .about-content p strong { color: var(--text); }
+
+    /* Quick-facts grid */
+    .about-facts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 2.5rem 0;
+    }
+
+    .about-fact {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 1.25rem 1.4rem;
+      background: var(--bg-elevated);
+    }
+
+    .about-fact .fact-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.4rem;
+    }
+
+    .about-fact .fact-value {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Contact section ── */
+    .contact-section {
+      padding: 4rem 0 6rem;
+      border-top: 1px solid var(--line);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 6vw, 6rem);
+      align-items: start;
+      margin-top: 3rem;
+    }
+
+    @media (max-width: 760px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Direct links column */
+    .contact-links { display: flex; flex-direction: column; gap: 1rem; }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--bg-elevated);
+      transition: border-color 0.2s ease, transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .contact-link:hover {
+      border-color: var(--yellow);
+      transform: translateX(4px);
+    }
+
+    .contact-link .cl-icon {
+      width: 38px; height: 38px;
+      border-radius: 10px;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      border: 1px solid var(--line);
+    }
+
+    .contact-link .cl-text { flex: 1; }
+    .contact-link .cl-label { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 0.15rem; }
+    .contact-link .cl-value { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+    .contact-link .cl-arrow { color: var(--text-faint); transition: color 0.2s ease; }
+    .contact-link:hover .cl-arrow { color: var(--yellow); }
+
+    /* Contact form */
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.45rem; }
+
+    .form-group label {
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 0.97rem;
+      transition: border-color 0.2s ease;
+      resize: none;
+      width: 100%;
+      outline: none;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: var(--text-faint); }
+
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: var(--yellow); }
+
+    .form-group textarea { height: 130px; }
+
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #000;
+      background: var(--yellow);
+      border: none;
+      border-radius: 980px;
+      padding: 0.85rem 1.75rem;
+      cursor: pointer;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      align-self: flex-start;
+    }
+
+    .form-submit:hover { opacity: 0.88; transform: translateY(-2px); }
+
+    /* ==========================================================================
+       22. PROJECT DETAIL PAGES
+       Full write-up layout for deep dives on individual projects.
+       ========================================================================== */
+
+    /* Meta bar just below the project title */
+    .detail-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+
+    .meta-tag {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+      border-radius: 980px;
+      padding: 0.35rem 0.85rem;
+      color: var(--text-dim);
+    }
+
+    /* Hero image for a project detail page */
+    .detail-hero-image {
+      position: relative;
+      margin-top: 3rem;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      aspect-ratio: 16 / 9;
+      background: var(--bg-elevated);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .detail-hero-image::before {
+      content: "";
+      position: absolute; inset: -40%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--glow-a, var(--yellow)) 0%, transparent 45%),
+        radial-gradient(circle at 75% 75%, var(--glow-b, var(--blue))   0%, transparent 50%);
+      opacity: 0.2;
+      filter: blur(50px);
+    }
+
+    .detail-hero-image img {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .detail-hero-image.has-media::before { display: none; }
+
+    .detail-hero-image span {
+      position: relative; z-index: 1;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      text-align: center;
+      padding: 2rem;
+    }
+
+    /* Two-column layout: body copy left, sidebar right */
+    .detail-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: clamp(2.5rem, 5vw, 5rem);
+      align-items: start;
+      padding: 4rem 0 6rem;
+    }
+
+    @media (max-width: 880px) {
+      .detail-layout { grid-template-columns: 1fr; }
+      .detail-sidebar { order: -1; } /* sidebar goes above body on mobile */
+    }
+
+    /* Body copy */
+    .detail-body h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 2.5rem 0 0.9rem;
+    }
+
+    .detail-body h2:first-child { margin-top: 0; }
+
+    .detail-body p {
+      font-size: 1rem;
+      color: var(--text-dim);
+      line-height: 1.78;
+      max-width: 65ch;
+      margin-bottom: 1.1rem;
+    }
+
+    .detail-body ul {
+      padding-left: 0;
+      list-style: none;
+      margin-bottom: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .detail-body ul li {
+      position: relative;
+      padding-left: 1.2rem;
+      font-size: 0.97rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .detail-body ul li::before {
+      content: "";
+      position: absolute;
+      left: 0; top: 0.58em;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--yellow);
+    }
+
+    /* Photo grid inside the body — use .photo-grid with 1, 2, or 3 columns */
+    .photo-grid {
+      display: grid;
+      gap: 0.75rem;
+      margin: 2rem 0;
+    }
+
+    .photo-grid--1 { grid-template-columns: 1fr; }
+    .photo-grid--2 { grid-template-columns: 1fr 1fr; }
+    .photo-grid--3 { grid-template-columns: 1fr 1fr 1fr; }
+
+    @media (max-width: 640px) {
+      .photo-grid--2,
+      .photo-grid--3 { grid-template-columns: 1fr; }
+    }
+
+    .photo-cell {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .photo-cell::before {
+      content: "";
+      position: absolute; inset: -40%;
+      background:
+        radial-gradient(circle at 30% 30%, var(--glow-a, var(--yellow)) 0%, transparent 45%),
+        radial-gradient(circle at 75% 75%, var(--glow-b, var(--blue))   0%, transparent 50%);
+      opacity: 0.15; filter: blur(30px);
+    }
+
+    .photo-cell img {
+      position: relative; z-index: 1;
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-cell.has-media::before { display: none; }
+
+    .photo-cell span {
+      position: relative; z-index: 1;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      text-align: center;
+      padding: 1rem;
+    }
+
+    /* Sidebar: quick-reference card */
+    .detail-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 2rem);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Disable sticky on single-column layout — must come after the base rule above */
+    @media (max-width: 880px) {
+      .detail-sidebar { position: static; }
+    }
+
+    .sidebar-card {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--bg-elevated);
+      padding: 1.4rem;
+    }
+
+    .sidebar-card h4 {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 1rem;
+    }
+
+    .sidebar-row {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .sidebar-row dt {
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 0.1rem;
+    }
+
+    .sidebar-row dd {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+
+    /* ==========================================================================
+       12. COMPACT PHOTO GALLERY TILES
+       Use .photo-gallery > .gallery-tile for large collections of process photos.
+       Tiles are 1:1 aspect ratio, 4 columns desktop / 3 tablet / 2 mobile.
+       Clicking any tile opens the lightbox (#13 below).
+       ========================================================================== */
+    .photo-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+    }
+
+    @media (max-width: 900px) {
+      .photo-gallery { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .photo-gallery { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .gallery-tile {
+      aspect-ratio: 1;
+      overflow: hidden;
+      border-radius: 10px;
+      cursor: zoom-in;
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      transition: border-color 0.2s ease;
+    }
+
+    .gallery-tile:hover { border-color: var(--line-bright); }
+
+    .gallery-tile img,
+    .gallery-tile video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .gallery-tile:hover img,
+    .gallery-tile:hover video { transform: scale(1.07); }
+
+
+    /* ==========================================================================
+       13. LIGHTBOX
+       Injected by JS (reveal.js #8). Hidden by default; .lb-open shows it.
+       ========================================================================== */
+    .lightbox {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9000;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.22s ease;
+    }
+
+    .lightbox.lb-open {
+      opacity: 1; pointer-events: auto;
+    }
+
+    .lightbox__media img,
+    .lightbox__media video {
+      max-width: 92vw; max-height: 88vh;
+      object-fit: contain;
+      border-radius: 10px;
+      display: block;
+    }
+
+    .lightbox__close {
+      position: absolute; top: 1rem; right: 1.5rem;
+      background: none; border: none;
+      color: #fff; font-size: 2.4rem; line-height: 1;
+      cursor: pointer; opacity: 0.7;
+      transition: opacity 0.15s;
+      padding: 0;
+    }
+
+    .lightbox__close:hover { opacity: 1; }
+
+    /* "Back to ..." link above the page hero on detail pages */
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover { color: var(--yellow); }
+
+    /* ==========================================================================
+       PROJECT DETAIL PAGES — LARGE PHOTO CAROUSEL
+       Use .photo-carousel for big image collections instead of .photo-gallery's
+       small grid tiles — one large slide is visible at a time, so a page with
+       a dozen+ photos doesn't have to load them all in at once for the visitor
+       to see something. A page can have multiple .photo-carousel instances;
+       each is initialized independently (see reveal.js, section 11).
+
+       Inner elements use a "pc-" prefix (pc-track, pc-slide, pc-dot, pc-btn,
+       pc-label) rather than the more generic "carousel-*" names — this file
+       already has an older, unrelated ".card-carousel" component that reuses
+       bare "carousel-slide" / "carousel-dot" / "carousel-btn" class names
+       (with conflicting rules, e.g. display:none on carousel-slide), so
+       reusing those names here would silently get clobbered by that
+       component regardless of selector specificity or source order.
+
+       Markup:
+         <div class="photo-carousel">
+           <div class="pc-track">
+             <div class="pc-slide">
+               <img src="..." alt="...">
+               <div class="pc-label">Optional caption</div>
+             </div>
+             ... more .pc-slide ...
+           </div>
+           <button class="pc-btn pc-btn--prev" aria-label="Previous slide">&#8249;</button>
+           <button class="pc-btn pc-btn--next" aria-label="Next slide">&#8250;</button>
+           <div class="pc-dots"></div>
+         </div>
+       ========================================================================== */
+    .photo-carousel {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--card);
+      border: 1px solid var(--line);
+      margin: 2rem 0;
+    }
+
+    .photo-carousel .pc-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .photo-carousel .pc-slide {
+      flex: 0 0 100%;
+      min-width: 0;
+      position: relative;
+      background: var(--card);
+    }
+
+    .photo-carousel .pc-slide img,
+    .photo-carousel .pc-slide video {
+      display: block;
+      width: 100%;
+      height: 480px;
+      object-fit: cover;
+      border-radius: 0;
+    }
+
+    @media (max-width: 760px) {
+      .photo-carousel .pc-slide img,
+      .photo-carousel .pc-slide video { height: 260px; }
+    }
+
+    .photo-carousel .pc-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(10,10,10,0.72);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: background 0.2s, border-color 0.2s;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    .photo-carousel .pc-btn:hover { background: var(--yellow); border-color: var(--yellow); color: #000; }
+    .photo-carousel .pc-btn--prev { left: 12px; }
+    .photo-carousel .pc-btn--next { right: 12px; }
+
+    .photo-carousel .pc-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 0 14px;
+      background: var(--card);
+    }
+    .photo-carousel .pc-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--line);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      padding: 0;
+    }
+    .photo-carousel .pc-dot.active {
+      background: var(--yellow);
+      transform: scale(1.3);
+    }
+    .photo-carousel .pc-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 46px 14px 16px;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #fff;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.85);
+      /* A gradient scrim (rather than trying to detect each photo's average
+         brightness and flip text color) — guarantees the caption stays
+         readable no matter how light, dark, or busy the photo underneath is. */
+      background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.38) 55%, rgba(0,0,0,0) 100%);
+      pointer-events: none;
+    }
+    .photo-carousel .pc-counter {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      z-index: 2;
+      background: rgba(10,10,10,0.72);
+      color: #fff;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      pointer-events: none;
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    /* ==========================================================================
+       23. SKILLS PROFICIENCY BARS (home page)
+       Animated horizontal bars that fill from 0 to a given percentage on scroll.
+       The fill width is set via a CSS custom property --pct on each bar.
+       JS reads data-pct from the DOM and sets --pct when the section enters view.
+       ========================================================================== */
+    .skills-bars { display: flex; flex-direction: column; gap: 0.9rem; }
+
+    .skill-bar-row {
+      display: grid;
+      grid-template-columns: 9rem 1fr 2.5rem;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .skill-bar-row .skill-name {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      text-align: right;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .skill-bar-track {
+      height: 5px;
+      border-radius: 980px;
+      background: var(--line);
+      overflow: hidden;
+    }
+
+    /* The fill — starts at 0 width, transitions to --pct when .animated is added */
+    .skill-bar-fill {
+      height: 100%;
+      border-radius: inherit;
+      width: 0;
+      transition: width 1.1s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .skill-bar-fill.animated { width: var(--pct, 0%); }
+
+    /* Alternate yellow/blue fills — target odd/even .skill-bar-row */
+    .skill-bar-row:nth-child(odd)  .skill-bar-fill { background: var(--yellow); }
+    .skill-bar-row:nth-child(even) .skill-bar-fill { background: var(--blue);   }
+
+    .skill-pct {
+      font-size: 0.72rem;
+      font-family: monospace;
+      color: var(--text-faint);
+      letter-spacing: 0.04em;
+    }
+
+    @media (max-width: 520px) {
+      .skill-bar-row { grid-template-columns: 6rem 1fr 2.2rem; }
+    }
+
+    /* ==========================================================================
+       STAT CARD GRID — compact "by the numbers" inside detail-body columns
+       ========================================================================== */
+    .stat-card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; margin: 2rem 0; }
+    @media (max-width: 700px) { .stat-card-grid { grid-template-columns: repeat(2, 1fr); } }
+    .stat-card-item { background: var(--bg-elevated); border: 1px solid var(--line); border-radius: 12px; padding: 1.25rem 1rem; text-align: center; }
+    .stat-card-num { font-size: 1.75rem; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+    .stat-card-item:nth-child(odd)  .stat-card-num { color: var(--yellow); }
+    .stat-card-item:nth-child(even) .stat-card-num { color: var(--blue); }
+    .stat-card-label { font-size: 0.72rem; color: var(--text-dim); margin-top: 0.45rem; text-transform: uppercase; letter-spacing: 0.07em; line-height: 1.4; }
+
+    /* ==========================================================================
+       CARD CAROUSEL — single-item slideshow inside legacy-card__media
+       ========================================================================== */
+    .card-carousel { position: relative; width: 100%; height: 100%; overflow: hidden; }
+    .carousel-slide { display: none; width: 100%; height: 100%; }
+    .carousel-slide.active { display: block; }
+    .carousel-slide img, .carousel-slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.45); border: none; color: #fff; font-size: 1.8rem; line-height: 1; padding: 0.25rem 0.6rem 0.35rem; cursor: pointer; z-index: 2; border-radius: 6px; transition: background 0.15s; }
+    .carousel-btn:hover { background: rgba(0,0,0,0.78); }
+    .carousel-prev { left: 0.5rem; }
+    .carousel-next { right: 0.5rem; }
+    .carousel-dots { position: absolute; bottom: 0.55rem; left: 50%; transform: translateX(-50%); display: flex; gap: 5px; pointer-events: none; }
+    .carousel-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.32); transition: background 0.2s; }
+    .carousel-dot.active { background: #fff; }
+
+    /* FEATURE CAROUSEL — crossfade slideshow inside .feature__visual on the home page */
+    .feature-carousel { position: absolute; inset: 0; }
+    .fc-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.9s ease; }
+    .fc-slide.active { opacity: 1; }
+    .fc-slide img { border-radius: 0; }
+
+    /* ==========================================================================
+       TIMELINE — vertical chronological journey on the home page
+       ========================================================================== */
+    .timeline {
+      position: relative;
+      max-width: 620px;
+      padding: 0.5rem 0 1rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: calc(72px + 11px);
+      top: 0.35rem;
+      bottom: 0;
+      width: 2px;
+      background: var(--line);
+    }
+    .tl-item {
+      display: grid;
+      grid-template-columns: 72px 22px 1fr;
+      gap: 0 1rem;
+      align-items: flex-start;
+      margin-bottom: 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      cursor: default;
+    }
+    a.tl-item { cursor: pointer; }
+    .tl-date {
+      text-align: right;
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      color: var(--text-dim);
+      padding-top: 0.32rem;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .tl-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin-top: 0.28rem;
+      position: relative;
+      z-index: 1;
+      justify-self: center;
+      transition: transform 0.2s;
+    }
+    a.tl-item:hover .tl-dot { transform: scale(1.4); }
+    .tl-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 0.72rem 1rem;
+      transition: border-color 0.2s;
+    }
+    a.tl-item:hover .tl-card { border-color: var(--yellow); }
+    a.tl-item.tl-internship:hover .tl-card { border-color: var(--blue); }
+    .tl-tag {
+      font-size: 0.63rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-dim);
+      margin-bottom: 0.18rem;
+    }
+    .tl-title {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+    .tl-sub {
+      font-size: 0.74rem;
+      color: var(--text-secondary);
+      margin-top: 0.12rem;
+    }
+    @media (max-width: 520px) {
+      .timeline { padding: 0.5rem 0; }
+      .timeline::before { left: calc(52px + 11px); }
+      .tl-item { grid-template-columns: 52px 22px 1fr; gap: 0 0.75rem; }
+      .tl-date { font-size: 0.62rem; }
+    }
+
+    /* ==========================================================================
+       TIMELINE-H — horizontal alternating timeline for the home page
+       ========================================================================== */
+    .timeline-h {
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+      position: relative;
+    }
+    .timeline-h::-webkit-scrollbar { display: none; }
+
+    /* Horizontal center line — sits at bottom of the top section + half dot */
+    .timeline-h::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      top: calc(150px + 7px); /* tl-h-top height + half dot height */
+      height: 2px;
+      background: var(--line);
+      z-index: 0;
+    }
+
+    .tl-h-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1 1 0;
+      min-width: 110px;
+      text-decoration: none;
+      color: inherit;
+      cursor: default;
+      padding: 0 0.25rem;
+    }
+    a.tl-h-col { cursor: pointer; }
+
+    .tl-h-top {
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      width: 100%;
+      padding-bottom: 8px;
+    }
+    .tl-h-bottom {
+      height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      width: 100%;
+      padding-top: 8px;
+    }
+
+    .tl-h-dot-wrap {
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+    }
+    .tl-h-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: block;
+      transition: transform 0.2s;
+    }
+    a.tl-h-col:hover .tl-h-dot { transform: scale(1.4); }
+
+    .tl-h-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      padding: 0.55rem 0.7rem;
+      width: 100%;
+      position: relative;
+      transition: border-color 0.2s;
+    }
+    /* Stems: thin line connecting card to the center line */
+    .tl-h-top .tl-h-card::after {
+      content: '';
+      position: absolute;
+      left: 50%; bottom: -9px;
+      width: 1px; height: 8px;
+      background: var(--line);
+    }
+    .tl-h-bottom .tl-h-card::before {
+      content: '';
+      position: absolute;
+      left: 50%; top: -9px;
+      width: 1px; height: 8px;
+      background: var(--line);
+    }
+
+    a.tl-h-col:hover .tl-h-card { border-color: var(--yellow); }
+    a.tl-h-col.tl-internship:hover .tl-h-card { border-color: var(--blue); }
+
+    .tl-h-kicker {
+      font-size: 0.62rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.18rem;
+      line-height: 1;
+    }
+    .tl-h-name {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.3;
+    }
+    .tl-h-sub {
+      font-size: 0.68rem;
+      color: var(--text-secondary);
+      margin-top: 0.12rem;
+      line-height: 1.3;
+    }
+  </style>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <!-- NAV -->
+  <header class="nav">
+    <a href="index.html" class="nav__logo"><span class="dot"></span>Charlie Steinman</a>
+    <nav class="nav__links">
+      <a href="index.html" data-page="index.html">Home</a>
+      <a href="internships.html" data-page="internships.html">Internships</a>
+      <a href="projects.html" data-page="projects.html">Projects</a>
+      <a href="shop.html" data-page="shop.html">Print &amp; Buy</a>
+      <a href="resume.html" data-page="resume.html" class="nav__cta">Resume</a>
+    </nav>
+    <button class="nav__toggle" aria-label="Open menu" aria-expanded="false">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <line x1="2" y1="6" x2="20" y2="6"/>
+        <line x1="2" y1="11" x2="20" y2="11"/>
+        <line x1="2" y1="16" x2="20" y2="16"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <nav class="mobile-menu" aria-hidden="true">
+    <a href="index.html" data-page="index.html">Home</a>
+    <a href="internships.html" data-page="internships.html">Internships</a>
+    <a href="projects.html" data-page="projects.html">Projects</a>
+    <a href="shop.html" data-page="shop.html">Print &amp; Buy</a>
+    <a href="resume.html" data-page="resume.html">Resume</a>
+  </nav>
+
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero__glow"><span class="g1"></span><span class="g2"></span></div>
+    <div class="container">
+      <span class="eyebrow eyebrow--yellow">Projects</span>
+      <h1>Built because I wanted to.</h1>
+      <p>
+        The projects I take on because I want to &mdash; from a daily-driver moped to an ESP32-powered
+        display and a from-scratch RC plane. Plus the earlier work that taught me CAD and fabrication
+        before I had formal training.
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURE: BOLT -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">BOLT Electric Race Motorcycle &middot; Oct 2022&ndash;Present</span>
+        <h3>Chassis Design, FEA &amp; Team President</h3>
+        <p>
+          I joined Virginia Tech's BOLT electric motorcycle race team as a chassis engineer,
+          designing and simulating the Emrax 248 (400kW) motor mount and switching its
+          material from steel to aluminum for 6 lbs of weight savings. My senior year I stepped
+          into the Admin Lead &amp; President role, leading a team of 100+ engineers with a
+          mid-five-figure build budget and growing membership from 55 to 120.
+        </p>
+        <a class="feature__link" href="detail-bolt.html">
+          Full BOLT write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
+        <div class="viewer">
+          <canvas id="bolt-canvas"></canvas>
+        </div>
+        <div class="viewer__hint" id="bolt-hint">
+          <span>3D MODEL VIEWER<br>Drop motor_asm.glb<br>into /models to display here</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: BOLT FAIRINGS -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">BOLT Electric Race Motorcycle &middot; Bodywork</span>
+        <h3>Fairing Design &amp; Carbon Fiber Fabrication</h3>
+        <p>
+          Alongside the chassis work, I took on primary ownership of BOLT VI's bodywork &mdash;
+          modeling the fairings in CAD, splitting them into printable sections, and carrying
+          each panel through 3D printing, wet carbon fiber layup, bonding, and paint.
+        </p>
+        <a class="feature__link" href="detail-bolt.html">
+          Full BOLT write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
+        <div class="viewer">
+          <canvas id="bolt-fairings-canvas"></canvas>
+        </div>
+        <div class="viewer__hint" id="bolt-fairings-hint">
+          <span>3D MODEL VIEWER<br>Drop fairings.glb<br>into /models to display here</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: MOPED -->
+  <section class="container">
+    <div class="feature feature--reverse">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--yellow">Summer 2024&ndash;Present</span>
+        <h3>1997 Honda Elite 50 &mdash; Moped Restoration</h3>
+        <p>
+          A few friends and I got hooked on building out mopeds as cheap, fun daily
+          transportation around campus. I picked up a non-running '97 Honda Elite 50 with
+          good mod potential and brought it back to life with a larger displacement head,
+          revised CVT gearing, and a performance exhaust. Since fall 2024, it's been my
+          everyday way to get to class.
+        </p>
+        <a class="feature__link" href="detail-moped.html">
+          Full moped write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <img src="assets/images/Moped/MopedGoodPhoto.JPG" alt="1997 Honda Elite 50 — restored moped">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: ESP32 TICKER -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">ESP32 &middot; RGB LED Matrix</span>
+        <h3>Wi-Fi Live Stock Ticker</h3>
+        <p>
+          Built for a friend studying finance, this display pairs two 64x32 RGB LED matrices
+          with an ESP32 to show live stock prices, the date, and the time. It pulls ticker
+          data from the FMP API, and a simple local web server lets you change which of up
+          to 10 tickers are shown. This was my first real dive into microcontrollers and a
+          deliberate departure from mechanical-only projects.
+        </p>
+        <a class="feature__link" href="detail-stock-ticker.html">
+          Full stock ticker write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <video src="assets/images/Stock%20Ticker/StockTickerFinalProduct.MP4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: POOL FENCE -->
+  <section class="container">
+    <div class="feature feature--reverse">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">Family Project</span>
+        <h3>Pool Equipment Fence with Pipe Avoidance</h3>
+        <p>
+          My parents' new house came with pool equipment sitting in plain view, and they
+          wanted it screened off without disturbing anything underground. I scanned the
+          existing foundation and modeled the known pipe runs so we could lay out fence
+          post locations that looked evenly spaced from every angle &mdash; without drilling
+          into anything we shouldn't.
+        </p>
+        <p>
+          Once the layout was dialed in on screen, my dad and I built the fence ourselves
+          and added shrubbery around it afterward to finish the look.
+        </p>
+        <a class="feature__link" href="detail-pool-fence.html">
+          Full pool fence write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <img src="assets/images/Pool%20Equipment%20Fence/PoolFinishedProduct.jpg" alt="Pool equipment fence — finished with shrubbery">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: HOKIEBIRD -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--yellow">Favorite Project</span>
+        <h3>Hokiebird 3D Scan to Statue</h3>
+        <p>
+          If you've spent any time around Virginia Tech, you've seen the Hokie statues that
+          sit outside local restaurants and shops. My parents love this mascot, so I scanned
+          one as a gift.
+        </p>
+        <p>
+          The scanning software kept losing tracking partway through, so I ended up with
+          five or six separate scans instead of one clean pass. I brought all of them into
+          Blender and manually stitched and smoothed the pieces back into a single statue.
+          After a 36-hour print, I had an 8" replica &mdash; my personal favorite project,
+          and one I've since reprinted and given to more than 40 friends and family.
+        </p>
+        <a class="feature__link" href="detail-hokiebird.html">
+          Full Hokiebird write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <img src="assets/images/HokieBirds/HokieArmy.JPG" alt="Army of 3D printed Hokiebird statues">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: RC CESSNA -->
+  <section class="container">
+    <div class="feature feature--reverse">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--yellow">Original Design &middot; RC / Aerospace</span>
+        <h3>RC Cessna 172 &mdash; 3D Printed Airplane</h3>
+        <p>
+          Most RC builds start from a kit; I wanted to design my own, loosely based on the
+          Cessna 172. The current version skips yaw control deliberately &mdash; my first
+          design, proving the rest of the airframe works before adding complexity. I
+          estimated center of gravity, lift force, and takeoff speed, and the CAD CG lines
+          up well with the physical model in the X/Y plane, though the 3D-printed build
+          shifted things slightly on the Z axis.
+        </p>
+        <a class="feature__link" href="detail-cessna.html">
+          Full Cessna write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
+        <div class="viewer">
+          <canvas id="cessna-canvas"></canvas>
+        </div>
+        <div class="viewer__hint" id="cessna-hint">
+          <span>3D MODEL VIEWER<br>Drop cessna.glb<br>into /models to display here</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: TIDY T-SHIRT FOLDER -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">Class Project &middot; Servo-Driven</span>
+        <h3>Tidy T-Shirt Folder</h3>
+        <p>
+          For a class challenge to design something that "makes college students' lives
+          easier," our team built a semi-automatic shirt folder with three folding flaps,
+          each driven by its own servo motor. I designed the folding mechanism and the
+          three-flap layout, and the working prototype successfully folded a shirt on its
+          first run, before any tuning.
+        </p>
+        <a class="feature__link" href="detail-tidy.html">
+          Full TIDY write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <img src="assets/images/Econ%20_TIDY_%20T-shirt%20Folder/TIDYBuilt.jpg" alt="TIDY semi-automatic t-shirt folder — completed prototype">
+      </div>
+    </div>
+  </section>
+
+  <!-- EARLIER WORK DIVIDER -->
+  <section class="section--tight" style="margin-top: 4rem;">
+    <div class="container">
+      <div class="section-head reveal" style="margin-bottom: 3rem;">
+        <span class="eyebrow eyebrow--blue">Earlier Work</span>
+        <h2>Where it started.</h2>
+        <p>
+          Modeling exercises, reverse-engineering practice, a backyard foundry, and projects
+          that taught me CAD and fabrication before I had formal training. Rougher around the
+          edges, but where it all started.
+        </p>
+      </div>
+
+      <div class="legacy-grid">
+
+        <!-- 1. 1994 ANNIVERSARY CASTING -->
+        <div class="legacy-card reveal">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><img src="assets/images/Older Projects/1994Final.JPG" alt="Finished aluminum casting — 1994 anniversary gift"></div>
+              <div class="carousel-slide"><img src="assets/images/Older Projects/FurnaceMk2.jpg" alt="Homemade foundry furnace Mk2"></div>
+              <div class="carousel-slide"><img src="assets/images/Older Projects/FurnaceOnFire.JPG" alt="Furnace running at temperature"></div>
+              <div class="carousel-slide"><video src="assets/images/Older Projects/CastingProcess.MOV" autoplay muted loop playsinline></video></div>
+              <div class="carousel-slide"><video src="assets/images/Older Projects/1994Pour.MOV" autoplay muted loop playsinline></video></div>
+              <div class="carousel-slide"><video src="assets/images/Older Projects/1994Reveal.MOV" autoplay muted loop playsinline></video></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots">
+                <span class="carousel-dot active"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+              </div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">7th Grade</span>
+            <h4>1994 Anniversary Casting</h4>
+            <p>
+              My parents got married in 1994. For their anniversary, my dad and I built a backyard
+              aluminum foundry from scratch &mdash; a custom-made forge and burner &mdash; and poured
+              molten aluminum into a negative sand mold shaped from a 3D print I designed. The result
+              was a solid aluminum piece representing that year, gifted to my mom.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. 3D PRINTED MODEL PISTON -->
+        <div class="legacy-card reveal reveal-delay-1">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><img src="assets/images/Older Projects/ModelPiston.png" alt="3D printed model piston — desk toy"></div>
+              <div class="carousel-slide"><video src="assets/images/Older Projects/3DprintedPiston.MOV" autoplay muted loop playsinline></video></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots">
+                <span class="carousel-dot active"></span>
+                <span class="carousel-dot"></span>
+              </div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">~8th Grade</span>
+            <h4>3D Printed Model Piston</h4>
+            <p>A desk-toy 4-stroke engine piston with pushrod-actuated intake and exhaust valves, built early on to learn the basics of CAD.</p>
+          </div>
+        </div>
+
+        <!-- 3. WIIII -->
+        <div class="legacy-card reveal reveal-delay-2">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><img src="assets/images/Older Projects/Wiiii.png" alt="Wii II (Wiiii) concept — game controller redesign"></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots"><span class="carousel-dot active"></span></div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">Freshman Year, High School</span>
+            <h4>Wii II (Wiiii) Game Console</h4>
+            <p>A freshman design assignment: reimagine a product for 2020. I gave the Wii Remote an adaptive display that changes with the game being played.</p>
+          </div>
+        </div>
+
+        <!-- 4. TURBOCHARGER -->
+        <div class="legacy-card reveal">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><img src="assets/images/Older Projects/Turbocharger.png" alt="Turbocharger cross-section CAD model"></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots"><span class="carousel-dot active"></span></div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">Learning Project</span>
+            <h4>Turbocharger</h4>
+            <p>A semi-accurate impeller and housing modeled with a cross-section to show the air-fluting of the impeller &mdash; pure CAD and turbo-fundamentals practice.</p>
+          </div>
+        </div>
+
+        <!-- 5. PELICAN BOX -->
+        <div class="legacy-card reveal reveal-delay-1">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><video src="assets/images/Older%20Projects/FINAL%20YAY.mov" autoplay muted loop playsinline></video></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots"><span class="carousel-dot active"></span></div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">Client Commission</span>
+            <h4>Pelican Box with Firearm Components</h4>
+            <p>A concept video and rough animation commissioned by a client to show how their product would be displayed inside a Pelican-style case.</p>
+          </div>
+        </div>
+
+        <!-- 6. ASSORTED -->
+        <div class="legacy-card reveal reveal-delay-2">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><img src="assets/images/Older Projects/Playground.png" alt="Playground CAD model"></div>
+              <div class="carousel-slide"><img src="assets/images/Older Projects/Zoo.png" alt="Zoo CAD model"></div>
+              <div class="carousel-slide"><img src="assets/images/Older Projects/PistonCAD.png" alt="Piston CAD model"></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots">
+                <span class="carousel-dot active"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+              </div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">Various</span>
+            <h4>Assorted Early Models</h4>
+            <p>A grab bag of other models that don't have enough detail or utility to warrant their own card &mdash; ask if you're curious about any of them.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <h3>Let's talk.</h3>
+          <p>
+            Mechanical engineering student focused on metal additive manufacturing,
+            with a habit of taking on projects that don't fit neatly into one category.
+          </p>
+        </div>
+        <div class="footer__links">
+          <a href="about.html">About</a>
+          <a href="mailto:csteinman@vt.edu">Email</a>
+          <a href="https://www.linkedin.com/in/charlessteinman" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="shop.html">Print &amp; Buy</a>
+          <a href="resume.html">Resume</a>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        Blacksburg, VA / Ashburn, VA &middot; Updated 2026
+      </div>
+    </div>
+  </footer>
+
+
+  <script type="module">
+    import { initViewer } from './js/viewer-init.js';
+    initViewer({
+      canvas: document.getElementById('bolt-canvas'),
+      hint: document.getElementById('bolt-hint'),
+      modelPath: 'models/motor_asm.glb',
+      accentColor: 0x0a84ff,
+      explode: true
+    });
+    initViewer({
+      canvas: document.getElementById('bolt-fairings-canvas'),
+      hint: document.getElementById('bolt-fairings-hint'),
+      modelPath: 'models/fairings.glb',
+      accentColor: 0xffd60a,
+      explode: true
+    });
+    initViewer({
+      canvas: document.getElementById('cessna-canvas'),
+      hint: document.getElementById('cessna-hint'),
+      modelPath: 'models/cessna.glb',
+      accentColor: 0xffd60a,
+      explode: true,
+      distanceScale: 2.3
+    });
+  </script>
+  <script>
+    /* ==========================================================================
+       reveal.js — Portfolio interactivity
+
+       This script is inlined into every page by _build/build.py.
+       It handles:
+         1. Active nav link highlighting (based on current page filename)
+         2. Nav border that appears once you scroll down
+         3. Mobile hamburger menu open/close
+         4. Scroll-triggered reveal animations (.reveal → .is-visible)
+         5. Count-up number animation for stats (data-count-to attribute)
+         6. Subtle mouse-parallax on the hero glow blobs
+
+       Everything runs after DOMContentLoaded so the page is fully parsed first.
+       ========================================================================== */
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+      /* ── 1. ACTIVE NAV LINK ───────────────────────────────────────────────
+         Each nav link has a data-page="filename.html" attribute.
+         We compare that to the current page's filename and add .active
+         to the matching link. CSS then makes it appear white / highlighted.
+         To add a new page to the nav, just add the link in _nav.html with
+         the correct data-page value. No JS changes needed. */
+      const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+      document.querySelectorAll('[data-page]').forEach(link => {
+        if (link.dataset.page === currentFile) {
+          link.classList.add('active');
+        }
+      });
+
+
+      /* ── 2. NAV SCROLL BORDER ─────────────────────────────────────────────
+         The nav starts with a transparent bottom border.
+         Once the page scrolls more than 8px, we add the .scrolled class
+         which makes the border visible (see .nav.scrolled in the CSS).
+         This makes the nav feel "attached" to the content below it once
+         you've left the hero section. */
+      const nav = document.querySelector('.nav');
+
+      const updateNavOnScroll = () => {
+        if (window.scrollY > 8) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+      };
+
+      window.addEventListener('scroll', updateNavOnScroll, { passive: true });
+      updateNavOnScroll(); // also run immediately on load
+
+
+      /* ── 3. MOBILE MENU ───────────────────────────────────────────────────
+         The hamburger button toggles the .open class on the .mobile-menu
+         overlay, which slides it down from off-screen (see CSS section 4).
+         We also:
+           - Toggle aria-expanded for screen readers
+           - Lock body scrolling while the menu is open
+           - Auto-close the menu when any link inside it is tapped */
+      const menuToggle = document.querySelector('.nav__toggle');
+      const mobileMenu = document.querySelector('.mobile-menu');
+
+      if (menuToggle && mobileMenu) {
+        menuToggle.addEventListener('click', () => {
+          const isOpen = mobileMenu.classList.toggle('open');
+          menuToggle.setAttribute('aria-expanded', isOpen);
+          // Prevent the page from scrolling behind the menu
+          document.body.style.overflow = isOpen ? 'hidden' : '';
+        });
+
+        // Close the menu automatically when a link is tapped
+        mobileMenu.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+          });
+        });
+      }
+
+
+      /* ── 4. SCROLL REVEAL ─────────────────────────────────────────────────
+         Any element with class="reveal" starts invisible (opacity: 0,
+         translated down 36px). IntersectionObserver fires when the element
+         enters the viewport; we add .is-visible which transitions it to
+         visible and y=0.
+
+         Stagger delays (.reveal-delay-1 through .reveal-delay-4) let you
+         offset sibling elements so they cascade in rather than all appearing
+         at once.
+
+         If IntersectionObserver isn't supported (very old browsers), we
+         fall back to just making everything visible immediately. */
+      const revealElements = document.querySelectorAll('.reveal');
+
+      if ('IntersectionObserver' in window) {
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              revealObserver.unobserve(entry.target); // only animate once
+            }
+          });
+        }, {
+          threshold: 0.18,         // 18% of the element must be visible to trigger
+          rootMargin: '0px 0px -40px 0px' // start slightly before it hits the bottom
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+      } else {
+        // Fallback: just show everything
+        revealElements.forEach(el => el.classList.add('is-visible'));
+      }
+
+
+      /* ── 5. COUNT-UP NUMBERS ──────────────────────────────────────────────
+         Any element with data-count-to="NUMBER" will animate from 0 to that
+         number when it scrolls into view. Optionally add data-suffix=" hr"
+         or data-suffix="+" to append text after the number.
+
+         Example: <span data-count-to="40" data-suffix="+">0</span>
+         Will animate: 0 → 1 → ... → 40+
+
+         The easing uses a cubic "ease out" formula so it starts fast and
+         decelerates as it approaches the target — feels natural. */
+      const counterElements = document.querySelectorAll('[data-count-to]');
+
+      const animateCounter = (element) => {
+        const target   = parseInt(element.dataset.countTo, 10);
+        const suffix   = element.dataset.suffix || '';
+        const duration = 1200; // ms — increase for a slower count
+        const startTime = performance.now();
+
+        const step = (now) => {
+          const elapsed  = now - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          // Cubic ease-out: starts fast, slows to target
+          const eased    = 1 - Math.pow(1 - progress, 3);
+          element.textContent = Math.round(eased * target) + suffix;
+          if (progress < 1) requestAnimationFrame(step);
+        };
+
+        requestAnimationFrame(step);
+      };
+
+      if ('IntersectionObserver' in window && counterElements.length) {
+        const counterObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              animateCounter(entry.target);
+              counterObserver.unobserve(entry.target); // only count up once
+            }
+          });
+        }, { threshold: 0.6 }); // element must be 60% visible before counting
+
+        counterElements.forEach(el => counterObserver.observe(el));
+      } else {
+        // Fallback: show final numbers immediately
+        counterElements.forEach(el => {
+          el.textContent = el.dataset.countTo + (el.dataset.suffix || '');
+        });
+      }
+
+
+      /* ── 6. HERO GLOW PARALLAX ────────────────────────────────────────────
+         On desktop (pointer: fine = mouse, not touch), the hero glow blobs
+         very slightly follow the mouse cursor. This adds a subtle depth
+         effect without being distracting.
+
+         The movement is intentionally small — divide by a larger number
+         (e.g. 48 instead of 24) if you want it more subtle, or remove
+         this block entirely to disable the effect. */
+      const heroGlow = document.querySelector('.hero__glow');
+
+      if (heroGlow && window.matchMedia('(pointer: fine)').matches) {
+        window.addEventListener('mousemove', (e) => {
+          const x = (e.clientX / window.innerWidth  - 0.5) * 24; // max ±12px
+          const y = (e.clientY / window.innerHeight - 0.5) * 24;
+          heroGlow.style.transform = `translate(${x}px, ${y}px)`;
+        }, { passive: true });
+      }
+
+    }); // end DOMContentLoaded
+
+
+    /* ==========================================================================
+       7. SKILL PROFICIENCY BARS
+       Each .skill-bar-fill has a data-pct attribute (e.g. data-pct="85%").
+       When the bar scrolls into view, we set the --pct CSS variable and add
+       .animated, which triggers the CSS width transition.
+       ========================================================================== */
+    const skillBars = document.querySelectorAll('.skill-bar-fill[data-pct]');
+
+    if ('IntersectionObserver' in window && skillBars.length) {
+      const barObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const bar = entry.target;
+            bar.style.setProperty('--pct', bar.dataset.pct);
+            // Tiny delay so the transition is visible after paint
+            requestAnimationFrame(() => bar.classList.add('animated'));
+            barObserver.unobserve(bar);
+          }
+        });
+      }, { threshold: 0.4 });
+
+      skillBars.forEach(bar => barObserver.observe(bar));
+    } else {
+      skillBars.forEach(bar => {
+        bar.style.setProperty('--pct', bar.dataset.pct);
+        bar.classList.add('animated');
+      });
+    }
+
+
+    /* ==========================================================================
+       8. LIGHTBOX
+       Intercepts clicks on .gallery-tile elements and opens a full-screen
+       overlay with the image or video. Close via ×, clicking the backdrop,
+       or pressing Escape.
+       ========================================================================== */
+    (function () {
+      const lb = document.createElement('div');
+      lb.className = 'lightbox';
+      lb.setAttribute('role', 'dialog');
+      lb.setAttribute('aria-modal', 'true');
+      lb.innerHTML = '<button class="lightbox__close" aria-label="Close">&times;</button><div class="lightbox__media"></div>';
+      document.body.appendChild(lb);
+
+      const media    = lb.querySelector('.lightbox__media');
+      const closeBtn = lb.querySelector('.lightbox__close');
+
+      function openLb(tile) {
+        media.innerHTML = '';
+        const vidEl = tile.querySelector('video');
+        if (vidEl) {
+          const v = document.createElement('video');
+          v.src      = vidEl.src;
+          v.controls = true;
+          v.autoplay = true;
+          v.style.cssText = 'max-width:92vw;max-height:88vh;border-radius:10px;display:block;';
+          media.appendChild(v);
+        } else {
+          const imgEl = tile.querySelector('img');
+          if (!imgEl) return;
+          const img = document.createElement('img');
+          img.src = imgEl.src;
+          img.alt = imgEl.alt || '';
+          media.appendChild(img);
+        }
+        lb.classList.add('lb-open');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      }
+
+      function closeLb() {
+        lb.classList.remove('lb-open');
+        media.innerHTML = '';
+        document.body.style.overflow = '';
+      }
+
+      closeBtn.addEventListener('click', closeLb);
+      lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && lb.classList.contains('lb-open')) closeLb(); });
+
+      document.addEventListener('click', e => {
+        const tile = e.target.closest('.gallery-tile');
+        if (tile) openLb(tile);
+      });
+    })();
+
+    /* ==========================================================================
+       9. CARD CAROUSEL
+       Single-item slideshow for .card-carousel elements on the Older Projects
+       page. Prev/next buttons cycle through .carousel-slide children.
+       ========================================================================== */
+    (function () {
+      document.querySelectorAll('.card-carousel').forEach(function (car) {
+        const slides = Array.from(car.querySelectorAll('.carousel-slide'));
+        const dots   = Array.from(car.querySelectorAll('.carousel-dot'));
+        const prev   = car.querySelector('.carousel-prev');
+        const next   = car.querySelector('.carousel-next');
+        if (slides.length <= 1) {
+          if (prev) prev.style.display = 'none';
+          if (next) next.style.display = 'none';
+          return;
+        }
+        let idx = 0;
+        function goTo(n) {
+          const oldVid = slides[idx].querySelector('video');
+          if (oldVid) oldVid.pause();
+          slides[idx].classList.remove('active');
+          if (dots[idx]) dots[idx].classList.remove('active');
+          idx = (n + slides.length) % slides.length;
+          slides[idx].classList.add('active');
+          if (dots[idx]) dots[idx].classList.add('active');
+          const newVid = slides[idx].querySelector('video');
+          if (newVid) { newVid.currentTime = 0; newVid.play(); }
+        }
+        if (prev) prev.addEventListener('click', function (e) { e.stopPropagation(); goTo(idx - 1); });
+        if (next) next.addEventListener('click', function (e) { e.stopPropagation(); goTo(idx + 1); });
+        dots.forEach(function (d, i) { d.addEventListener('click', function (e) { e.stopPropagation(); goTo(i); }); });
+      });
+    })();
+
+
+    /* ==========================================================================
+       9. CONTACT FORM (Formspree / mailto fallback)
+       Intercepts the form submit, sends via fetch to Formspree (if configured),
+       and shows a thank-you message. If Formspree isn't set up yet, falls back
+       to opening the user's mail client.
+
+       TO CONFIGURE FORMSPREE:
+         1. Sign up at formspree.io (free tier allows 50 submissions/month).
+         2. Create a new form and copy your endpoint URL.
+         3. Update the FORMSPREE_URL constant below.
+         4. Remove the mailto fallback once it's working.
+       ========================================================================== */
+    const FORMSPREE_URL = 'https://formspree.io/f/xwvdappa';
+
+    const contactForm = document.getElementById('contact-form');
+    const formStatus  = document.getElementById('form-status');
+
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const data = new FormData(contactForm);
+
+        if (FORMSPREE_URL) {
+          // Send to Formspree
+          try {
+            const res = await fetch(FORMSPREE_URL, {
+              method: 'POST',
+              body: data,
+              headers: { 'Accept': 'application/json' }
+            });
+
+            if (res.ok) {
+              contactForm.style.display = 'none';
+              if (formStatus) {
+                formStatus.textContent = "Message sent — I'll get back to you soon.";
+                formStatus.style.color = 'var(--yellow)';
+              }
+            } else {
+              if (formStatus) {
+                formStatus.textContent = 'Something went wrong. Try emailing directly.';
+                formStatus.style.color = 'var(--text-dim)';
+              }
+            }
+          } catch {
+            if (formStatus) {
+              formStatus.textContent = 'Network error. Try emailing directly.';
+            }
+          }
+        } else {
+          // Fallback: open mailto with prefilled subject/body
+          const name    = data.get('name')    || '';
+          const message = data.get('message') || '';
+          const subject = encodeURIComponent(`Portfolio contact from ${name}`);
+          const body    = encodeURIComponent(message);
+          window.location.href = `mailto:csteinman@vt.edu?subject=${subject}&body=${body}`;
+        }
+      });
+    }
+
+    /* ==========================================================================
+       10. WIP STRIP — DRAG TO SCRUB
+       The "currently working on" ticker (.wip-strip / .wip-track) auto-scrolls
+       left on its own, but can also be grabbed and dragged (mouse or touch) —
+       it tracks the pointer 1:1 while dragging, then resumes auto-scrolling
+       from wherever it was released. Position is a single `x` value (the
+       track's translateX in px) driven every frame by requestAnimationFrame,
+       so dragging and auto-scroll are just two ways of changing the same
+       number instead of fighting each other.
+       ========================================================================== */
+    (function () {
+      const strip = document.querySelector('.wip-strip');
+      const track = document.querySelector('.wip-track');
+      if (!strip || !track) return;
+
+      const LOOP_SECONDS = 28; // matches the old CSS animation's duration
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      let x = 0;              // current translateX, always <= 0
+      let dragging = false;
+      let hovering = false;
+      let dragStartX = 0;
+      let dragStartPos = 0;
+      let lastFrameTime = null;
+
+      const halfWidth = () => track.scrollWidth / 2; // the two halves are identical, so this is one loop
+      const pixelsPerSecond = () => halfWidth() / LOOP_SECONDS;
+
+      // Keep x inside (-halfWidth, 0] no matter how far a drag pushes it,
+      // so the seamless loop never runs out of duplicated content.
+      const wrap = () => {
+        const hw = halfWidth();
+        if (hw <= 0) return;
+        x = ((x % hw) + hw) % hw;
+        if (x > 0) x -= hw;
+      };
+
+      const render = () => { track.style.transform = `translateX(${x}px)`; };
+
+      const tick = (time) => {
+        if (lastFrameTime === null) lastFrameTime = time;
+        const dt = (time - lastFrameTime) / 1000;
+        lastFrameTime = time;
+
+        if (!dragging && !hovering && !reducedMotion) {
+          x -= pixelsPerSecond() * dt;
+          wrap();
+          render();
+        }
+
+        requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+
+      strip.addEventListener('mouseenter', () => { hovering = true; });
+      strip.addEventListener('mouseleave', () => { hovering = false; });
+
+      strip.addEventListener('pointerdown', (e) => {
+        dragging = true;
+        dragStartX = e.clientX;
+        dragStartPos = x;
+        strip.classList.add('is-dragging');
+        strip.setPointerCapture(e.pointerId);
+      });
+
+      strip.addEventListener('pointermove', (e) => {
+        if (!dragging) return;
+        x = dragStartPos + (e.clientX - dragStartX);
+        wrap();
+        render();
+      });
+
+      const endDrag = (e) => {
+        if (!dragging) return;
+        dragging = false;
+        strip.classList.remove('is-dragging');
+        if (e && strip.hasPointerCapture(e.pointerId)) strip.releasePointerCapture(e.pointerId);
+      };
+      strip.addEventListener('pointerup', endDrag);
+      strip.addEventListener('pointercancel', endDrag);
+    })();
+
+    /* ==========================================================================
+       11. PHOTO CAROUSEL (project detail pages)
+       Powers .photo-carousel — a large single-slide viewer used in place of a
+       grid of small thumbnails on pages with a lot of process photos. A page
+       can have several of these (one per section), so this loops over every
+       .photo-carousel instance and wires each one up independently: prev/next
+       buttons, dot navigation, autoplay with pause-on-hover, and touch swipe.
+       ========================================================================== */
+    document.querySelectorAll('.photo-carousel').forEach((carousel) => {
+      const track  = carousel.querySelector('.pc-track');
+      const slides = carousel.querySelectorAll('.pc-slide');
+      const dotsEl = carousel.querySelector('.pc-dots');
+      const btnPrev = carousel.querySelector('.pc-btn--prev');
+      const btnNext = carousel.querySelector('.pc-btn--next');
+      if (!track || slides.length <= 1) return;
+
+      let current = 0;
+      let timer;
+
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'pc-dot' + (i === 0 ? ' active' : '');
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.addEventListener('click', () => goTo(i));
+        dotsEl.appendChild(dot);
+      });
+
+      // "3 / 12" style counter in the corner — with a dozen+ photos in some of
+      // these galleries, counting dots one by one isn't practical.
+      const counter = document.createElement('div');
+      counter.className = 'pc-counter';
+      carousel.appendChild(counter);
+      const updateCounter = () => { counter.textContent = (current + 1) + ' / ' + slides.length; };
+      updateCounter();
+
+      function goTo(idx) {
+        slides[current].querySelector('video')?.pause();
+        current = (idx + slides.length) % slides.length;
+        track.style.transform = 'translateX(-' + (current * 100) + '%)';
+        dotsEl.querySelectorAll('.pc-dot').forEach((d, i) =>
+          d.classList.toggle('active', i === current)
+        );
+        updateCounter();
+        const vid = slides[current].querySelector('video');
+        if (vid) { vid.currentTime = 0; vid.play(); }
+        resetTimer();
+      }
+
+      function resetTimer() {
+        clearInterval(timer);
+        timer = setInterval(() => goTo(current + 1), 4500);
+      }
+
+      if (btnPrev) btnPrev.addEventListener('click', () => goTo(current - 1));
+      if (btnNext) btnNext.addEventListener('click', () => goTo(current + 1));
+
+      carousel.addEventListener('mouseenter', () => clearInterval(timer));
+      carousel.addEventListener('mouseleave', resetTimer);
+
+      let touchStartX = 0;
+      carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+      carousel.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+      }, { passive: true });
+
+      resetTimer();
+    });
+  </script>
+</body>
+</html>

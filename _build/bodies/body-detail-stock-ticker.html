@@ -1,0 +1,232 @@
+__NAV__
+
+<style>
+  .photo-carousel { position: relative; border-radius: 12px; overflow: hidden; background: var(--card); border: 1px solid var(--line); margin: 2rem 0; }
+  .carousel-track { display: flex; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+  .carousel-slide { flex: 0 0 100%; min-width: 0; position: relative; background: var(--card); }
+  .carousel-slide img, .carousel-slide video { display: block; width: 100%; height: 480px; object-fit: cover; border-radius: 0; }
+  @media (max-width: 760px) { .carousel-slide img, .carousel-slide video { height: 260px; } }
+  .carousel-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(10,10,10,0.72); border: 1px solid rgba(255,255,255,0.12); color: #fff; width: 42px; height: 42px; border-radius: 50%; font-size: 1.3rem; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 2; transition: background 0.2s, border-color 0.2s; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .carousel-btn:hover { background: var(--yellow); border-color: var(--yellow); color: #000; }
+  .carousel-btn--prev { left: 12px; }
+  .carousel-btn--next { right: 12px; }
+  .carousel-dots { display: flex; justify-content: center; gap: 8px; padding: 12px 0 14px; background: var(--card); }
+  .carousel-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line); border: none; cursor: pointer; transition: background 0.2s, transform 0.2s; padding: 0; }
+  .carousel-dot.active { background: var(--yellow); transform: scale(1.3); }
+  .carousel-label { position: absolute; bottom: 46px; left: 0; right: 0; text-align: center; font-size: 0.75rem; color: rgba(255,255,255,0.6); letter-spacing: 0.06em; text-transform: uppercase; pointer-events: none; }
+</style>
+
+  <section class="page-hero">
+    <div class="page-hero__glow"><span class="g1"></span><span class="g2"></span></div>
+    <div class="container">
+      <a class="back-link" href="projects.html">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 7H3M6 3L2 7l4 4"/></svg>
+        Back to Projects
+      </a>
+      <span class="eyebrow eyebrow--blue">ESP32 &middot; LED Matrix &middot; Wi-Fi</span>
+      <h1>Wi-Fi Live Stock Ticker</h1>
+      <div class="detail-meta">
+        <span class="meta-tag">ESP32</span>
+        <span class="meta-tag">64&times;32 LED Matrix</span>
+        <span class="meta-tag">FMP API</span>
+        <span class="meta-tag">C++</span>
+        <span class="meta-tag">Web Server</span>
+        <span class="meta-tag">Embedded Systems</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="detail-hero-image has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+      <video src="assets/images/Stock%20Ticker/StockTickerFinalProduct.MP4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="detail-layout">
+      <div class="detail-body">
+
+        <h2>Why Build It?</h2>
+        <p>
+          A good friend of mine is studying finance and obsessively tracks stock prices.
+          I wanted to build something that sat on a desk and showed live market data without
+          needing a phone or browser open &mdash; something dedicated to the one job.
+          I also wanted an excuse to get into microcontrollers, which is a different world
+          from mechanical engineering and one I&rsquo;d been deliberately avoiding.
+        </p>
+        <p>
+          This project was my first serious dive into embedded systems. The combination of
+          real-time API calls, local network hosting, display driving, and physical packaging
+          all in one project gave me a complete crash course.
+        </p>
+
+        <h2>How It Works</h2>
+        <p>
+          Two 64&times;32 RGB LED matrix panels are wired in a chain and driven by an ESP32
+          microcontroller. On startup, the ESP32 connects to the local Wi-Fi network and
+          starts pulling ticker data from the Financial Modeling Prep (FMP) API &mdash; a
+          JSON payload containing price, change, and percent change for each requested symbol.
+        </p>
+        <p>
+          The display cycles through up to 10 configurable tickers, plus the current date
+          and time pulled from an NTP server. To change which tickers are shown, a user
+          navigates to the ESP32&rsquo;s local IP address in a browser: a minimal web server
+          running on the chip serves a configuration page where tickers can be set without
+          reflashing the firmware.
+        </p>
+
+        <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <img src="assets/images/Stock%20Ticker/StockTickerFinalWiring.jpg" alt="Final wiring — ESP32 and LED matrix panels">
+          </div>
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <img src="assets/images/Stock%20Ticker/StockTickerWebsiteIP.JPG" alt="Local web server — ticker configuration page on device IP">
+          </div>
+        </div>
+
+        <h2>Build Progression</h2>
+        <p>
+          Getting from a breadboard to a finished unit took a lot of incremental steps:
+          first getting one panel to light up, then two, then displaying readable text,
+          then pulling live data, then adding the clock, then adding brightness control.
+          Each feature revealed the next problem.
+        </p>
+
+        <div class="photo-carousel" id="ticker-carousel">
+          <div class="carousel-track" id="ticker-track">
+            <div class="carousel-slide">
+              <img src="assets/images/Stock%20Ticker/StockTickerIDEK.JPEG" alt="Early breadboard wiring stage">
+              <div class="carousel-label">Early stage — wiring chaos on the breadboard</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/images/Stock%20Ticker/StockTickerScreenTest.JPG" alt="First screen test — panels responding">
+              <div class="carousel-label">First screen test — panels alive</div>
+            </div>
+            <div class="carousel-slide">
+              <video src="assets/images/Stock%20Ticker/StockTickerFirstMultiColor.MP4" autoplay muted loop playsinline></video>
+              <div class="carousel-label">First multi-color output</div>
+            </div>
+            <div class="carousel-slide">
+              <video src="assets/images/Stock%20Ticker/StockTickerBigText.MP4" autoplay muted loop playsinline></video>
+              <div class="carousel-label">Text size and font testing</div>
+            </div>
+            <div class="carousel-slide">
+              <video src="assets/images/Stock%20Ticker/StockTickerAPISuccess.MP4" autoplay muted loop playsinline></video>
+              <div class="carousel-label">First successful live API call — real prices</div>
+            </div>
+            <div class="carousel-slide">
+              <video src="assets/images/Stock%20Ticker/StockTickerClockImplemented.MP4" autoplay muted loop playsinline></video>
+              <div class="carousel-label">Date and time display added</div>
+            </div>
+            <div class="carousel-slide">
+              <video src="assets/images/Stock%20Ticker/StockTickerDimmingAttempt.MP4" autoplay muted loop playsinline></video>
+              <div class="carousel-label">Working on brightness / dimming control</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/images/Stock%20Ticker/StockTickerWebsiteIP.JPG" alt="Web server configuration interface">
+              <div class="carousel-label">Local web server for ticker configuration</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/images/Stock%20Ticker/StockTickerFinalWiring.jpg" alt="Final wiring complete">
+              <div class="carousel-label">Final wiring — all cleaned up</div>
+            </div>
+            <div class="carousel-slide">
+              <video src="assets/images/Stock%20Ticker/StockTickerFinalProduct.MP4" autoplay muted loop playsinline></video>
+              <div class="carousel-label">Finished — live prices on the desk</div>
+            </div>
+          </div>
+          <button class="carousel-btn carousel-btn--prev" aria-label="Previous slide">&#8249;</button>
+          <button class="carousel-btn carousel-btn--next" aria-label="Next slide">&#8250;</button>
+          <div class="carousel-dots" id="ticker-dots"></div>
+        </div>
+
+        <h2>What&rsquo;s Next</h2>
+        <p>
+          The school year makes it hard to work on side projects, but there are a few things
+          I want to add: a weather display mode, a crypto ticker option, and possibly a
+          sports score feed. The web server configuration interface makes adding new display
+          modes relatively straightforward without touching the display hardware.
+        </p>
+
+      </div>
+
+      <aside class="detail-sidebar">
+        <div class="sidebar-card">
+          <h4>Hardware</h4>
+          <dl class="sidebar-row">
+            <dt>MCU</dt><dd>ESP32</dd>
+            <dt>Display</dt><dd>2&times; 64&times;32 RGB LED</dd>
+            <dt>Power</dt><dd>5V regulated</dd>
+          </dl>
+        </div>
+        <div class="sidebar-card">
+          <h4>Software</h4>
+          <dl class="sidebar-row">
+            <dt>API</dt><dd>FMP (Financial Modeling Prep)</dd>
+            <dt>Time</dt><dd>NTP server</dd>
+            <dt>Config</dt><dd>Local web server</dd>
+            <dt>Tickers</dt><dd>Up to 10, configurable</dd>
+          </dl>
+        </div>
+        <a class="btn-outline" href="projects.html">&larr; Projects</a>
+      </aside>
+    </div>
+  </div>
+
+<script>
+  (function () {
+    const carousel = document.getElementById('ticker-carousel');
+    if (!carousel) return;
+
+    const track   = document.getElementById('ticker-track');
+    const slides  = track.querySelectorAll('.carousel-slide');
+    const dotsEl  = document.getElementById('ticker-dots');
+    const btnPrev = carousel.querySelector('.carousel-btn--prev');
+    const btnNext = carousel.querySelector('.carousel-btn--next');
+
+    let current = 0;
+    let timer;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(dot);
+    });
+
+    function goTo(idx) {
+      slides[current].querySelector('video')?.pause();
+      current = (idx + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) =>
+        d.classList.toggle('active', i === current)
+      );
+      const vid = slides[current].querySelector('video');
+      if (vid) { vid.currentTime = 0; vid.play(); }
+      resetTimer();
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => goTo(current + 1), 4500);
+    }
+
+    btnPrev.addEventListener('click', () => goTo(current - 1));
+    btnNext.addEventListener('click', () => goTo(current + 1));
+
+    carousel.addEventListener('mouseenter', () => clearInterval(timer));
+    carousel.addEventListener('mouseleave', resetTimer);
+
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+    }, { passive: true });
+
+    resetTimer();
+  })();
+</script>
+
+__FOOTER__

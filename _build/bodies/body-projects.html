@@ -1,0 +1,409 @@
+__NAV__
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero__glow"><span class="g1"></span><span class="g2"></span></div>
+    <div class="container">
+      <span class="eyebrow eyebrow--yellow">Projects</span>
+      <h1>Built because I wanted to.</h1>
+      <p>
+        The projects I take on because I want to &mdash; from a daily-driver moped to an ESP32-powered
+        display and a from-scratch RC plane. Plus the earlier work that taught me CAD and fabrication
+        before I had formal training.
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURE: BOLT -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">BOLT Electric Race Motorcycle &middot; Oct 2022&ndash;Present</span>
+        <h3>Chassis Design, FEA &amp; Team President</h3>
+        <p>
+          I joined Virginia Tech's BOLT electric motorcycle race team as a chassis engineer,
+          designing and simulating the Emrax 248 (400kW) motor mount and switching its
+          material from steel to aluminum for 6 lbs of weight savings. My senior year I stepped
+          into the Admin Lead &amp; President role, leading a team of 100+ engineers with a
+          mid-five-figure build budget and growing membership from 55 to 120.
+        </p>
+        <a class="feature__link" href="detail-bolt.html">
+          Full BOLT write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
+        <div class="viewer">
+          <canvas id="bolt-canvas"></canvas>
+        </div>
+        <div class="viewer__hint" id="bolt-hint">
+          <span>3D MODEL VIEWER<br>Drop motor_asm.glb<br>into /models to display here</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: BOLT FAIRINGS -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">BOLT Electric Race Motorcycle &middot; Bodywork</span>
+        <h3>Fairing Design &amp; Carbon Fiber Fabrication</h3>
+        <p>
+          Alongside the chassis work, I took on primary ownership of BOLT VI's bodywork &mdash;
+          modeling the fairings in CAD, splitting them into printable sections, and carrying
+          each panel through 3D printing, wet carbon fiber layup, bonding, and paint.
+        </p>
+        <a class="feature__link" href="detail-bolt.html">
+          Full BOLT write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
+        <div class="viewer">
+          <canvas id="bolt-fairings-canvas"></canvas>
+        </div>
+        <div class="viewer__hint" id="bolt-fairings-hint">
+          <span>3D MODEL VIEWER<br>Drop fairings.glb<br>into /models to display here</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: MOPED -->
+  <section class="container">
+    <div class="feature feature--reverse">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--yellow">Summer 2024&ndash;Present</span>
+        <h3>1997 Honda Elite 50 &mdash; Moped Restoration</h3>
+        <p>
+          A few friends and I got hooked on building out mopeds as cheap, fun daily
+          transportation around campus. I picked up a non-running '97 Honda Elite 50 with
+          good mod potential and brought it back to life with a larger displacement head,
+          revised CVT gearing, and a performance exhaust. Since fall 2024, it's been my
+          everyday way to get to class.
+        </p>
+        <a class="feature__link" href="detail-moped.html">
+          Full moped write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <img src="assets/images/Moped/MopedGoodPhoto.JPG" alt="1997 Honda Elite 50 — restored moped">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: ESP32 TICKER -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">ESP32 &middot; RGB LED Matrix</span>
+        <h3>Wi-Fi Live Stock Ticker</h3>
+        <p>
+          Built for a friend studying finance, this display pairs two 64x32 RGB LED matrices
+          with an ESP32 to show live stock prices, the date, and the time. It pulls ticker
+          data from the FMP API, and a simple local web server lets you change which of up
+          to 10 tickers are shown. This was my first real dive into microcontrollers and a
+          deliberate departure from mechanical-only projects.
+        </p>
+        <a class="feature__link" href="detail-stock-ticker.html">
+          Full stock ticker write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <video src="assets/images/Stock%20Ticker/StockTickerFinalProduct.MP4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: POOL FENCE -->
+  <section class="container">
+    <div class="feature feature--reverse">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">Family Project</span>
+        <h3>Pool Equipment Fence with Pipe Avoidance</h3>
+        <p>
+          My parents' new house came with pool equipment sitting in plain view, and they
+          wanted it screened off without disturbing anything underground. I scanned the
+          existing foundation and modeled the known pipe runs so we could lay out fence
+          post locations that looked evenly spaced from every angle &mdash; without drilling
+          into anything we shouldn't.
+        </p>
+        <p>
+          Once the layout was dialed in on screen, my dad and I built the fence ourselves
+          and added shrubbery around it afterward to finish the look.
+        </p>
+        <a class="feature__link" href="detail-pool-fence.html">
+          Full pool fence write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <img src="assets/images/Pool%20Equipment%20Fence/PoolFinishedProduct.jpg" alt="Pool equipment fence — finished with shrubbery">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: HOKIEBIRD -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--yellow">Favorite Project</span>
+        <h3>Hokiebird 3D Scan to Statue</h3>
+        <p>
+          If you've spent any time around Virginia Tech, you've seen the Hokie statues that
+          sit outside local restaurants and shops. My parents love this mascot, so I scanned
+          one as a gift.
+        </p>
+        <p>
+          The scanning software kept losing tracking partway through, so I ended up with
+          five or six separate scans instead of one clean pass. I brought all of them into
+          Blender and manually stitched and smoothed the pieces back into a single statue.
+          After a 36-hour print, I had an 8" replica &mdash; my personal favorite project,
+          and one I've since reprinted and given to more than 40 friends and family.
+        </p>
+        <a class="feature__link" href="detail-hokiebird.html">
+          Full Hokiebird write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <img src="assets/images/HokieBirds/HokieArmy.JPG" alt="Army of 3D printed Hokiebird statues">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: RC CESSNA -->
+  <section class="container">
+    <div class="feature feature--reverse">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--yellow">Original Design &middot; RC / Aerospace</span>
+        <h3>RC Cessna 172 &mdash; 3D Printed Airplane</h3>
+        <p>
+          Most RC builds start from a kit; I wanted to design my own, loosely based on the
+          Cessna 172. The current version skips yaw control deliberately &mdash; my first
+          design, proving the rest of the airframe works before adding complexity. I
+          estimated center of gravity, lift force, and takeoff speed, and the CAD CG lines
+          up well with the physical model in the X/Y plane, though the 3D-printed build
+          shifted things slightly on the Z axis.
+        </p>
+        <a class="feature__link" href="detail-cessna.html">
+          Full Cessna write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
+        <div class="viewer">
+          <canvas id="cessna-canvas"></canvas>
+        </div>
+        <div class="viewer__hint" id="cessna-hint">
+          <span>3D MODEL VIEWER<br>Drop cessna.glb<br>into /models to display here</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: TIDY T-SHIRT FOLDER -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">Class Project &middot; Servo-Driven</span>
+        <h3>Tidy T-Shirt Folder</h3>
+        <p>
+          For a class challenge to design something that "makes college students' lives
+          easier," our team built a semi-automatic shirt folder with three folding flaps,
+          each driven by its own servo motor. I designed the folding mechanism and the
+          three-flap layout, and the working prototype successfully folded a shirt on its
+          first run, before any tuning.
+        </p>
+        <a class="feature__link" href="detail-tidy.html">
+          Full TIDY write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <img src="assets/images/Econ%20_TIDY_%20T-shirt%20Folder/TIDYBuilt.jpg" alt="TIDY semi-automatic t-shirt folder — completed prototype">
+      </div>
+    </div>
+  </section>
+
+  <!-- EARLIER WORK DIVIDER -->
+  <section class="section--tight" style="margin-top: 4rem;">
+    <div class="container">
+      <div class="section-head reveal" style="margin-bottom: 3rem;">
+        <span class="eyebrow eyebrow--blue">Earlier Work</span>
+        <h2>Where it started.</h2>
+        <p>
+          Modeling exercises, reverse-engineering practice, a backyard foundry, and projects
+          that taught me CAD and fabrication before I had formal training. Rougher around the
+          edges, but where it all started.
+        </p>
+      </div>
+
+      <div class="legacy-grid">
+
+        <!-- 1. 1994 ANNIVERSARY CASTING -->
+        <div class="legacy-card reveal">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><img src="assets/images/Older Projects/1994Final.JPG" alt="Finished aluminum casting — 1994 anniversary gift"></div>
+              <div class="carousel-slide"><img src="assets/images/Older Projects/FurnaceMk2.jpg" alt="Homemade foundry furnace Mk2"></div>
+              <div class="carousel-slide"><img src="assets/images/Older Projects/FurnaceOnFire.JPG" alt="Furnace running at temperature"></div>
+              <div class="carousel-slide"><video src="assets/images/Older Projects/CastingProcess.MOV" autoplay muted loop playsinline></video></div>
+              <div class="carousel-slide"><video src="assets/images/Older Projects/1994Pour.MOV" autoplay muted loop playsinline></video></div>
+              <div class="carousel-slide"><video src="assets/images/Older Projects/1994Reveal.MOV" autoplay muted loop playsinline></video></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots">
+                <span class="carousel-dot active"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+              </div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">7th Grade</span>
+            <h4>1994 Anniversary Casting</h4>
+            <p>
+              My parents got married in 1994. For their anniversary, my dad and I built a backyard
+              aluminum foundry from scratch &mdash; a custom-made forge and burner &mdash; and poured
+              molten aluminum into a negative sand mold shaped from a 3D print I designed. The result
+              was a solid aluminum piece representing that year, gifted to my mom.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. 3D PRINTED MODEL PISTON -->
+        <div class="legacy-card reveal reveal-delay-1">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><img src="assets/images/Older Projects/ModelPiston.png" alt="3D printed model piston — desk toy"></div>
+              <div class="carousel-slide"><video src="assets/images/Older Projects/3DprintedPiston.MOV" autoplay muted loop playsinline></video></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots">
+                <span class="carousel-dot active"></span>
+                <span class="carousel-dot"></span>
+              </div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">~8th Grade</span>
+            <h4>3D Printed Model Piston</h4>
+            <p>A desk-toy 4-stroke engine piston with pushrod-actuated intake and exhaust valves, built early on to learn the basics of CAD.</p>
+          </div>
+        </div>
+
+        <!-- 3. WIIII -->
+        <div class="legacy-card reveal reveal-delay-2">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><img src="assets/images/Older Projects/Wiiii.png" alt="Wii II (Wiiii) concept — game controller redesign"></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots"><span class="carousel-dot active"></span></div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">Freshman Year, High School</span>
+            <h4>Wii II (Wiiii) Game Console</h4>
+            <p>A freshman design assignment: reimagine a product for 2020. I gave the Wii Remote an adaptive display that changes with the game being played.</p>
+          </div>
+        </div>
+
+        <!-- 4. TURBOCHARGER -->
+        <div class="legacy-card reveal">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><img src="assets/images/Older Projects/Turbocharger.png" alt="Turbocharger cross-section CAD model"></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots"><span class="carousel-dot active"></span></div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">Learning Project</span>
+            <h4>Turbocharger</h4>
+            <p>A semi-accurate impeller and housing modeled with a cross-section to show the air-fluting of the impeller &mdash; pure CAD and turbo-fundamentals practice.</p>
+          </div>
+        </div>
+
+        <!-- 5. PELICAN BOX -->
+        <div class="legacy-card reveal reveal-delay-1">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><video src="assets/images/Older%20Projects/FINAL%20YAY.mov" autoplay muted loop playsinline></video></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots"><span class="carousel-dot active"></span></div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">Client Commission</span>
+            <h4>Pelican Box with Firearm Components</h4>
+            <p>A concept video and rough animation commissioned by a client to show how their product would be displayed inside a Pelican-style case.</p>
+          </div>
+        </div>
+
+        <!-- 6. ASSORTED -->
+        <div class="legacy-card reveal reveal-delay-2">
+          <div class="legacy-card__media has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <div class="card-carousel">
+              <div class="carousel-slide active"><img src="assets/images/Older Projects/Playground.png" alt="Playground CAD model"></div>
+              <div class="carousel-slide"><img src="assets/images/Older Projects/Zoo.png" alt="Zoo CAD model"></div>
+              <div class="carousel-slide"><img src="assets/images/Older Projects/PistonCAD.png" alt="Piston CAD model"></div>
+              <button class="carousel-btn carousel-prev" aria-label="Previous">&#8249;</button>
+              <button class="carousel-btn carousel-next" aria-label="Next">&#8250;</button>
+              <div class="carousel-dots">
+                <span class="carousel-dot active"></span>
+                <span class="carousel-dot"></span>
+                <span class="carousel-dot"></span>
+              </div>
+            </div>
+          </div>
+          <div class="legacy-card__body">
+            <span class="when">Various</span>
+            <h4>Assorted Early Models</h4>
+            <p>A grab bag of other models that don't have enough detail or utility to warrant their own card &mdash; ask if you're curious about any of them.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+__FOOTER__
+
+  <script type="module">
+    import { initViewer } from './js/viewer-init.js';
+    initViewer({
+      canvas: document.getElementById('bolt-canvas'),
+      hint: document.getElementById('bolt-hint'),
+      modelPath: 'models/motor_asm.glb',
+      accentColor: 0x0a84ff,
+      explode: true
+    });
+    initViewer({
+      canvas: document.getElementById('bolt-fairings-canvas'),
+      hint: document.getElementById('bolt-fairings-hint'),
+      modelPath: 'models/fairings.glb',
+      accentColor: 0xffd60a,
+      explode: true
+    });
+    initViewer({
+      canvas: document.getElementById('cessna-canvas'),
+      hint: document.getElementById('cessna-hint'),
+      modelPath: 'models/cessna.glb',
+      accentColor: 0xffd60a,
+      explode: true,
+      distanceScale: 2.3
+    });
+  </script>

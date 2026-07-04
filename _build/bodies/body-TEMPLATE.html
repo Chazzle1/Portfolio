@@ -1,0 +1,65 @@
+<!--
+  PAGE TEMPLATE — copy this file to add a new tab.
+
+  Steps:
+  1. Copy this file to _build/bodies/body-your-page.html
+  2. Edit the hero text and feature sections below
+  3. Add a line to the PAGES list in _build/build.py:
+       ("your-page.html", "Your Page Title — Your Name", "body-your-page.html"),
+  4. Add a nav link in _build/templates/_nav.html (desktop + mobile menu)
+     and in every other page's nav once rebuilt — or just ask Claude to
+     wire it up everywhere in one go.
+  5. From the portfolio/ folder, run: python3 _build/build.py
+     This regenerates every page (including this new one) as a
+     self-contained HTML file.
+-->
+__NAV__
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero__glow"><span class="g1"></span><span class="g2"></span></div>
+    <div class="container">
+      <span class="eyebrow eyebrow--yellow">Section Label</span>
+      <h1>Your headline goes here.</h1>
+      <p>
+        A short sub-headline describing what this page covers.
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURE EXAMPLE -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">Project Label</span>
+        <h3>Project title</h3>
+        <p>
+          Project description goes here. Keep it to one or two short
+          paragraphs for the best layout.
+        </p>
+      </div>
+      <!--
+        Placeholder visual. To use a real photo, replace the inner div
+        with:
+          <img src="assets/images/your-photo.jpg" alt="Description">
+        and add class="has-media" to the .feature__visual div below.
+      -->
+      <div class="feature__visual reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <div class="feature__visual-label">
+          <strong>Project Name</strong>
+          Photo or 3D viewer goes here
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!--
+    To add a grid of smaller items (like the Hendrick fixtures on the
+    Internships page), copy the .subgrid block from
+    _build/bodies/body-internships.html.
+
+    To add a card grid (like Older CAD), copy the .legacy-grid block
+    from the "Earlier Work" section of _build/bodies/body-projects.html.
+  -->
+
+__FOOTER__

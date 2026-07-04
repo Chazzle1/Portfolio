@@ -1,0 +1,173 @@
+__NAV__
+
+  <section class="page-hero">
+    <div class="page-hero__glow"><span class="g1"></span><span class="g2"></span></div>
+    <div class="container">
+      <a class="back-link" href="internships.html">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 7H3M6 3L2 7l4 4"/></svg>
+        Back to Internships
+      </a>
+      <span class="eyebrow eyebrow--yellow">Caterpillar Inc. &middot; May&ndash;Jul 2024</span>
+      <h1>Small Wheel Loader Structures</h1>
+      <div class="detail-meta">
+        <span class="meta-tag">Structural Design</span>
+        <span class="meta-tag">Sheet Metal</span>
+        <span class="meta-tag">FEA</span>
+        <span class="meta-tag">ISO Compliance</span>
+        <span class="meta-tag">Bolted Joint Analysis</span>
+        <span class="meta-tag">Siemens NX</span>
+        <span class="meta-tag">Clayton, NC</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="detail-hero-image has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+      <img src="assets/images/Internships/CaterpillarMeLWL.jpg" alt="Standing next to the 926 Small Wheel Loader" style="object-position: center 14%;">
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="detail-layout">
+      <div class="detail-body">
+
+        <h2>The Problem</h2>
+        <p>
+          The 926 Small Wheel Loader uses a cast-iron rear counterweight &mdash; expensive
+          to manufacture and a cost obstacle for a planned lower-price general-construction
+          variant of the machine. The goal was to develop a concrete-filled sheet-metal
+          alternative that preserved all of the original's functional requirements while
+          hitting a lower cost target.
+        </p>
+
+        <h2>Design Constraints</h2>
+        <p>
+          Before sketching anything, I mapped every constraint the new counterweight had to
+          satisfy simultaneously. Six drove every iteration:
+        </p>
+        <ul>
+          <li><strong>Departure angle</strong> &mdash; a minimum rearward ground clearance angle that protects the machine on slopes; non-negotiable</li>
+          <li><strong>Turning clearance</strong> &mdash; the counterweight cannot contact any frame or body component at full articulation</li>
+          <li><strong>Moment equivalence</strong> &mdash; must generate the same stabilizing counterbalance as the cast-iron part it replaces</li>
+          <li><strong>Component integration</strong> &mdash; taillights, reflectors, tow hitch, and battery access all had to be incorporated</li>
+          <li><strong>Mounting geometry</strong> &mdash; fastener layout and clamp load had to pass Caterpillar's internal bolted-joint standards</li>
+          <li><strong>Operator ergonomics</strong> &mdash; ISO 3411 5th-percentile reach envelope applied to any latches or access points on the bumper</li>
+        </ul>
+
+        <h2>Design Iterations</h2>
+        <p>
+          I ran three rounds of design reviews over the summer, producing nine concept variants
+          in total. Each round started with CAD, ran through a quick check against all six
+          constraints, and ended in a team meeting where senior engineers gave feedback that
+          drove the next iteration. The concepts progressively moved from blocky first-pass
+          geometry toward a cleaner, more efficient shape that satisfied every requirement.
+        </p>
+
+        <div class="photo-gallery">
+          <div class="gallery-tile"><img src="assets/images/Internships/Cat_Iter1.png" alt="Counterweight concept iteration 1 &mdash; early boxy geometry"></div>
+          <div class="gallery-tile"><img src="assets/images/Internships/Cat_Iter2.png" alt="Counterweight concept iteration 2 &mdash; wider profile after feedback"></div>
+          <div class="gallery-tile"><img src="assets/images/Internships/Cat_Iter3.png" alt="Counterweight concept iteration 3 &mdash; final design"></div>
+          <div class="gallery-tile"><img src="assets/images/Internships/Cat_CAD_Final.png" alt="926 Small Wheel Loader CAD model with concrete counterweight design"></div>
+        </div>
+
+        <h2>My Role</h2>
+        <p>
+          I owned the counterweight concept from initial sketches through eight full design
+          iterations, running design team meetings, presenting to senior engineers, and
+          carrying each concept through FEA and bolted-joint analysis before landing on
+          the final revision.
+        </p>
+        <ul>
+          <li>Developed nine sheet-metal concept variants, each evaluated against turning clearance, departure angle, center-of-mass moment, and interference with surrounding components</li>
+          <li>Ran linear and nonlinear FEA in Creo Simulate to validate structural performance under rated load cases</li>
+          <li>Performed bolted-joint analysis per internal CAT standards to confirm fastener selection and clamp load</li>
+          <li>Applied ISO 3411 operator-size ergonomics standards across the mounting geometry</li>
+          <li>Presented at weekly design reviews with the full structures team</li>
+        </ul>
+
+        <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <img src="assets/images/Internships/CaterpillarSWL.jpg" alt="Caterpillar 926 Small Wheel Loader">
+          </div>
+          <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <img src="assets/images/Internships/CaterpillarMe.jpg" alt="With the safety linkage part">
+          </div>
+        </div>
+
+        <h2>The Failure Investigation</h2>
+        <p>
+          Alongside the counterweight project, I investigated recurring failures in the
+          steering lockout link. The part was failing in the field at stresses well below
+          its rated capacity &mdash; something wasn't adding up.
+        </p>
+        <p>
+          My hypothesis: incorrect installation of the link/clevis pin assembly was generating
+          an unintended bending moment on the link that the part was never designed to carry.
+          I worked backward from hydraulic cylinder bore and pump pressure to calculate
+          peak in-service loads, then ran FEA in Creo Simulate to confirm buckling as the
+          actual failure mode under the misinstalled condition. The fix was a straightforward
+          assembly-process change.
+        </p>
+        <p>
+          The two simulations below tell the story directly: the correctly loaded link stays
+          well within its yield stress, while the misinstalled condition causes the bar to
+          bow and exceed yield across its full span.
+        </p>
+
+        <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <img src="assets/images/Internships/Cat_FEA_Control.png" alt="FEA control simulation &mdash; correct loading, link well within yield">
+          </div>
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <img src="assets/images/Internships/Cat_FEA_Incorrect.png" alt="FEA incorrect loading &mdash; link buckles and exceeds yield stress">
+          </div>
+        </div>
+
+        <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <img src="assets/images/Internships/CaterpillarSafetyLink.jpg" alt="The steering lockout link &mdash; isolated part and installed on machine">
+          </div>
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <img src="assets/images/Internships/Cat_LinkInstalled.jpeg" alt="Safety lockout link installed on the 926 SWL">
+          </div>
+        </div>
+
+        <h2>What I Learned</h2>
+        <p>
+          Caterpillar gave me my first real look at how design decisions get made when
+          nine engineers are in the room and the constraints don't all point in the same
+          direction. The counterweight project in particular taught me how to defend a
+          design decision &mdash; not just "the simulation says it passes" but understanding
+          enough of the why to explain it clearly to people with thirty years more experience.
+        </p>
+
+      </div>
+
+      <aside class="detail-sidebar">
+        <div class="sidebar-card">
+          <h4>Quick Facts</h4>
+          <dl class="sidebar-row">
+            <dt>Company</dt><dd>Caterpillar Inc.</dd>
+            <dt>Duration</dt><dd>May &ndash; Jul 2024 (10 wks)</dd>
+            <dt>Location</dt><dd>Clayton, NC</dd>
+            <dt>Team</dt><dd>Small Wheel Loader Structures</dd>
+            <dt>Software</dt><dd>Siemens NX, Creo Simulate, Teamcenter</dd>
+          </dl>
+        </div>
+        <div class="sidebar-card">
+          <h4>Key Deliverables</h4>
+          <dl class="sidebar-row">
+            <dt>Concepts</dt><dd>9 counterweight iterations across 3 review cycles</dd>
+            <dt>Analysis</dt><dd>FEA, bolted joint, ISO 3411 ergonomics</dd>
+            <dt>Investigation</dt><dd>Steering linkage failure root cause &amp; fix</dd>
+          </dl>
+        </div>
+        <a class="btn-outline" href="internships.html">
+          &larr; All Internships
+        </a>
+      </aside>
+
+    </div>
+  </div>
+
+__FOOTER__

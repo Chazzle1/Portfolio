@@ -1,0 +1,120 @@
+__NAV__
+
+  <section class="page-hero">
+    <div class="page-hero__glow"><span class="g1"></span><span class="g2"></span></div>
+    <div class="container">
+      <a class="back-link" href="projects.html">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 7H3M6 3L2 7l4 4"/></svg>
+        Back to Projects
+      </a>
+      <span class="eyebrow eyebrow--yellow">Original Design &middot; RC Airplane &middot; 2023&ndash;Present</span>
+      <h1>3D Printed RC Cessna 172</h1>
+      <div class="detail-meta">
+        <span class="meta-tag">SolidWorks</span>
+        <span class="meta-tag">FDM Printing</span>
+        <span class="meta-tag">RC Flight</span>
+        <span class="meta-tag">Aerodynamics</span>
+        <span class="meta-tag">CG Analysis</span>
+        <span class="meta-tag">Servo Control</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="detail-hero-image has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+      <img src="assets/images/3D%20Printed%20172%20Cessna/CessnaEarlyFuselage.JPG" alt="3D printed Cessna 172 RC airplane — assembled fuselage">
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="detail-layout">
+      <div class="detail-body">
+
+        <h2>Why Design One from Scratch?</h2>
+        <p>
+          When I got interested in RC planes, most builds start from a kit &mdash; a known-good
+          airframe someone else already designed, tested, and packaged up. I wanted something
+          harder. I based this design on the Cessna 172, one of the most widely flown aircraft
+          in the world, and modeled every component from the ground up in SolidWorks.
+        </p>
+        <p>
+          The school year has a habit of pushing the timeline out, but as of early 2024 the
+          airframe is nearly complete. The first version deliberately omits yaw control &mdash;
+          no rudder servo. The goal is to prove the rest of the airframe can fly before adding
+          more complexity.
+        </p>
+
+        <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <img src="assets/images/3D%20Printed%20172%20Cessna/CessnaEarlyCad.JPG" alt="Cessna 172 CAD model in SolidWorks — early version">
+          </div>
+          <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <img src="assets/images/3D%20Printed%20172%20Cessna/CessnaLabLiftCalcs.JPG" alt="Lift force, takeoff speed, and mass budget calculations">
+          </div>
+        </div>
+
+        <h2>The Engineering Behind It</h2>
+        <p>
+          I built a full mass budget for the plane in a spreadsheet: motor, prop, ESC, battery,
+          receiver, servos, and the printed structure itself. Tracking each component's actual
+          weight let me estimate the center of gravity before committing to final assembly.
+        </p>
+        <p>
+          From the mass model, I estimated wing loading, predicted lift at various airspeeds
+          using a simplified lift equation, and calculated a conservative stall and takeoff
+          speed. Some aerodynamic constants are estimates where direct measurement isn't
+          practical at this scale, but the numbers are consistent with comparable RC aircraft.
+        </p>
+        <p>
+          One known problem to solve before first flight: the CAD center of gravity matches the
+          physical model well in X and Y but drifts noticeably on the Z axis. 3D-printed infill
+          isn't perfectly uniform, and the internal fill pattern distributes mass differently
+          than the solid CAD model predicts. Ballast placement before flying will address this.
+        </p>
+
+        <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <video src="assets/images/3D%20Printed%20172%20Cessna/CessnaServoTest.MP4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+          </div>
+          <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <img src="assets/images/3D%20Printed%20172%20Cessna/ServoTest.GIF" alt="Servo deflection test on the control surfaces" style="width:100%;height:100%;object-fit:cover;display:block;">
+          </div>
+        </div>
+
+        <h2>What&rsquo;s Left</h2>
+        <p>
+          The ailerons and elevator are built and connected. Servo travel has been dialed in
+          and both surfaces deflect through the full range without binding. Remaining work
+          before a first flight attempt: CG ballast, final battery placement for trim, and
+          field range-check of the radio link. Once the baseline airframe is proven to fly,
+          a rudder servo will be the next addition.
+        </p>
+
+      </div>
+
+      <aside class="detail-sidebar">
+        <div class="sidebar-card">
+          <h4>Quick Facts</h4>
+          <dl class="sidebar-row">
+            <dt>Based on</dt><dd>Cessna 172</dd>
+            <dt>Software</dt><dd>SolidWorks</dd>
+            <dt>Material</dt><dd>FDM PLA</dd>
+            <dt>Control</dt><dd>Roll + Pitch</dd>
+            <dt>Yaw</dt><dd>Future version</dd>
+          </dl>
+        </div>
+        <div class="sidebar-card">
+          <h4>Drivetrain</h4>
+          <dl class="sidebar-row">
+            <dt>Motor</dt><dd>Brushless outrunner</dd>
+            <dt>Battery</dt><dd>3S LiPo</dd>
+            <dt>Servos</dt><dd>3 (ailerons + elevator)</dd>
+            <dt>Status</dt><dd>Near completion</dd>
+          </dl>
+        </div>
+        <a class="btn-outline" href="projects.html">&larr; Projects</a>
+      </aside>
+    </div>
+  </div>
+
+__FOOTER__

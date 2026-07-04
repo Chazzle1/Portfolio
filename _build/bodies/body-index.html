@@ -1,0 +1,594 @@
+__NAV__
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       HERO SECTION
+       Full-viewport opener with animated glow blobs and headline.
+       â”€ To change the headline: edit the <h1> text
+       â”€ To change the eyebrow line: edit the <p class="hero__eyebrow">
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <section class="hero">
+    <div class="hero__glow">
+      <span class="g1"></span>
+      <span class="g2"></span>
+    </div>
+    <p class="hero__eyebrow">Mechanical Engineering &middot; Virginia Tech &middot; Class of 2026</p>
+    <h1>Designs that go from <span class="accent-y">sketch</span> to <span class="accent-b">shop floor</span>.</h1>
+    <p>
+      I take projects from a rough idea to a finished, working part &mdash; scanning a statue
+      and reprinting it at scale, running FEA on a NASCAR motor mount, or wiring an ESP32
+      to drive an LED matrix. This is a collection of the work I'm proudest of.
+    </p>
+    <div class="hero__scroll">SCROLL<br>&darr;</div>
+  </section>
+
+  <!-- ABOUT -->
+  <section>
+    <div class="container">
+      <div class="about-grid">
+
+        <div class="about-photo reveal">
+          <div class="about-photo__frame">
+            <img src="assets/images/Headshot.jpeg" alt="Charlie Steinman">
+          </div>
+          <p class="about-photo__caption">Charlie Steinman &mdash; Blacksburg, VA</p>
+        </div>
+
+        <div class="about-content reveal reveal-delay-1">
+          <h2>I like building things that didn't exist before I started.</h2>
+
+          <p>
+            I'm a mechanical engineering student at Virginia Tech finishing an accelerated
+            master's program with a focus on <strong>metal additive manufacturing</strong>
+            &mdash; specifically laser powder bed fusion and directed energy deposition.
+            Day-to-day that means a lot of time in NX and Creo running structural simulations,
+            but it started much earlier: tearing apart a dead lawn mower to reverse-engineer
+            the piston, designing a model engine in 8th grade just to see if I could.
+          </p>
+
+          <p>
+            In the summers between semesters I've had the chance to do that for real &mdash;
+            nine concrete counterweight concepts at <strong>Caterpillar</strong> for a new
+            Small Wheel Loader, and component design for four <strong>Hendrick Motorsports</strong>
+            NASCAR Cup Series cars (5, 9, 24, and 48). Both internships pushed me to work
+            within real constraints — tolerances, schedules, supply chains — rather than
+            the relatively clean sandbox of class projects.
+          </p>
+
+          <p>
+            Outside of coursework I'm the president and a chassis engineer on <strong>Virginia
+            Tech's BOLT electric motorcycle team</strong>, a teaching assistant for sophomore
+            thermodynamics, and a competitive swimmer. On weekends I'm usually working
+            on something that has nothing to do with my thesis: moped engine mods, an RC
+            plane I designed from scratch, or an ESP32 project that started as a gift and
+            turned into a whole electronics rabbit hole.
+          </p>
+
+          <p>
+            Long-term I'm interested in how additive manufacturing changes what's
+            actually possible to build &mdash; topology-optimized structures, novel alloy
+            combinations, geometry that couldn't be cast or machined. I want to work at
+            the edge of what's manufacturable, wherever that happens to be.
+          </p>
+
+          <div class="about-facts">
+            <div class="about-fact">
+              <div class="fact-label">Based in</div>
+              <div class="fact-value">Blacksburg / Ashburn, VA</div>
+            </div>
+            <div class="about-fact">
+              <div class="fact-label">Program</div>
+              <div class="fact-value">B.S./M.S. Mechanical Eng.</div>
+            </div>
+            <div class="about-fact">
+              <div class="fact-label">Focus</div>
+              <div class="fact-value">Metal Additive Mfg.</div>
+            </div>
+            <div class="about-fact">
+              <div class="fact-label">Graduating</div>
+              <div class="fact-value">May 2026</div>
+            </div>
+            <div class="about-fact">
+              <div class="fact-label">GPA</div>
+              <div class="fact-value">3.70</div>
+            </div>
+            <div class="about-fact">
+              <div class="fact-label">Hobbies</div>
+              <div class="fact-value">Mopeds, RC, Swimming</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       CURRENTLY WORKING ON STRIP
+       Continuous scrolling ticker showing active projects.
+       â”€ To add an item: copy one .wip-item block (including its duplicate)
+         and update the dot color, label, and project name.
+       â”€ Items are duplicated so the loop is seamless &mdash; always keep
+         two identical halves inside .wip-track.
+       â”€ To change scroll speed: edit animation duration in CSS section 19.
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <div class="wip-strip">
+    <div class="wip-track">
+      <!-- First copy -->
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--blue);"></span>
+        <span class="wip-label">Retired</span>
+        BOLT 6 Electric Race Motorcycle
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--blue);"></span>
+        <span class="wip-label">Upcoming</span>
+        Northrop Grumman &mdash; Summer 2026
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--yellow);"></span>
+        <span class="wip-label">In Progress</span>
+        RC Cessna 172 &mdash; First Flight Prep
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--blue);"></span>
+        <span class="wip-label">Active</span>
+        Thermodynamics TA &mdash; Spring 2026
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--yellow);"></span>
+        <span class="wip-label">Ongoing</span>
+        Metal Additive Manufacturing Research
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--blue);"></span>
+        <span class="wip-label">Research</span>
+        1991&ndash;95 Land Rover Defender 90
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--yellow);"></span>
+        <span class="wip-label">Growing</span>
+        MakerWorld / Printables Shop
+      </span>
+      <!-- Duplicate copy for seamless loop -->
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--blue);"></span>
+        <span class="wip-label">Active</span>
+        BOLT 6 Electric Race Motorcycle
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--blue);"></span>
+        <span class="wip-label">Upcoming</span>
+        Northrop Grumman &mdash; Summer 2026
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--yellow);"></span>
+        <span class="wip-label">In Progress</span>
+        RC Cessna 172 &mdash; First Flight Prep
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--blue);"></span>
+        <span class="wip-label">Active</span>
+        Thermodynamics TA &mdash; Spring 2026
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--yellow);"></span>
+        <span class="wip-label">Ongoing</span>
+        Metal Additive Manufacturing Research
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--blue);"></span>
+        <span class="wip-label">Research</span>
+        1991&ndash;95 Land Rover Defender 90
+      </span>
+      <span class="wip-item">
+        <span class="wip-dot" style="background: var(--yellow);"></span>
+        <span class="wip-label">Growing</span>
+        MakerWorld / Printables Shop
+      </span>
+    </div>
+  </div>
+
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       BY THE NUMBERS
+       â”€ data-count-to : the final number to count up to
+       â”€ data-suffix   : text appended after the number (optional)
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <section class="stats">
+    <div class="container stats__grid">
+      <div class="stat reveal">
+        <div class="num"><span data-count-to="9">0</span></div>
+        <div class="label">counterweight concepts developed at Caterpillar</div>
+      </div>
+      <div class="stat reveal reveal-delay-1">
+        <div class="num"><span data-count-to="100" data-suffix="+">0</span></div>
+        <div class="label">NASCAR Cup Series parts inspected for compliance</div>
+      </div>
+      <div class="stat reveal reveal-delay-2">
+        <div class="num"><span data-count-to="36" data-suffix=" hr">0</span></div>
+        <div class="label">print time for the scanned Hokiebird statue</div>
+      </div>
+      <div class="stat reveal reveal-delay-3">
+        <div class="num"><span data-count-to="40" data-suffix="+">0</span></div>
+        <div class="label">Hokiebird replicas printed and gifted</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       FEATURE ROWS &mdash; one per section of the site.
+       â”€ To swap sides: add/remove class "feature--reverse"
+       â”€ To add a photo: replace the .feature__visual-label div with
+         <img src="assets/images/name.jpg" alt="...">
+         and add class "has-media" to the .feature__visual div.
+       â”€ To embed a video: replace with .video-wrap + iframe (see CSS Â§20).
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+
+  <section class="container">
+    <div class="feature feature--reverse">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">Internships</span>
+        <h3>Built for the shop floor.</h3>
+        <p>
+          Cleanroom satellite assembly at Northrop Grumman (Cygnus ISS resupply), structural
+          design and FEA at Caterpillar (Small Wheel Loader counterweight), and component
+          design for Hendrick Motorsports NASCAR Cup Series cars 5, 9, 24, and 48.
+        </p>
+        <a class="feature__link" href="internships.html">
+          Explore Internships
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <div class="feature-carousel">
+          <div class="fc-slide active"><img src="assets/images/Internships/HendrickLeMans.JPG" alt="Hendrick Motorsports #24 car at Le Mans"></div>
+          <div class="fc-slide"><img src="assets/images/Internships/CaterpillarMeLWL.jpg" alt="Caterpillar Small Wheel Loader internship"></div>
+          <div class="fc-slide"><img src="assets/images/Northrop%20internship%20images/NG23.jpg" alt="Northrop Grumman internship"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--yellow">Projects</span>
+        <h3>Built because I wanted to.</h3>
+        <p>
+          A '97 Honda Elite 50 brought back from non-running to daily-driver, an ESP32 stock
+          ticker with two RGB LED matrices, an original RC Cessna 172 design, FEA work on the
+          BOLT electric race motorcycle's motor mount, and a backyard aluminum foundry &mdash;
+          plus the earlier modeling exercises that taught me CAD before any of it was formal.
+        </p>
+        <a class="feature__link" href="projects.html">
+          Explore Projects
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <div class="feature-carousel">
+          <div class="fc-slide active"><img src="assets/images/Moped/MopedGoodPhoto.JPG" alt="1997 Honda Elite 50 moped"></div>
+          <div class="fc-slide"><img src="assets/images/BOLT/BOLTVI_Upright.jpeg" alt="BOLT VI electric motorcycle"></div>
+          <div class="fc-slide"><img src="assets/images/3D%20Printed%20172%20Cessna/CessnaEarlyFuselage.JPG" alt="3D printed RC Cessna 172 fuselage"></div>
+          <div class="fc-slide"><img src="assets/images/Stock%20Ticker/StockTickerFinalWiring.jpg" alt="Wi-Fi stock ticker wiring"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--yellow">Print &amp; Buy</span>
+        <h3>Take a piece home.</h3>
+        <p>
+          A growing collection of 3D-printable designs on MakerWorld, Printables, Thingiverse,
+          and Etsy &mdash; including the Hokiebird that's now on 40+ shelves. Files, finished
+          prints, and custom orders all available.
+        </p>
+        <a class="feature__link" href="shop.html">
+          Visit Print &amp; Buy
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <div class="feature-carousel">
+          <div class="fc-slide active"><img src="assets/images/HokieBirds/HokieArmy.JPG" alt="Army of printed Hokiebird statues"></div>
+          <div class="fc-slide"><img src="assets/images/HokieBirds/HokiesPrinted.JPG" alt="Freshly printed Hokiebirds"></div>
+          <div class="fc-slide"><img src="assets/images/HokieBirds/HokieSunBurnt.jpg" alt="Hokiebird in sunburst orange"></div>
+          <div class="fc-slide"><img src="assets/images/HokieBirds/HokieFirstColorful.jpg" alt="First colorful Hokiebird print"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- TIMELINE -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow eyebrow--blue">Journey</span>
+        <h2>The story so far.</h2>
+      </div>
+
+      <div class="timeline-h">
+
+        <!-- 1. VT Enrolled (above) → about.html -->
+        <a class="tl-h-col reveal" href="index.html">
+          <div class="tl-h-top">
+            <div class="tl-h-card">
+              <div class="tl-h-kicker">Fall &#39;22 &middot; Education</div>
+              <div class="tl-h-name">Enrolled at VT</div>
+              <div class="tl-h-sub">Mechanical Engineering</div>
+            </div>
+          </div>
+          <div class="tl-h-dot-wrap"><div class="tl-h-dot" style="background: var(--yellow);"></div></div>
+          <div class="tl-h-bottom"></div>
+        </a>
+
+        <!-- 2. BOLT joined (below) -->
+        <a class="tl-h-col reveal reveal-delay-1" href="detail-bolt.html">
+          <div class="tl-h-top"></div>
+          <div class="tl-h-dot-wrap"><div class="tl-h-dot" style="background: var(--yellow);"></div></div>
+          <div class="tl-h-bottom">
+            <div class="tl-h-card">
+              <div class="tl-h-kicker">Oct &#39;22 &middot; Project</div>
+              <div class="tl-h-name">Joined BOLT</div>
+              <div class="tl-h-sub">Chassis Engineer</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- 3. Hendrick (above) -->
+        <a class="tl-h-col reveal tl-internship" href="detail-hendrick.html">
+          <div class="tl-h-top">
+            <div class="tl-h-card">
+              <div class="tl-h-kicker">Sum &#39;23 &middot; Internship</div>
+              <div class="tl-h-name">Hendrick Motorsports</div>
+              <div class="tl-h-sub">NASCAR Cup Series</div>
+            </div>
+          </div>
+          <div class="tl-h-dot-wrap"><div class="tl-h-dot" style="background: var(--blue);"></div></div>
+          <div class="tl-h-bottom"></div>
+        </a>
+
+        <!-- 4. Caterpillar (below) -->
+        <a class="tl-h-col reveal reveal-delay-1 tl-internship" href="detail-caterpillar.html">
+          <div class="tl-h-top"></div>
+          <div class="tl-h-dot-wrap"><div class="tl-h-dot" style="background: var(--blue);"></div></div>
+          <div class="tl-h-bottom">
+            <div class="tl-h-card">
+              <div class="tl-h-kicker">Sum &#39;24 &middot; Internship</div>
+              <div class="tl-h-name">Caterpillar</div>
+              <div class="tl-h-sub">Small Wheel Loader</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- 5. Northrop '25 (above) -->
+        <a class="tl-h-col reveal tl-internship" href="detail-northrop.html">
+          <div class="tl-h-top">
+            <div class="tl-h-card">
+              <div class="tl-h-kicker">Sum &#39;25 &middot; Internship</div>
+              <div class="tl-h-name">Northrop Grumman</div>
+              <div class="tl-h-sub">Cygnus ISS Resupply</div>
+            </div>
+          </div>
+          <div class="tl-h-dot-wrap"><div class="tl-h-dot" style="background: var(--blue);"></div></div>
+          <div class="tl-h-bottom"></div>
+        </a>
+
+        <!-- 6. BOLT Admin/President (below) -->
+        <a class="tl-h-col reveal reveal-delay-1" href="detail-bolt.html">
+          <div class="tl-h-top"></div>
+          <div class="tl-h-dot-wrap"><div class="tl-h-dot" style="background: var(--yellow);"></div></div>
+          <div class="tl-h-bottom">
+            <div class="tl-h-card">
+              <div class="tl-h-kicker">Fall &#39;25 &middot; Leadership</div>
+              <div class="tl-h-name">BOLT President</div>
+              <div class="tl-h-sub">55&rarr;120 members</div>
+            </div>
+          </div>
+        </a>
+
+        <!-- 7. VT Graduation (above) → about.html -->
+        <a class="tl-h-col reveal" href="index.html">
+          <div class="tl-h-top">
+            <div class="tl-h-card">
+              <div class="tl-h-kicker">May &#39;26 &middot; Education</div>
+              <div class="tl-h-name">Graduated VT</div>
+              <div class="tl-h-sub">Class of 2026</div>
+            </div>
+          </div>
+          <div class="tl-h-dot-wrap"><div class="tl-h-dot" style="background: var(--yellow);"></div></div>
+          <div class="tl-h-bottom"></div>
+        </a>
+
+        <!-- 8. Northrop '26 (below) -->
+        <a class="tl-h-col reveal reveal-delay-1 tl-internship" href="detail-northrop.html">
+          <div class="tl-h-top"></div>
+          <div class="tl-h-dot-wrap"><div class="tl-h-dot" style="background: var(--blue);"></div></div>
+          <div class="tl-h-bottom">
+            <div class="tl-h-card">
+              <div class="tl-h-kicker">Sum &#39;26 &middot; Internship</div>
+              <div class="tl-h-name">Northrop Grumman</div>
+              <div class="tl-h-sub">Cygnus ISS Resupply</div>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       SKILLS / PROFICIENCY BARS
+       â”€ data-pct sets the fill width (percentage, 0&ndash;100%)
+       â”€ Bar colors alternate yellow/blue via CSS nth-child
+       â”€ To add a skill: copy one .skill-bar-row and set data-pct
+       â”€ Labels on the left are plain text &mdash; edit freely
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow eyebrow--yellow">Skills</span>
+        <h2>Tools of the trade.</h2>
+      </div>
+
+      <div class="tools__grid" style="grid-template-columns: repeat(4, 1fr);">
+
+        <div class="tools__group reveal">
+          <h4>CAD &amp; Simulation</h4>
+          <div class="pill-row">
+            <span class="pill">Siemens NX</span>
+            <span class="pill">Teamcenter</span>
+            <span class="pill">Creo Parametric</span>
+            <span class="pill">Creo Simulate</span>
+            <span class="pill">SOLIDWORKS</span>
+            <span class="pill">Fusion 360</span>
+            <span class="pill">AutoCAD</span>
+            <span class="pill">Inventor</span>
+          </div>
+        </div>
+
+        <div class="tools__group reveal reveal-delay-1">
+          <h4>Shop &amp; Fabrication</h4>
+          <div class="pill-row">
+            <span class="pill">FDM / PBF Additive</span>
+            <span class="pill">3-Axis CNC</span>
+            <span class="pill">Mill / Lathe</span>
+            <span class="pill">MIG Welding</span>
+            <span class="pill">TIG Welding</span>
+            <span class="pill">Stick Welding</span>
+            <span class="pill">Laser / Water Cutting</span>
+            <span class="pill">Metal Casting</span>
+            <span class="pill">Woodworking</span>
+          </div>
+        </div>
+
+        <div class="tools__group reveal reveal-delay-2">
+          <h4>Analysis</h4>
+          <div class="pill-row">
+            <span class="pill">FEA (Linear &amp; NL)</span>
+            <span class="pill">Bolted Joint Analysis</span>
+            <span class="pill">GD&amp;T</span>
+            <span class="pill">3D Scanning &amp; Mesh</span>
+            <span class="pill">ISO Standards</span>
+            <span class="pill">Structural Analysis</span>
+          </div>
+        </div>
+
+        <div class="tools__group reveal reveal-delay-3">
+          <h4>Code &amp; Electronics</h4>
+          <div class="pill-row">
+            <span class="pill">MATLAB</span>
+            <span class="pill">C / C++</span>
+            <span class="pill">Java</span>
+            <span class="pill">Arduino / ESP32</span>
+            <span class="pill">Microsoft Office</span>
+            <span class="pill">Google Workspace</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section">
+    <div class="container">
+
+      <div class="section-head reveal">
+        <span class="eyebrow eyebrow--blue">Contact</span>
+        <h2>Let's talk.</h2>
+        <p>
+          Whether it's a job opportunity, a collab, a custom print, or just a question
+          about a project — drop me a line.
+        </p>
+      </div>
+
+      <div class="contact-grid">
+
+        <div class="contact-links reveal">
+
+          <a class="contact-link" href="mailto:csteinman@vt.edu">
+            <div class="cl-icon">✉</div>
+            <div class="cl-text">
+              <div class="cl-label">Email</div>
+              <div class="cl-value">csteinman@vt.edu</div>
+            </div>
+            <svg class="cl-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+
+          <a class="contact-link" href="https://www.linkedin.com/in/charlessteinman" target="_blank" rel="noopener">
+            <div class="cl-icon">in</div>
+            <div class="cl-text">
+              <div class="cl-label">LinkedIn</div>
+              <div class="cl-value">linkedin.com/in/charlessteinman</div>
+            </div>
+            <svg class="cl-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+
+          <a class="contact-link" href="resume.html">
+            <div class="cl-icon">↓</div>
+            <div class="cl-text">
+              <div class="cl-label">Resume</div>
+              <div class="cl-value">View or download PDF</div>
+            </div>
+            <svg class="cl-arrow" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+          </a>
+
+        </div>
+
+        <div class="reveal reveal-delay-1">
+          <form class="contact-form" id="contact-form" action="#" method="POST">
+
+            <div class="form-group">
+              <label for="cf-name">Your name</label>
+              <input type="text" id="cf-name" name="name" placeholder="Jane Smith" required>
+            </div>
+
+            <div class="form-group">
+              <label for="cf-email">Email</label>
+              <input type="email" id="cf-email" name="email" placeholder="jane@example.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="cf-subject">Subject</label>
+              <input type="text" id="cf-subject" name="subject" placeholder="Internship opportunity / custom print / etc.">
+            </div>
+
+            <div class="form-group">
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" name="message" placeholder="Tell me what's on your mind..." required></textarea>
+            </div>
+
+            <button type="submit" class="form-submit">
+              Send message
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+            </button>
+
+          </form>
+          <p id="form-status" style="margin-top: 1rem; font-size: 0.9rem;"></p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <script>
+    document.querySelectorAll('.feature-carousel').forEach(function(carousel) {
+      var slides = carousel.querySelectorAll('.fc-slide');
+      if (slides.length < 2) return;
+      var current = 0;
+      setInterval(function() {
+        slides[current].classList.remove('active');
+        current = (current + 1) % slides.length;
+        slides[current].classList.add('active');
+      }, 3500);
+    });
+  </script>
+
+__FOOTER__

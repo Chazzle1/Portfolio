@@ -1,0 +1,296 @@
+__NAV__
+
+<style>
+  /* ── PHOTO CAROUSEL ─────────────────────────────────────────── */
+  .photo-carousel {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--card);
+    border: 1px solid var(--line);
+    margin: 2rem 0;
+  }
+
+  .carousel-track {
+    display: flex;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .carousel-slide {
+    flex: 0 0 100%;
+    min-width: 0;
+    position: relative;
+    background: var(--card);
+  }
+
+  .carousel-slide img,
+  .carousel-slide video {
+    display: block;
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    border-radius: 0;
+  }
+
+  @media (max-width: 760px) {
+    .carousel-slide img,
+    .carousel-slide video { height: 260px; }
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(10,10,10,0.72);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: #fff;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    transition: background 0.2s, border-color 0.2s;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .carousel-btn:hover { background: var(--yellow); border-color: var(--yellow); color: #000; }
+  .carousel-btn--prev { left: 12px; }
+  .carousel-btn--next { right: 12px; }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 0 14px;
+    background: var(--card);
+  }
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--line);
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+    padding: 0;
+  }
+  .carousel-dot.active {
+    background: var(--yellow);
+    transform: scale(1.3);
+  }
+  .carousel-label {
+    position: absolute;
+    bottom: 46px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+</style>
+
+  <section class="page-hero">
+    <div class="page-hero__glow"><span class="g1"></span><span class="g2"></span></div>
+    <div class="container">
+      <a class="back-link" href="3d-scans.html">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 7H3M6 3L2 7l4 4"/></svg>
+        Back to 3D Scans
+      </a>
+      <span class="eyebrow eyebrow--yellow">3D Scanning &amp; Printing &middot; 2023&ndash;Present</span>
+      <h1>Hokiebird Mascot Statue</h1>
+      <div class="detail-meta">
+        <span class="meta-tag">3D Scanning</span>
+        <span class="meta-tag">Photogrammetry</span>
+        <span class="meta-tag">Blender</span>
+        <span class="meta-tag">FDM Printing</span>
+        <span class="meta-tag">Multi-Color</span>
+        <span class="meta-tag">Blacksburg, VA</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="detail-hero-image has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+      <img src="assets/images/HokieBirds/HokieArmy.JPG" alt="Army of 3D printed Hokiebird statues">
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="detail-layout">
+      <div class="detail-body">
+
+        <h2>Where It Started</h2>
+        <p>
+          The Hokiebird statues scattered around the Virginia Tech campus were always a
+          recognizable piece of VT identity. I wanted one — but not a cheap souvenir
+          knockoff. I wanted something that was actually accurate to the real sculpture.
+          So I scanned one.
+        </p>
+        <p>
+          Using photogrammetry, I captured the geometry of an actual campus Hokiebird statue,
+          stitched the mesh together in Blender, fixed up the topology, and printed a
+          test copy. Then a second. Then a bunch more.
+        </p>
+
+        <!-- ── IMAGE CAROUSEL ── -->
+        <div class="photo-carousel" id="hokie-carousel">
+          <div class="carousel-track" id="hokie-track">
+            <div class="carousel-slide">
+              <img src="assets/images/HokieBirds/HokieInspiration.jpg" alt="The original campus Hokiebird statue — inspiration for the scan">
+              <div class="carousel-label">The original — scanned on campus</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/images/HokieBirds/HokieUnSmoothed.JPG" alt="Early print — unsmoothed mesh">
+              <div class="carousel-label">First print — raw mesh, no post-processing</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/images/HokieBirds/HokieSunBurnt.jpg" alt="Sunburnt Hokiebird">
+              <div class="carousel-label">Lesson learned about UV exposure and PLA</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/images/HokieBirds/HokieFirstColorful.jpg" alt="First multi-color Hokiebird print">
+              <div class="carousel-label">First colorful version</div>
+            </div>
+            <div class="carousel-slide">
+              <video src="assets/images/HokieBirds/HokiesPrinting.MP4" autoplay muted loop playsinline></video>
+              <div class="carousel-label">Mid-print — watching the layers stack up</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/images/HokieBirds/HokiesPrinted.JPG" alt="Finished Hokiebird prints">
+              <div class="carousel-label">A finished batch fresh off the printer</div>
+            </div>
+            <div class="carousel-slide">
+              <video src="assets/images/HokieBirds/HokieBirdPrintTimelapse.mp4" autoplay muted loop playsinline></video>
+              <div class="carousel-label">Timelapse — 36+ hour print condensed</div>
+            </div>
+            <div class="carousel-slide">
+              <img src="assets/images/HokieBirds/HokieArmy.JPG" alt="Army of Hokiebird prints">
+              <div class="carousel-label">The army grows</div>
+            </div>
+          </div>
+          <button class="carousel-btn carousel-btn--prev" aria-label="Previous slide">&#8249;</button>
+          <button class="carousel-btn carousel-btn--next" aria-label="Next slide">&#8250;</button>
+          <div class="carousel-dots" id="hokie-dots"></div>
+        </div>
+
+        <h2>The Process</h2>
+        <p>
+          Getting a clean printable mesh from photogrammetry isn't as automatic as it sounds.
+          The initial scan had holes, overlapping geometry, and noise artifacts around the base.
+          I cleaned all of that up in Blender — retopologizing the problem areas, filling holes,
+          and smoothing surfaces that should be smooth while preserving the detail in the feathers
+          and face.
+        </p>
+        <p>
+          Print settings went through several iterations too. The early PLA prints looked good
+          indoors but warped and discolored in direct sunlight. I switched to PETG for better
+          UV and heat resistance, and tuned wall thickness and infill to balance print time
+          against structural rigidity at 8 inches tall.
+        </p>
+
+        <h2>More Than 40 In Homes</h2>
+        <p>
+          What started as a one-off for my own shelf has turned into a running small project.
+          Classmates, friends, and VT alumni have bought copies — at this point there are 40+
+          of these statues out in the world. Each one takes about 36 hours on the printer.
+          The multi-color version, using an AMS system to swap filament mid-print, adds another
+          layer of fidelity to the maroon-and-orange color scheme.
+        </p>
+        <p>
+          Available on MakerWorld and Printables as a free download if you have your own printer,
+          or as a finished print through the shop.
+        </p>
+
+      </div>
+
+      <aside class="detail-sidebar">
+        <div class="sidebar-card">
+          <h4>Quick Facts</h4>
+          <dl class="sidebar-row">
+            <dt>Source</dt><dd>Photogrammetry scan</dd>
+            <dt>Post-processing</dt><dd>Blender mesh cleanup</dd>
+            <dt>Material</dt><dd>PETG (recommended)</dd>
+            <dt>Print time</dt><dd>~36 hrs at 8"</dd>
+            <dt>Units out</dt><dd>40+</dd>
+          </dl>
+        </div>
+        <div class="sidebar-card">
+          <h4>Available</h4>
+          <dl class="sidebar-row">
+            <dt>File</dt><dd>MakerWorld, Printables</dd>
+            <dt>Finished print</dt><dd>Shop page</dd>
+          </dl>
+        </div>
+        <a class="btn-outline" href="3d-scans.html">&larr; All 3D Scans</a>
+      </aside>
+    </div>
+  </div>
+
+<script>
+  (function () {
+    const carousel = document.getElementById('hokie-carousel');
+    if (!carousel) return;
+
+    const track  = document.getElementById('hokie-track');
+    const slides = track.querySelectorAll('.carousel-slide');
+    const dotsEl = document.getElementById('hokie-dots');
+    const btnPrev = carousel.querySelector('.carousel-btn--prev');
+    const btnNext = carousel.querySelector('.carousel-btn--next');
+
+    let current = 0;
+    let timer;
+
+    // Build dots
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      dot.addEventListener('click', () => goTo(i));
+      dotsEl.appendChild(dot);
+    });
+
+    function goTo(idx) {
+      slides[current].querySelector('video')?.pause();
+      current = (idx + slides.length) % slides.length;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dotsEl.querySelectorAll('.carousel-dot').forEach((d, i) =>
+        d.classList.toggle('active', i === current)
+      );
+      const vid = slides[current].querySelector('video');
+      if (vid) { vid.currentTime = 0; vid.play(); }
+      resetTimer();
+    }
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(() => goTo(current + 1), 4500);
+    }
+
+    btnPrev.addEventListener('click', () => goTo(current - 1));
+    btnNext.addEventListener('click', () => goTo(current + 1));
+
+    // Pause on hover
+    carousel.addEventListener('mouseenter', () => clearInterval(timer));
+    carousel.addEventListener('mouseleave', resetTimer);
+
+    // Touch swipe support
+    let touchStartX = 0;
+    carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    carousel.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+    }, { passive: true });
+
+    resetTimer();
+  })();
+</script>
+
+__FOOTER__

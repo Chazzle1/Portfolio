@@ -1,0 +1,84 @@
+__NAV__
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero__glow"><span class="g1"></span><span class="g2"></span></div>
+    <div class="container">
+      <span class="eyebrow eyebrow--yellow">3D Scans</span>
+      <h1>Scan it. Stitch it. Print it.</h1>
+      <p>
+        Two projects that start the same way &mdash; pointing a scanner at something real
+        &mdash; and end very differently: a backyard fence built around existing plumbing,
+        and a miniature statue scanned, stitched, and reprinted from scratch.
+      </p>
+    </div>
+  </section>
+
+  <!-- FEATURE: POOL FENCE -->
+  <section class="container">
+    <div class="feature">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--blue">Family Project</span>
+        <h3>Pool Equipment Fence with Pipe Avoidance</h3>
+        <p>
+          My parents' new house came with pool equipment sitting in plain view, and they
+          wanted it screened off without disturbing anything underground. I scanned the
+          existing foundation and modeled the known pipe runs so we could lay out fence
+          post locations that looked evenly spaced from every angle &mdash; without drilling
+          into anything we shouldn't.
+        </p>
+        <p>
+          Once the layout was dialed in on screen, my dad and I built the fence ourselves
+          and added shrubbery around it afterward to finish the look.
+        </p>
+        <a class="feature__link" href="detail-pool-fence.html">
+          Full pool fence write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <img src="assets/images/Pool%20Equipment%20Fence/PoolFinishedProduct.jpg" alt="Pool equipment fence — finished with shrubbery">
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE: HOKIEBIRD -->
+  <section class="container">
+    <div class="feature feature--reverse">
+      <div class="feature__content reveal">
+        <span class="eyebrow eyebrow--yellow">Favorite Project</span>
+        <h3>Hokiebird 3D Scan to Statue</h3>
+        <p>
+          If you've spent any time around Virginia Tech, you've seen the Hokie statues that
+          sit outside local restaurants and shops. My parents love this mascot, so I scanned
+          one as a gift.
+        </p>
+        <p>
+          The scanning software kept losing tracking partway through, so I ended up with
+          five or six separate scans instead of one clean pass. I brought all of them into
+          Blender and manually stitched and smoothed the pieces back into a single statue.
+          After a 36-hour print, I had an 8" replica &mdash; my personal favorite project,
+          and one I've since reprinted and given to more than 40 friends and family.
+        </p>
+        <a class="feature__link" href="detail-hokiebird.html">
+          Full Hokiebird write-up
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <img src="assets/images/HokieBirds/HokieArmy.JPG" alt="Army of 3D printed Hokiebird statues">
+      </div>
+    </div>
+  </section>
+
+__FOOTER__
+
+  <script type="module">
+    import { initViewer } from './js/viewer-init.js';
+    initViewer({
+      canvas: document.getElementById('hokiebird-canvas'),
+      hint: document.getElementById('hokiebird-hint'),
+      modelPath: 'models/hokiebird.glb',
+      accentColor: 0xffd60a
+    });
+  </script>

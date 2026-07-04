@@ -1,0 +1,207 @@
+__NAV__
+
+  <!-- PAGE HERO ──────────────────────────────────────────────────────────────
+       Same structure as every other sub-page hero. The glow colors are
+       intentionally swapped (g1=blue, g2=yellow) to give this page a
+       slightly different feel from the engineering pages. -->
+  <section class="page-hero">
+    <div class="page-hero__glow">
+      <span class="g1" style="background: var(--blue);"></span>
+      <span class="g2" style="background: var(--yellow);"></span>
+    </div>
+    <div class="container">
+      <span class="eyebrow eyebrow--blue">Print &amp; Buy</span>
+      <h1>Take a piece home.</h1>
+      <p>
+        A growing collection of 3D-printable designs available on Makerworld,
+        Printables, and MakerWorld &mdash; or order a finished print directly
+        from me. Every model here is something I designed for a real purpose
+        and then cleaned up to share.
+      </p>
+    </div>
+  </section>
+
+
+  <section class="section--tight">
+    <div class="container">
+
+      <!-- PLATFORM LINKS ──────────────────────────────────────────────────────
+           Quick-access pill buttons linking to your profile on each platform.
+
+           TO ADD A PLATFORM:
+             1. Copy one .platform-pill block below.
+             2. Update href to your profile URL.
+             3. Set --accent to a color that matches that platform's brand.
+             4. Update .platform-name and .platform-handle text.
+
+           TO REMOVE A PLATFORM: just delete that .platform-pill block.
+
+           Current platform accent colors used:
+             MakerWorld  : #ff6d00  (orange)
+             Printables  : #fa6831  (orange-red)
+             Thingiverse : #248bfb  (blue)
+             Etsy        : #f1641e  (orange-red)
+           ────────────────────────────────────────────────────────────────── -->
+      <div class="section-head reveal">
+        <span class="eyebrow eyebrow--yellow">Platforms</span>
+        <h2>Find me on these platforms.</h2>
+        <p>All listings are available on at least one of the platforms below.
+           Some models are free; paid listings help offset filament and design time.</p>
+      </div>
+
+      <div class="shop-platforms reveal">
+
+        <a class="platform-pill" href="#" target="_blank" rel="noopener"
+           style="--accent: #ff6d00;">
+          <span class="platform-dot"></span>
+          <span class="platform-name">MakerWorld</span>
+          <span class="platform-handle">@yourhandle</span>
+        </a>
+
+        <a class="platform-pill" href="#" target="_blank" rel="noopener"
+           style="--accent: #fa6831;">
+          <span class="platform-dot"></span>
+          <span class="platform-name">Printables</span>
+          <span class="platform-handle">@yourhandle</span>
+        </a>
+
+        <a class="platform-pill" href="#" target="_blank" rel="noopener"
+           style="--accent: #248bfb;">
+          <span class="platform-dot"></span>
+          <span class="platform-name">Thingiverse</span>
+          <span class="platform-handle">@yourhandle</span>
+        </a>
+
+        <a class="platform-pill" href="#" target="_blank" rel="noopener"
+           style="--accent: #f1641e;">
+          <span class="platform-dot"></span>
+          <span class="platform-name">Etsy</span>
+          <span class="platform-handle">YourShopName</span>
+        </a>
+
+      </div>
+
+      <!-- LISTINGS GRID ───────────────────────────────────────────────────────
+           One .listing-card per model/product you sell or share.
+
+           TO ADD A LISTING:
+             1. Copy one .listing-card block.
+             2. Update the title, description, and .listing-card__links.
+             3. To add a photo: replace the <span> inside .listing-card__media
+                with <img src="assets/images/your-photo.jpg" alt="...">
+                and add class="has-media" to .listing-card__media.
+             4. Set --glow-a / --glow-b on .listing-card__media for the glow color.
+             5. In each platform link, set --accent to that platform's color.
+                Only include platforms the model is actually listed on.
+
+           TO REMOVE A LISTING: delete the whole .listing-card block.
+           ────────────────────────────────────────────────────────────────── -->
+      <div class="section-head reveal" style="margin-top: 4rem;">
+        <span class="eyebrow eyebrow--blue">Models &amp; Prints</span>
+        <h2>Available now.</h2>
+        <p>Printable files, finished prints, and limited collectibles.</p>
+      </div>
+
+      <div class="listings-grid">
+
+        <!-- LISTING 1: HOKIEBIRD STATUE ───────────────────────── -->
+        <div class="listing-card reveal">
+          <div class="listing-card__media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <!-- TO ADD A PHOTO:
+                 Replace this <span> with:
+                 <img src="assets/images/shop-hokiebird.jpg" alt="Hokiebird statue print">
+                 and add class="has-media" to the .listing-card__media div above -->
+            <span>Hokiebird Statue<br>Photo coming soon</span>
+          </div>
+          <div class="listing-card__body">
+            <h4>Hokiebird Mascot Statue</h4>
+            <p>
+              8" replica of the Hokie bird statues found around the Virginia Tech area.
+              Scanned from the real thing, stitched in Blender, and test-printed over
+              36 hours. 40+ in homes already. Recommended in PETG or PLA+ for best detail.
+            </p>
+            <div class="listing-card__links">
+              <a href="#" target="_blank" rel="noopener" style="--accent: #ff6d00;">
+                <span class="btn-dot"></span>MakerWorld
+              </a>
+              <a href="#" target="_blank" rel="noopener" style="--accent: #fa6831;">
+                <span class="btn-dot"></span>Printables
+              </a>
+              <a href="#" target="_blank" rel="noopener" style="--accent: #f1641e;">
+                <span class="btn-dot"></span>Etsy (finished print)
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTING 2: PLACEHOLDER — duplicate and fill in when ready ── -->
+        <div class="listing-card reveal reveal-delay-1">
+          <div class="listing-card__media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <span>Coming soon</span>
+          </div>
+          <div class="listing-card__body">
+            <h4>Next Design</h4>
+            <p>
+              More models coming as I design and clean them up for sharing.
+              Follow me on MakerWorld or Printables to get notified when new
+              files drop.
+            </p>
+            <div class="listing-card__links">
+              <a href="#" target="_blank" rel="noopener" style="--accent: #ff6d00;">
+                <span class="btn-dot"></span>Follow on MakerWorld
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- LISTING 3: PLACEHOLDER ─────────────────────────────────── -->
+        <div class="listing-card reveal reveal-delay-2">
+          <div class="listing-card__media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <span>Coming soon</span>
+          </div>
+          <div class="listing-card__body">
+            <h4>More designs inbound</h4>
+            <p>
+              I have several functional and decorative designs in the queue.
+              Custom requests welcome &mdash; see below.
+            </p>
+            <div class="listing-card__links">
+              <a href="#" target="_blank" rel="noopener" style="--accent: #248bfb;">
+                <span class="btn-dot"></span>Follow on Thingiverse
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- end .listings-grid -->
+
+
+      <!-- CUSTOM PRINT CTA ─────────────────────────────────────────────────
+           Full-width call-to-action for visitors who want something not
+           in the existing listings — custom one-off prints, file conversions,
+           scan-to-print requests, etc.
+
+           TO UPDATE: edit the text below. The email link uses your normal
+           email — update the href if yours is different from what's in
+           the footer template. -->
+      <div class="custom-cta reveal" style="margin-top: 3rem;">
+        <div class="custom-cta__text">
+          <h3>Need something custom?</h3>
+          <p>
+            Have a part you need printed, a scan you'd like cleaned up, or
+            something you've seen on this site that you want a copy of? I
+            take on occasional custom print requests &mdash; just send me a
+            message with what you're after and I'll let you know if it's
+            something I can do.
+          </p>
+        </div>
+        <a class="btn-yellow" href="mailto:csteinman@vt.edu">
+          Request a print
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+__FOOTER__
