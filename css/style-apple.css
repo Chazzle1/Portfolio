@@ -1434,6 +1434,9 @@ button:focus-visible {
 
 @media (max-width: 760px) {
   .about-grid { grid-template-columns: 1fr; }
+  /* Sticky is a two-column-layout trick — in a single stacked column it just
+     pins the photo in place while the bio text scrolls up over it. */
+  .about-photo { position: static; top: auto; }
 }
 
 .about-photo {
