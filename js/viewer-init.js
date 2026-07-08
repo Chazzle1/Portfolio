@@ -16,7 +16,7 @@ export function initViewer({ canvas, hint, modelPath, accentColor = 0xffd60a, ex
 
   const scene = new THREE.Scene();
 
-  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 1000);
+  const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 5000);
   camera.position.set(2.2, 1.6, 2.2);
 
   const controls = new OrbitControls(camera, canvas);
@@ -25,7 +25,7 @@ export function initViewer({ canvas, hint, modelPath, accentColor = 0xffd60a, ex
   controls.autoRotate = true;
   controls.autoRotateSpeed = 0.8;
   controls.minDistance = 0.5;
-  controls.maxDistance = 20;
+  controls.maxDistance = 20; // widened per-model in frameObject() once the real size is known
 
   const key = new THREE.DirectionalLight(0xffffff, 2.2);
   key.position.set(4, 6, 4);
@@ -55,6 +55,11 @@ export function initViewer({ canvas, hint, modelPath, accentColor = 0xffd60a, ex
     obj.position.sub(center);
     const maxDim = Math.max(size.x, size.y, size.z) || 1;
     const dist = maxDim * distanceScale;
+    // OrbitControls' min/maxDistance default to a small fixed range that only
+    // suits small models — rescale it to this model's actual size, or larger
+    // models silently get clamped in tight regardless of distanceScale.
+    controls.minDistance = maxDim * 0.1;
+    controls.maxDistance = Math.max(20, dist * 4);
     camera.position.set(dist, dist * 0.7, dist);
     controls.target.set(0, 0, 0);
     controls.update();
@@ -135,27 +140,46 @@ export function initViewer({ canvas, hint, modelPath, accentColor = 0xffd60a, ex
     if (hint) hint.style.display = 'flex';
   }
 
-  if (modelPath) {
-    const loader = new GLTFLoader();
-    loader.load(
-      modelPath,
-      (gltf) => {
-        if (hint) hint.style.display = 'none';
-        const root = gltf.scene;
-        if (explode) setupExplode(root);
-        scene.add(root);
-        activeObject = root;
-        frameObject(root);
-      },
-      undefined,
-      () => showPlaceholder()
-    );
-  } else {
-    showPlaceholder();
+  // Model files can be tens of MB (see fairings.glb) — don't fetch/parse them
+  // until the viewer is actually about to scroll into view.
+  let modelRequested = false;
+  function loadModel() {
+    if (modelRequested) return;
+    modelRequested = true;
+    if (modelPath) {
+      const loader = new GLTFLoader();
+      loader.load(
+        modelPath,
+        (gltf) => {
+          if (hint) hint.style.display = 'none';
+          const root = gltf.scene;
+          if (explode) setupExplode(root);
+          scene.add(root);
+          activeObject = root;
+          frameObject(root);
+        },
+        undefined,
+        () => showPlaceholder()
+      );
+    } else {
+      showPlaceholder();
+    }
   }
+
+  // Also skip the render loop entirely while off-screen — an auto-rotating
+  // model re-renders every frame forever otherwise, even scrolled away.
+  let isVisible = false;
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      isVisible = entry.isIntersecting;
+      if (isVisible) loadModel();
+    });
+  }, { rootMargin: '400px 0px' });
+  io.observe(canvas);
 
   function animate() {
     requestAnimationFrame(animate);
+    if (!isVisible) return;
     resize();
     controls.update();
     updateExplode();

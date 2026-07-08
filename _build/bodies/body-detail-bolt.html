@@ -7,7 +7,7 @@ __NAV__
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 7H3M6 3L2 7l4 4"/></svg>
         Back to Projects
       </a>
-      <span class="eyebrow eyebrow--yellow">BOLT Electric Motorcycle Team &middot; Oct 2022&ndash;Present</span>
+      <span class="eyebrow eyebrow--yellow">BOLT Electric Motorcycle Team &middot; Oct 2022&ndash;May 2026</span>
       <h1>BOLT VI Electric Race Motorcycle</h1>
       <div class="detail-meta">
         <span class="meta-tag">Chassis Engineering</span>
@@ -15,14 +15,15 @@ __NAV__
         <span class="meta-tag">Carbon Fiber</span>
         <span class="meta-tag">FEA</span>
         <span class="meta-tag">SolidWorks</span>
+        <span class="meta-tag">Fabrication</span>
         <span class="meta-tag">Blacksburg, VA</span>
       </div>
     </div>
   </section>
 
   <div class="container">
-    <div class="detail-hero-image has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
-      <img src="assets/images/BOLT/BOLTVI_Upright.jpeg" alt="BOLT VI electric race motorcycle — upright view">
+    <div class="detail-hero-image has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue); aspect-ratio: 3/4;">
+      <img src="assets/images/BOLT/BOLTVI_Upright.jpeg" alt="Charlie Steinman sitting on the BOLT VI electric race motorcycle">
     </div>
   </div>
 
@@ -32,16 +33,17 @@ __NAV__
 
         <h2>The Team</h2>
         <p>
-          Virginia Tech's BOLT (Built on Lightning Technology) team designs, builds, and
+          Virginia Tech's BOLT (Battery Operated Land Transport) team designs, builds, and
           races an electric motorcycle from the ground up each year, competing in events
           including the TTXGP and similar electric racing series. Every subsystem &mdash;
           frame, suspension, battery pack, motor controller, fairings &mdash; is engineered
           and fabricated by students.
         </p>
         <p>
-          I joined as a chassis engineer responsible for the structural design of BOLT VI's
-          frame and suspension geometry, and took on primary ownership of the bodywork &mdash;
-          designing, printing, laying up, and finishing every fairing panel on the bike.
+          I joined as a chassis engineer working on the Emrax 248 (400kW) motor and its mount,
+          along with various electronic housing components and simulation work on miscellaneous
+          parts. I also helped extensively with construction, picking up hands-on fabrication
+          skills along the way &mdash; waterjet cutting, CNC milling, and more.
         </p>
 
         <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
@@ -53,12 +55,13 @@ __NAV__
           </div>
         </div>
 
-        <h2>Admin Lead &amp; President</h2>
+        <h2>Admin Lead</h2>
         <p>
-          My senior year I stepped back from the build floor to run the team itself &mdash;
-          serving as Administrative Lead and Team President. That meant owning recruiting,
-          community outreach, safety compliance, and all of the organizational infrastructure
-          behind a 100+ person student engineering team.
+          My senior year I was promoted to Admin Lead (President). The role meant owning
+          recruiting, community outreach, safety compliance, and all of the organizational
+          infrastructure behind a 100+ person student engineering team, but I stayed involved
+          in engineering decisions throughout rather than stepping away from the technical
+          side entirely.
         </p>
 
         <div class="stat-card-grid">
@@ -100,25 +103,46 @@ __NAV__
           schedule.
         </p>
 
+        <!-- EHS / compliance photos coming in a later push:
         <div class="photo-gallery">
-          <div class="gallery-tile" style="cursor: default;"></div>
-          <div class="gallery-tile" style="cursor: default;"></div>
-          <div class="gallery-tile" style="cursor: default;"></div>
-          <div class="gallery-tile" style="cursor: default;"></div>
+          <div class="gallery-tile"><img src="assets/images/BOLT/your-photo.jpg" alt="..."></div>
+          <div class="gallery-tile"><img src="assets/images/BOLT/your-photo.jpg" alt="..."></div>
+          <div class="gallery-tile"><img src="assets/images/BOLT/your-photo.jpg" alt="..."></div>
+          <div class="gallery-tile"><img src="assets/images/BOLT/your-photo.jpg" alt="..."></div>
         </div>
+        -->
 
-        <h2>Chassis Design</h2>
         <p>
-          The frame is a tubular steel trellis design, optimized for torsional rigidity and
-          ease of repair in a competition environment. My work included establishing the
-          suspension geometry (rake, trail, swingarm pivot height), sizing the main frame
-          members using hand calculations and FEA, and ensuring the battery pack and motor
-          could be integrated without compromising center of mass targets.
+          Designing the fairings became my senior design project. I chose to take it on
+          specifically because of my dedication to the team, and because it meant designing
+          for fluid dynamics and CFD for the first time &mdash; a discipline I hadn't worked
+          in before this bike.
         </p>
         <p>
-          Livery was designed in parallel with the body panels so graphics and surface splits
-          could be planned together before any printing started.
+          CFD analysis showed the fairings increased downforce by 150% while drag rose just
+          3%, despite the added frontal area &mdash; modeled at 200 mph, well above anything
+          the bike can actually reach, to keep margin in the numbers. On track, BOLT VI has
+          hit a real top speed of 165 mph and does 0&ndash;60 in 2.3 seconds.
         </p>
+
+        <div class="stat-card-grid">
+          <div class="stat-card-item">
+            <div class="stat-card-num">+150%</div>
+            <div class="stat-card-label">Downforce (CFD)</div>
+          </div>
+          <div class="stat-card-item">
+            <div class="stat-card-num">+3%</div>
+            <div class="stat-card-label">Drag (CFD)</div>
+          </div>
+          <div class="stat-card-item">
+            <div class="stat-card-num">165 mph</div>
+            <div class="stat-card-label">Top Speed (Track)</div>
+          </div>
+          <div class="stat-card-item">
+            <div class="stat-card-num">2.3s</div>
+            <div class="stat-card-label">0&ndash;60 mph</div>
+          </div>
+        </div>
 
         <div class="photo-carousel">
           <div class="pc-track">
@@ -148,6 +172,34 @@ __NAV__
           <div class="pc-dots"></div>
         </div>
 
+        <h2>Interactive 3D Models</h2>
+        <p>
+          Both the motor mount and the fairing bodywork started as CAD assemblies before
+          any material was cut or printed. Drag either model to rotate it, or move your
+          mouse across it to explode the assembly into its individual parts.
+        </p>
+
+        <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+            <div class="viewer">
+              <canvas id="bolt-canvas"></canvas>
+            </div>
+            <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
+            <div class="viewer__hint" id="bolt-hint">
+              <span>3D MODEL VIEWER<br>Drop motor_asm.glb<br>into /models to display here</span>
+            </div>
+          </div>
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <div class="viewer">
+              <canvas id="bolt-fairings-canvas"></canvas>
+            </div>
+            <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
+            <div class="viewer__hint" id="bolt-fairings-hint">
+              <span>3D MODEL VIEWER<br>Drop fairings.glb<br>into /models to display here</span>
+            </div>
+          </div>
+        </div>
+
         <h2>3D Printing the Fairings</h2>
         <p>
           The bodywork was modeled in CAD and split into printable sections &mdash; each piece
@@ -169,7 +221,7 @@ __NAV__
               <div class="pc-label">Tail piece</div>
             </div>
             <div class="pc-slide">
-              <video src="assets/images/BOLT/FairingTimelapse.mp4" autoplay muted loop playsinline></video>
+              <video src="assets/images/BOLT/FairingTimelapse.mp4" muted loop playsinline preload="none"></video>
               <div class="pc-label">Fairing print timelapse</div>
             </div>
           </div>
@@ -335,7 +387,7 @@ __NAV__
               <div class="pc-label">Fairings in the paint booth</div>
             </div>
             <div class="pc-slide">
-              <video src="assets/images/BOLT/Painting.MOV" autoplay muted loop playsinline></video>
+              <video src="assets/images/BOLT/Painting.MOV" muted loop playsinline preload="none"></video>
               <div class="pc-label">Applying the color coat</div>
             </div>
             <div class="pc-slide">
@@ -441,11 +493,11 @@ __NAV__
           </dl>
         </div>
         <div class="sidebar-card">
-          <h4>Chassis Focus</h4>
+          <h4>Motor Mount</h4>
           <dl class="sidebar-row">
-            <dt>Frame</dt><dd>Tubular steel trellis</dd>
-            <dt>Suspension</dt><dd>Geometry &amp; sizing</dd>
-            <dt>Analysis</dt><dd>Torsional stiffness, FEA</dd>
+            <dt>Motor</dt><dd>Emrax 248 (400kW)</dd>
+            <dt>Material</dt><dd>Steel &rarr; Aluminum</dd>
+            <dt>Result</dt><dd>6 lbs saved</dd>
           </dl>
         </div>
         <a class="btn-outline" href="projects.html">
@@ -456,3 +508,21 @@ __NAV__
   </div>
 
 __FOOTER__
+
+  <script type="module">
+    import { initViewer } from './js/viewer-init.js';
+    initViewer({
+      canvas: document.getElementById('bolt-canvas'),
+      hint: document.getElementById('bolt-hint'),
+      modelPath: 'models/motor_asm.glb',
+      accentColor: 0x0a84ff,
+      explode: true
+    });
+    initViewer({
+      canvas: document.getElementById('bolt-fairings-canvas'),
+      hint: document.getElementById('bolt-fairings-hint'),
+      modelPath: 'models/fairings.glb',
+      accentColor: 0xffd60a,
+      explode: true
+    });
+  </script>

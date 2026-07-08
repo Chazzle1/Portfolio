@@ -19,7 +19,7 @@
    9.  TOOLS / SKILLS PILLS
    10. SUBGRID CARDS (small item grid, e.g. Hendrick fixtures)
    11. LEGACY GRID CARDS (Older CAD page)
-   12. SHOP PAGE (Print & Buy — Makerworld / Etsy / etc.)
+   12. SHOP PAGE (Files / Prints — Makerworld / Etsy / etc.)
    13. RESUME TIMELINE
    14. FOOTER
    15. SCROLL REVEAL ANIMATION
@@ -99,8 +99,10 @@
 }
 
 /* Smooth anchor scrolling (e.g. # links). Disabled for users who prefer
-   reduced motion — see the @media block at the bottom of this file. */
-html { scroll-behavior: smooth; }
+   reduced motion — see the @media block at the bottom of this file.
+   scroll-padding-top keeps the fixed nav bar from covering the top of
+   whatever section a #anchor link jumps to. */
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
 
 body {
   background: var(--bg);
@@ -250,6 +252,58 @@ button:focus-visible {
 .nav__links a.active,
 .mobile-menu a.active { color: var(--text); }
 
+/* ── Hover dropdown for nav items with sub-pages (Internships, Projects) ──
+   .nav__item stretches to the full nav height (align-self: stretch) so
+   .nav__dropdown's "top: 100%" lands exactly at the nav bar's bottom edge
+   instead of partway down inside it. Shows on hover (and :focus-within for
+   keyboard nav); disappears as soon as the mouse leaves the item+dropdown. */
+.nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-self: stretch;
+}
+
+.nav__dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  min-width: 210px;
+  padding: 0.5rem;
+  background: rgba(20, 20, 22, 0.9);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+
+.nav__item:hover .nav__dropdown,
+.nav__item:focus-within .nav__dropdown {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav__dropdown a {
+  padding: 0.55rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.nav__dropdown a:hover { background: rgba(255, 255, 255, 0.07); }
+
 /* Hamburger button — hidden on desktop, shown on mobile */
 .nav__toggle {
   display: none;
@@ -370,7 +424,7 @@ button:focus-visible {
   font-weight: 700;
   letter-spacing: -0.04em; /* tighter spacing on large display text = more polish */
   line-height: 1.04;
-  max-width: 16ch; /* prevents line from stretching too wide */
+  max-width: min(16ch, 80vw); /* prevents line from stretching too wide, but never wider than the viewport */
 }
 
 /* Colored accent words in the headline */
@@ -384,7 +438,7 @@ button:focus-visible {
   margin-top: 1.5rem;
   font-size: clamp(1.05rem, 2.4vw, 1.4rem);
   color: var(--text-dim);
-  max-width: 46ch;
+  max-width: min(46ch, 85vw);
   font-weight: 400;
 }
 
@@ -455,7 +509,7 @@ button:focus-visible {
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.08;
-  max-width: 18ch;
+  max-width: min(18ch, 80vw);
 }
 
 .page-hero p {
@@ -464,7 +518,7 @@ button:focus-visible {
   margin-top: 1.25rem;
   font-size: clamp(1.05rem, 2.2vw, 1.3rem);
   color: var(--text-dim);
-  max-width: 46ch;
+  max-width: min(46ch, 85vw);
 }
 
 
@@ -661,6 +715,8 @@ button:focus-visible {
   gap: 2.5rem;
 }
 
+.tools__grid--4col { grid-template-columns: repeat(4, 1fr); }
+
 .tools__group h4 {
   font-size: 1.05rem;
   font-weight: 600;
@@ -838,7 +894,7 @@ button:focus-visible {
 
 
 /* ==========================================================================
-   12. SHOP PAGE — Print & Buy
+   12. SHOP PAGE — Files / Prints
    Platform link cards, a listing card grid for individual models,
    and a "request a custom print" call-to-action section.
    ========================================================================== */
@@ -1234,7 +1290,10 @@ button:focus-visible {
   .feature--reverse .feature__content { order: initial; }
 }
 
-/* Tools grid: 3 col → 1 col below 760px */
+/* Tools grid: 3/4 col → 2 col below 900px → 1 col below 760px */
+@media (max-width: 900px) {
+  .tools__grid--4col { grid-template-columns: repeat(2, 1fr); }
+}
 @media (max-width: 760px) {
   .tools__grid { grid-template-columns: 1fr; gap: 2.25rem; }
 }

@@ -4,6 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>__TITLE__</title>
+  <meta name="description" content="__DESC__" />
+
+  <!-- Favicon — gradient dot mark, matches the nav logo -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Social preview (Open Graph + Twitter Card) — controls how the link
+       looks when pasted into LinkedIn, Slack, iMessage, etc.
+       TODO: once this is deployed, add an og:url tag with the live domain, AND
+       change og:image / twitter:image below to a full absolute URL
+       (https://your-domain/assets/images/og-image.png) — most platforms
+       (LinkedIn, Facebook, etc.) won't reliably load a relative image path. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Charlie Steinman" />
+  <meta property="og:title" content="__TITLE__" />
+  <meta property="og:description" content="__DESC__" />
+  <meta property="og:image" content="assets/images/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="__TITLE__" />
+  <meta name="twitter:description" content="__DESC__" />
+  <meta name="twitter:image" content="assets/images/og-image.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">

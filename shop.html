@@ -3,7 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Print & Buy — Charlie Steinman</title>
+  <title>Files / Prints — Charlie Steinman</title>
+  <meta name="description" content="Mechanical engineering portfolio of Charlie Steinman — Virginia Tech, Class of 2026. CAD, FEA, carbon fiber fabrication, and embedded systems projects, from an electric race motorcycle to a 3D-printed RC aircraft." />
+
+  <!-- Favicon — gradient dot mark, matches the nav logo -->
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Social preview (Open Graph + Twitter Card) — controls how the link
+       looks when pasted into LinkedIn, Slack, iMessage, etc.
+       TODO: once this is deployed, add an og:url tag with the live domain, AND
+       change og:image / twitter:image below to a full absolute URL
+       (https://your-domain/assets/images/og-image.png) — most platforms
+       (LinkedIn, Facebook, etc.) won't reliably load a relative image path. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Charlie Steinman" />
+  <meta property="og:title" content="Files / Prints — Charlie Steinman" />
+  <meta property="og:description" content="Mechanical engineering portfolio of Charlie Steinman — Virginia Tech, Class of 2026. CAD, FEA, carbon fiber fabrication, and embedded systems projects, from an electric race motorcycle to a 3D-printed RC aircraft." />
+  <meta property="og:image" content="assets/images/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Files / Prints — Charlie Steinman" />
+  <meta name="twitter:description" content="Mechanical engineering portfolio of Charlie Steinman — Virginia Tech, Class of 2026. CAD, FEA, carbon fiber fabrication, and embedded systems projects, from an electric race motorcycle to a 3D-printed RC aircraft." />
+  <meta name="twitter:image" content="assets/images/og-image.png" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -29,7 +54,7 @@
        9.  TOOLS / SKILLS PILLS
        10. SUBGRID CARDS (small item grid, e.g. Hendrick fixtures)
        11. LEGACY GRID CARDS (Older CAD page)
-       12. SHOP PAGE (Print & Buy — Makerworld / Etsy / etc.)
+       12. SHOP PAGE (Files / Prints — Makerworld / Etsy / etc.)
        13. RESUME TIMELINE
        14. FOOTER
        15. SCROLL REVEAL ANIMATION
@@ -109,8 +134,10 @@
     }
 
     /* Smooth anchor scrolling (e.g. # links). Disabled for users who prefer
-       reduced motion — see the @media block at the bottom of this file. */
-    html { scroll-behavior: smooth; }
+       reduced motion — see the @media block at the bottom of this file.
+       scroll-padding-top keeps the fixed nav bar from covering the top of
+       whatever section a #anchor link jumps to. */
+    html { scroll-behavior: smooth; scroll-padding-top: var(--nav-h); }
 
     body {
       background: var(--bg);
@@ -260,6 +287,58 @@
     .nav__links a.active,
     .mobile-menu a.active { color: var(--text); }
 
+    /* ── Hover dropdown for nav items with sub-pages (Internships, Projects) ──
+       .nav__item stretches to the full nav height (align-self: stretch) so
+       .nav__dropdown's "top: 100%" lands exactly at the nav bar's bottom edge
+       instead of partway down inside it. Shows on hover (and :focus-within for
+       keyboard nav); disappears as soon as the mouse leaves the item+dropdown. */
+    .nav__item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      align-self: stretch;
+    }
+
+    .nav__dropdown {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      min-width: 210px;
+      padding: 0.5rem;
+      background: rgba(20, 20, 22, 0.9);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateX(-50%) translateY(-6px);
+      transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+    }
+
+    .nav__item:hover .nav__dropdown,
+    .nav__item:focus-within .nav__dropdown {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .nav__dropdown a {
+      padding: 0.55rem 0.9rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      white-space: nowrap;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .nav__dropdown a:hover { background: rgba(255, 255, 255, 0.07); }
+
     /* Hamburger button — hidden on desktop, shown on mobile */
     .nav__toggle {
       display: none;
@@ -380,7 +459,7 @@
       font-weight: 700;
       letter-spacing: -0.04em; /* tighter spacing on large display text = more polish */
       line-height: 1.04;
-      max-width: 16ch; /* prevents line from stretching too wide */
+      max-width: min(16ch, 80vw); /* prevents line from stretching too wide, but never wider than the viewport */
     }
 
     /* Colored accent words in the headline */
@@ -394,7 +473,7 @@
       margin-top: 1.5rem;
       font-size: clamp(1.05rem, 2.4vw, 1.4rem);
       color: var(--text-dim);
-      max-width: 46ch;
+      max-width: min(46ch, 85vw);
       font-weight: 400;
     }
 
@@ -465,7 +544,7 @@
       font-weight: 700;
       letter-spacing: -0.035em;
       line-height: 1.08;
-      max-width: 18ch;
+      max-width: min(18ch, 80vw);
     }
 
     .page-hero p {
@@ -474,7 +553,7 @@
       margin-top: 1.25rem;
       font-size: clamp(1.05rem, 2.2vw, 1.3rem);
       color: var(--text-dim);
-      max-width: 46ch;
+      max-width: min(46ch, 85vw);
     }
 
 
@@ -671,6 +750,8 @@
       gap: 2.5rem;
     }
 
+    .tools__grid--4col { grid-template-columns: repeat(4, 1fr); }
+
     .tools__group h4 {
       font-size: 1.05rem;
       font-weight: 600;
@@ -848,7 +929,7 @@
 
 
     /* ==========================================================================
-       12. SHOP PAGE — Print & Buy
+       12. SHOP PAGE — Files / Prints
        Platform link cards, a listing card grid for individual models,
        and a "request a custom print" call-to-action section.
        ========================================================================== */
@@ -1244,7 +1325,10 @@
       .feature--reverse .feature__content { order: initial; }
     }
 
-    /* Tools grid: 3 col → 1 col below 760px */
+    /* Tools grid: 3/4 col → 2 col below 900px → 1 col below 760px */
+    @media (max-width: 900px) {
+      .tools__grid--4col { grid-template-columns: repeat(2, 1fr); }
+    }
     @media (max-width: 760px) {
       .tools__grid { grid-template-columns: 1fr; gap: 2.25rem; }
     }
@@ -2367,10 +2451,37 @@
   <header class="nav">
     <a href="index.html" class="nav__logo"><span class="dot"></span>Charlie Steinman</a>
     <nav class="nav__links">
-      <a href="index.html" data-page="index.html">Home</a>
-      <a href="internships.html" data-page="internships.html">Internships</a>
-      <a href="projects.html" data-page="projects.html">Projects</a>
-      <a href="shop.html" data-page="shop.html">Print &amp; Buy</a>
+      <div class="nav__item">
+        <a href="index.html" data-page="index.html">Home</a>
+        <div class="nav__dropdown">
+          <a href="index.html#about">About</a>
+          <a href="index.html#skills">Skills</a>
+          <a href="index.html#timeline">Timeline</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+      </div>
+      <div class="nav__item">
+        <a href="internships.html" data-page="internships.html">Internships</a>
+        <div class="nav__dropdown">
+          <a href="detail-northrop.html">Northrop Grumman</a>
+          <a href="detail-caterpillar.html">Caterpillar</a>
+          <a href="detail-hendrick.html">Hendrick Motorsports</a>
+        </div>
+      </div>
+      <div class="nav__item">
+        <a href="projects.html" data-page="projects.html">Projects</a>
+        <div class="nav__dropdown">
+          <a href="detail-bolt.html">BOLT Motorcycle</a>
+          <a href="detail-moped.html">Moped Restoration</a>
+          <a href="detail-stock-ticker.html">Wi-Fi Stock Ticker</a>
+          <a href="detail-pool-fence.html">Pool Equipment Fence</a>
+          <a href="detail-hokiebird.html">Hokiebird 3D Scan</a>
+          <a href="detail-cessna.html">RC Cessna 172</a>
+          <a href="detail-tidy.html">TIDY T-Shirt Folder</a>
+        </div>
+      </div>
+      <a href="shop.html" data-page="shop.html">Files / Prints</a>
+      <a href="index.html#contact" class="nav__cta">Contact</a>
       <a href="resume.html" data-page="resume.html" class="nav__cta">Resume</a>
     </nav>
     <button class="nav__toggle" aria-label="Open menu" aria-expanded="false">
@@ -2387,7 +2498,8 @@
     <a href="index.html" data-page="index.html">Home</a>
     <a href="internships.html" data-page="internships.html">Internships</a>
     <a href="projects.html" data-page="projects.html">Projects</a>
-    <a href="shop.html" data-page="shop.html">Print &amp; Buy</a>
+    <a href="shop.html" data-page="shop.html">Files / Prints</a>
+    <a href="index.html#contact">Contact</a>
     <a href="resume.html" data-page="resume.html">Resume</a>
   </nav>
 
@@ -2402,11 +2514,11 @@
       <span class="g2" style="background: var(--yellow);"></span>
     </div>
     <div class="container">
-      <span class="eyebrow eyebrow--blue">Print &amp; Buy</span>
+      <span class="eyebrow eyebrow--blue">Files / Prints</span>
       <h1>Take a piece home.</h1>
       <p>
-        A growing collection of 3D-printable designs available on Makerworld,
-        Printables, and MakerWorld &mdash; or order a finished print directly
+        A growing collection of 3D-printable designs available on MakerWorld,
+        Printables, Thingiverse, and Etsy &mdash; or order a finished print directly
         from me. Every model here is something I designed for a real purpose
         and then cleaned up to share.
       </p>
@@ -2429,7 +2541,7 @@
            TO REMOVE A PLATFORM: just delete that .platform-pill block.
 
            Current platform accent colors used:
-             MakerWorld  : #ff6d00  (orange)
+             MakerWorld  : #00ae42  (Bambu Lab green)
              Printables  : #fa6831  (orange-red)
              Thingiverse : #248bfb  (blue)
              Etsy        : #f1641e  (orange-red)
@@ -2443,32 +2555,32 @@
 
       <div class="shop-platforms reveal">
 
-        <a class="platform-pill" href="#" target="_blank" rel="noopener"
-           style="--accent: #ff6d00;">
+        <a class="platform-pill" href="https://makerworld.com/en/@Chazzle_" target="_blank" rel="noopener"
+           style="--accent: #00ae42;">
           <span class="platform-dot"></span>
           <span class="platform-name">MakerWorld</span>
-          <span class="platform-handle">@yourhandle</span>
+          <span class="platform-handle">@Chazzle_</span>
         </a>
 
-        <a class="platform-pill" href="#" target="_blank" rel="noopener"
+        <a class="platform-pill" href="https://www.printables.com/@Chazzle_5070598" target="_blank" rel="noopener"
            style="--accent: #fa6831;">
           <span class="platform-dot"></span>
           <span class="platform-name">Printables</span>
-          <span class="platform-handle">@yourhandle</span>
+          <span class="platform-handle">@Chazzle</span>
         </a>
 
-        <a class="platform-pill" href="#" target="_blank" rel="noopener"
+        <a class="platform-pill" href="https://www.thingiverse.com/Chazzle_/designs" target="_blank" rel="noopener"
            style="--accent: #248bfb;">
           <span class="platform-dot"></span>
           <span class="platform-name">Thingiverse</span>
-          <span class="platform-handle">@yourhandle</span>
+          <span class="platform-handle">@Chazzle_</span>
         </a>
 
-        <a class="platform-pill" href="#" target="_blank" rel="noopener"
+        <a class="platform-pill" href="https://www.etsy.com/people/0834dii8bxuk46mb" target="_blank" rel="noopener"
            style="--accent: #f1641e;">
           <span class="platform-dot"></span>
           <span class="platform-name">Etsy</span>
-          <span class="platform-handle">YourShopName</span>
+          <span class="platform-handle">View Profile</span>
         </a>
 
       </div>
@@ -2498,12 +2610,8 @@
 
         <!-- LISTING 1: HOKIEBIRD STATUE ───────────────────────── -->
         <div class="listing-card reveal">
-          <div class="listing-card__media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
-            <!-- TO ADD A PHOTO:
-                 Replace this <span> with:
-                 <img src="assets/images/shop-hokiebird.jpg" alt="Hokiebird statue print">
-                 and add class="has-media" to the .listing-card__media div above -->
-            <span>Hokiebird Statue<br>Photo coming soon</span>
+          <div class="listing-card__media has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <img src="assets/images/HokieBirds/HokieFirstColorful.jpg" alt="Hokiebird mascot statue print">
           </div>
           <div class="listing-card__body">
             <h4>Hokiebird Mascot Statue</h4>
@@ -2513,13 +2621,13 @@
               36 hours. 40+ in homes already. Recommended in PETG or PLA+ for best detail.
             </p>
             <div class="listing-card__links">
-              <a href="#" target="_blank" rel="noopener" style="--accent: #ff6d00;">
+              <a href="https://makerworld.com/en/@Chazzle_" target="_blank" rel="noopener" style="--accent: #00ae42;">
                 <span class="btn-dot"></span>MakerWorld
               </a>
-              <a href="#" target="_blank" rel="noopener" style="--accent: #fa6831;">
+              <a href="https://www.printables.com/@Chazzle_5070598" target="_blank" rel="noopener" style="--accent: #fa6831;">
                 <span class="btn-dot"></span>Printables
               </a>
-              <a href="#" target="_blank" rel="noopener" style="--accent: #f1641e;">
+              <a href="https://www.etsy.com/people/0834dii8bxuk46mb" target="_blank" rel="noopener" style="--accent: #f1641e;">
                 <span class="btn-dot"></span>Etsy (finished print)
               </a>
             </div>
@@ -2539,7 +2647,7 @@
               files drop.
             </p>
             <div class="listing-card__links">
-              <a href="#" target="_blank" rel="noopener" style="--accent: #ff6d00;">
+              <a href="https://makerworld.com/en/@Chazzle_" target="_blank" rel="noopener" style="--accent: #00ae42;">
                 <span class="btn-dot"></span>Follow on MakerWorld
               </a>
             </div>
@@ -2558,7 +2666,7 @@
               Custom requests welcome &mdash; see below.
             </p>
             <div class="listing-card__links">
-              <a href="#" target="_blank" rel="noopener" style="--accent: #248bfb;">
+              <a href="https://www.thingiverse.com/Chazzle_/designs" target="_blank" rel="noopener" style="--accent: #248bfb;">
                 <span class="btn-dot"></span>Follow on Thingiverse
               </a>
             </div>
@@ -2587,7 +2695,7 @@
             something I can do.
           </p>
         </div>
-        <a class="btn-yellow" href="mailto:csteinman@vt.edu">
+        <a class="btn-yellow" href="index.html#contact">
           Request a print
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7h10M8 3l4 4-4 4"/></svg>
         </a>
@@ -2608,15 +2716,15 @@
           </p>
         </div>
         <div class="footer__links">
-          <a href="about.html">About</a>
+          <a href="index.html#about">About</a>
           <a href="mailto:csteinman@vt.edu">Email</a>
           <a href="https://www.linkedin.com/in/charlessteinman" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="shop.html">Print &amp; Buy</a>
+          <a href="shop.html">Files / Prints</a>
           <a href="resume.html">Resume</a>
         </div>
       </div>
       <div class="footer__bottom">
-        Blacksburg, VA / Ashburn, VA &middot; Updated 2026
+        Blacksburg, VA / Ashburn, VA &middot; Updated 2026 &middot; Made by yours truly
       </div>
     </div>
   </footer>
@@ -3075,6 +3183,12 @@
        can have several of these (one per section), so this loops over every
        .photo-carousel instance and wires each one up independently: prev/next
        buttons, dot navigation, autoplay with pause-on-hover, and touch swipe.
+
+       Autoplay runs on load, advancing every 4.5s — except on a video slide,
+       where it waits for that clip's actual length instead (these loop, so we
+       read .duration rather than waiting for an "ended" event that never fires).
+       The moment a visitor manually navigates (arrows, dots, swipe), autoplay
+       stops outright and comes back on its own after 60s of no further input.
        ========================================================================== */
     document.querySelectorAll('.photo-carousel').forEach((carousel) => {
       const track  = carousel.querySelector('.pc-track');
@@ -3085,13 +3199,16 @@
       if (!track || slides.length <= 1) return;
 
       let current = 0;
-      let timer;
+      let advanceTimer = null;  // scheduled advance to the next slide
+      let resumeTimer = null;   // scheduled resume of autoplay after manual nav
+      let hovering = false;     // temporary pause while the mouse is over the carousel
+      let stopped = false;      // true once the visitor has manually navigated
 
       slides.forEach((_, i) => {
         const dot = document.createElement('button');
         dot.className = 'pc-dot' + (i === 0 ? ' active' : '');
         dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-        dot.addEventListener('click', () => goTo(i));
+        dot.addEventListener('click', () => userNav(i));
         dotsEl.appendChild(dot);
       });
 
@@ -3104,6 +3221,7 @@
       updateCounter();
 
       function goTo(idx) {
+        clearTimeout(advanceTimer);
         slides[current].querySelector('video')?.pause();
         current = (idx + slides.length) % slides.length;
         track.style.transform = 'translateX(-' + (current * 100) + '%)';
@@ -3113,28 +3231,61 @@
         updateCounter();
         const vid = slides[current].querySelector('video');
         if (vid) { vid.currentTime = 0; vid.play(); }
-        resetTimer();
+        scheduleAdvance();
       }
 
-      function resetTimer() {
-        clearInterval(timer);
-        timer = setInterval(() => goTo(current + 1), 4500);
+      function scheduleAdvance() {
+        clearTimeout(advanceTimer);
+        if (hovering || stopped) return;
+
+        const vid = slides[current].querySelector('video');
+        if (!vid) {
+          advanceTimer = setTimeout(() => goTo(current + 1), 4500);
+          return;
+        }
+
+        let armed = false;
+        const arm = () => {
+          if (armed) return;
+          armed = true;
+          const ms = (vid.duration && isFinite(vid.duration) && vid.duration > 0)
+            ? Math.round(vid.duration * 1000) + 400
+            : 6000;
+          advanceTimer = setTimeout(() => goTo(current + 1), ms);
+        };
+
+        if (vid.readyState >= 1) {
+          arm();
+        } else {
+          vid.addEventListener('loadedmetadata', arm, { once: true });
+          setTimeout(arm, 4000); // safety net if metadata never loads
+        }
       }
 
-      if (btnPrev) btnPrev.addEventListener('click', () => goTo(current - 1));
-      if (btnNext) btnNext.addEventListener('click', () => goTo(current + 1));
+      function userNav(idx) {
+        stopped = true;
+        clearTimeout(resumeTimer);
+        resumeTimer = setTimeout(() => {
+          stopped = false;
+          scheduleAdvance();
+        }, 60000);
+        goTo(idx);
+      }
 
-      carousel.addEventListener('mouseenter', () => clearInterval(timer));
-      carousel.addEventListener('mouseleave', resetTimer);
+      if (btnPrev) btnPrev.addEventListener('click', () => userNav(current - 1));
+      if (btnNext) btnNext.addEventListener('click', () => userNav(current + 1));
+
+      carousel.addEventListener('mouseenter', () => { hovering = true; clearTimeout(advanceTimer); });
+      carousel.addEventListener('mouseleave', () => { hovering = false; scheduleAdvance(); });
 
       let touchStartX = 0;
       carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
       carousel.addEventListener('touchend', e => {
         const dx = e.changedTouches[0].clientX - touchStartX;
-        if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+        if (Math.abs(dx) > 40) userNav(dx < 0 ? current + 1 : current - 1);
       }, { passive: true });
 
-      resetTimer();
+      scheduleAdvance();
     });
   </script>
 </body>

@@ -18,56 +18,26 @@ __NAV__
   <section class="container">
     <div class="feature">
       <div class="feature__content reveal">
-        <span class="eyebrow eyebrow--blue">BOLT Electric Race Motorcycle &middot; Oct 2022&ndash;Present</span>
-        <h3>Chassis Design, FEA &amp; Team President</h3>
+        <span class="eyebrow eyebrow--blue">BOLT Electric Race Motorcycle &middot; Oct 2022&ndash;May 2026</span>
+        <h3>Chassis Design, Fairings &amp; Team President</h3>
         <p>
           I joined Virginia Tech's BOLT electric motorcycle race team as a chassis engineer,
           designing and simulating the Emrax 248 (400kW) motor mount and switching its
-          material from steel to aluminum for 6 lbs of weight savings. My senior year I stepped
-          into the Admin Lead &amp; President role, leading a team of 100+ engineers with a
-          mid-five-figure build budget and growing membership from 55 to 120.
+          material from steel to aluminum for 6 lbs of weight savings. Alongside the chassis
+          work, I took on primary ownership of BOLT VI's bodywork &mdash; modeling the
+          fairings in CAD, splitting them into printable sections, and carrying each panel
+          through 3D printing, wet carbon fiber layup, bonding, and paint. My senior year I
+          stepped into the Admin Lead (President) role, leading a team of 100+ engineers
+          with a mid-five-figure build budget and growing
+          membership from 55 to 120.
         </p>
         <a class="feature__link" href="detail-bolt.html">
           Full BOLT write-up
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </div>
-      <div class="feature__visual reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
-        <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
-        <div class="viewer">
-          <canvas id="bolt-canvas"></canvas>
-        </div>
-        <div class="viewer__hint" id="bolt-hint">
-          <span>3D MODEL VIEWER<br>Drop motor_asm.glb<br>into /models to display here</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEATURE: BOLT FAIRINGS -->
-  <section class="container">
-    <div class="feature">
-      <div class="feature__content reveal">
-        <span class="eyebrow eyebrow--blue">BOLT Electric Race Motorcycle &middot; Bodywork</span>
-        <h3>Fairing Design &amp; Carbon Fiber Fabrication</h3>
-        <p>
-          Alongside the chassis work, I took on primary ownership of BOLT VI's bodywork &mdash;
-          modeling the fairings in CAD, splitting them into printable sections, and carrying
-          each panel through 3D printing, wet carbon fiber layup, bonding, and paint.
-        </p>
-        <a class="feature__link" href="detail-bolt.html">
-          Full BOLT write-up
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
-        </a>
-      </div>
-      <div class="feature__visual reveal reveal-delay-2" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
-        <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
-        <div class="viewer">
-          <canvas id="bolt-fairings-canvas"></canvas>
-        </div>
-        <div class="viewer__hint" id="bolt-fairings-hint">
-          <span>3D MODEL VIEWER<br>Drop fairings.glb<br>into /models to display here</span>
-        </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <img src="assets/images/BOLT/BOLTVI_Upright.jpeg" alt="BOLT VI electric race motorcycle">
       </div>
     </div>
   </section>
@@ -81,9 +51,9 @@ __NAV__
         <p>
           A few friends and I got hooked on building out mopeds as cheap, fun daily
           transportation around campus. I picked up a non-running '97 Honda Elite 50 with
-          good mod potential and brought it back to life with a larger displacement head,
-          revised CVT gearing, and a performance exhaust. Since fall 2024, it's been my
-          everyday way to get to class.
+          good mod potential and brought it back to life with a performance clutch and
+          flywheel, retuned CVT gearing, and a performance exhaust. Since fall 2024, it's
+          been my everyday way to get to class.
         </p>
         <a class="feature__link" href="detail-moped.html">
           Full moped write-up
@@ -196,14 +166,8 @@ __NAV__
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </div>
-      <div class="feature__visual reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
-        <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
-        <div class="viewer">
-          <canvas id="cessna-canvas"></canvas>
-        </div>
-        <div class="viewer__hint" id="cessna-hint">
-          <span>3D MODEL VIEWER<br>Drop cessna.glb<br>into /models to display here</span>
-        </div>
+      <div class="feature__visual has-media reveal reveal-delay-2" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
+        <img src="assets/images/3D%20Printed%20172%20Cessna/CessnaEarlyFuselage.JPG" alt="3D printed Cessna 172 RC airplane — assembled fuselage">
       </div>
     </div>
   </section>
@@ -381,29 +345,3 @@ __NAV__
   </section>
 
 __FOOTER__
-
-  <script type="module">
-    import { initViewer } from './js/viewer-init.js';
-    initViewer({
-      canvas: document.getElementById('bolt-canvas'),
-      hint: document.getElementById('bolt-hint'),
-      modelPath: 'models/motor_asm.glb',
-      accentColor: 0x0a84ff,
-      explode: true
-    });
-    initViewer({
-      canvas: document.getElementById('bolt-fairings-canvas'),
-      hint: document.getElementById('bolt-fairings-hint'),
-      modelPath: 'models/fairings.glb',
-      accentColor: 0xffd60a,
-      explode: true
-    });
-    initViewer({
-      canvas: document.getElementById('cessna-canvas'),
-      hint: document.getElementById('cessna-hint'),
-      modelPath: 'models/cessna.glb',
-      accentColor: 0xffd60a,
-      explode: true,
-      distanceScale: 2.3
-    });
-  </script>

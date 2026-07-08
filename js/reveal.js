@@ -451,6 +451,12 @@ if (contactForm) {
    can have several of these (one per section), so this loops over every
    .photo-carousel instance and wires each one up independently: prev/next
    buttons, dot navigation, autoplay with pause-on-hover, and touch swipe.
+
+   Autoplay runs on load, advancing every 4.5s — except on a video slide,
+   where it waits for that clip's actual length instead (these loop, so we
+   read .duration rather than waiting for an "ended" event that never fires).
+   The moment a visitor manually navigates (arrows, dots, swipe), autoplay
+   stops outright and comes back on its own after 60s of no further input.
    ========================================================================== */
 document.querySelectorAll('.photo-carousel').forEach((carousel) => {
   const track  = carousel.querySelector('.pc-track');
@@ -461,13 +467,16 @@ document.querySelectorAll('.photo-carousel').forEach((carousel) => {
   if (!track || slides.length <= 1) return;
 
   let current = 0;
-  let timer;
+  let advanceTimer = null;  // scheduled advance to the next slide
+  let resumeTimer = null;   // scheduled resume of autoplay after manual nav
+  let hovering = false;     // temporary pause while the mouse is over the carousel
+  let stopped = false;      // true once the visitor has manually navigated
 
   slides.forEach((_, i) => {
     const dot = document.createElement('button');
     dot.className = 'pc-dot' + (i === 0 ? ' active' : '');
     dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
-    dot.addEventListener('click', () => goTo(i));
+    dot.addEventListener('click', () => userNav(i));
     dotsEl.appendChild(dot);
   });
 
@@ -480,6 +489,7 @@ document.querySelectorAll('.photo-carousel').forEach((carousel) => {
   updateCounter();
 
   function goTo(idx) {
+    clearTimeout(advanceTimer);
     slides[current].querySelector('video')?.pause();
     current = (idx + slides.length) % slides.length;
     track.style.transform = 'translateX(-' + (current * 100) + '%)';
@@ -489,26 +499,59 @@ document.querySelectorAll('.photo-carousel').forEach((carousel) => {
     updateCounter();
     const vid = slides[current].querySelector('video');
     if (vid) { vid.currentTime = 0; vid.play(); }
-    resetTimer();
+    scheduleAdvance();
   }
 
-  function resetTimer() {
-    clearInterval(timer);
-    timer = setInterval(() => goTo(current + 1), 4500);
+  function scheduleAdvance() {
+    clearTimeout(advanceTimer);
+    if (hovering || stopped) return;
+
+    const vid = slides[current].querySelector('video');
+    if (!vid) {
+      advanceTimer = setTimeout(() => goTo(current + 1), 4500);
+      return;
+    }
+
+    let armed = false;
+    const arm = () => {
+      if (armed) return;
+      armed = true;
+      const ms = (vid.duration && isFinite(vid.duration) && vid.duration > 0)
+        ? Math.round(vid.duration * 1000) + 400
+        : 6000;
+      advanceTimer = setTimeout(() => goTo(current + 1), ms);
+    };
+
+    if (vid.readyState >= 1) {
+      arm();
+    } else {
+      vid.addEventListener('loadedmetadata', arm, { once: true });
+      setTimeout(arm, 4000); // safety net if metadata never loads
+    }
   }
 
-  if (btnPrev) btnPrev.addEventListener('click', () => goTo(current - 1));
-  if (btnNext) btnNext.addEventListener('click', () => goTo(current + 1));
+  function userNav(idx) {
+    stopped = true;
+    clearTimeout(resumeTimer);
+    resumeTimer = setTimeout(() => {
+      stopped = false;
+      scheduleAdvance();
+    }, 60000);
+    goTo(idx);
+  }
 
-  carousel.addEventListener('mouseenter', () => clearInterval(timer));
-  carousel.addEventListener('mouseleave', resetTimer);
+  if (btnPrev) btnPrev.addEventListener('click', () => userNav(current - 1));
+  if (btnNext) btnNext.addEventListener('click', () => userNav(current + 1));
+
+  carousel.addEventListener('mouseenter', () => { hovering = true; clearTimeout(advanceTimer); });
+  carousel.addEventListener('mouseleave', () => { hovering = false; scheduleAdvance(); });
 
   let touchStartX = 0;
   carousel.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
   carousel.addEventListener('touchend', e => {
     const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
+    if (Math.abs(dx) > 40) userNav(dx < 0 ? current + 1 : current - 1);
   }, { passive: true });
 
-  resetTimer();
+  scheduleAdvance();
 });

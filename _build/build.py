@@ -15,6 +15,10 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 TPL = ROOT / "_build" / "templates"
 BODIES = ROOT / "_build" / "bodies"
 
+DESC = ("Mechanical engineering portfolio of Charlie Steinman — Virginia Tech, Class of 2026. "
+        "CAD, FEA, carbon fiber fabrication, and embedded systems projects, from an electric race "
+        "motorcycle to a 3D-printed RC aircraft.")
+
 CSS = (ROOT / "css" / "style-apple.css").read_text(encoding="utf-8")
 JS = (ROOT / "js" / "reveal.js").read_text(encoding="utf-8")
 HEAD = (TPL / "_head.html").read_text(encoding="utf-8")
@@ -27,7 +31,7 @@ PAGES = [
     ("internships.html", "Internships — Charlie Steinman", "body-internships.html"),
     ("projects.html",          "Projects — Charlie Steinman",           "body-projects.html"),
     ("resume.html", "Resume — Charlie Steinman", "body-resume.html"),
-    ("shop.html",          "Print & Buy — Charlie Steinman",           "body-shop.html"),
+    ("shop.html",          "Files / Prints — Charlie Steinman",        "body-shop.html"),
     ("detail-caterpillar.html", "Caterpillar — Charlie Steinman",       "body-detail-caterpillar.html"),
     ("detail-hendrick.html",    "Hendrick Motorsports — Charlie Steinman", "body-detail-hendrick.html"),
     ("detail-hokiebird.html",   "Hokiebird — Charlie Steinman",         "body-detail-hokiebird.html"),
@@ -51,7 +55,7 @@ foot_filled = FOOT.replace("__JS__", indent(JS))
 for out_name, title, body_name in PAGES:
     body = (BODIES / body_name).read_text(encoding="utf-8")
     body = body.replace("__NAV__", NAV).replace("__FOOTER__", FOOTER)
-    html = head_filled.replace("__TITLE__", title) + body + foot_filled
+    html = head_filled.replace("__TITLE__", title).replace("__DESC__", DESC) + body + foot_filled
     out_path = ROOT / out_name
     out_path.write_text(html, encoding="utf-8")
     print(f"built {out_name}  ({len(html):,} bytes)")

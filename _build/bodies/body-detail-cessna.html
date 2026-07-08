@@ -10,7 +10,7 @@ __NAV__
       <span class="eyebrow eyebrow--yellow">Original Design &middot; RC Airplane &middot; 2023&ndash;Present</span>
       <h1>3D Printed RC Cessna 172</h1>
       <div class="detail-meta">
-        <span class="meta-tag">SolidWorks</span>
+        <span class="meta-tag">Fusion 360</span>
         <span class="meta-tag">FDM Printing</span>
         <span class="meta-tag">RC Flight</span>
         <span class="meta-tag">Aerodynamics</span>
@@ -34,22 +34,44 @@ __NAV__
         <p>
           When I got interested in RC planes, most builds start from a kit &mdash; a known-good
           airframe someone else already designed, tested, and packaged up. I wanted something
-          harder. I based this design on the Cessna 172, one of the most widely flown aircraft
-          in the world, and modeled every component from the ground up in SolidWorks.
+          harder: a plane designed and built almost entirely from 3D-printed parts, both to
+          simplify manufacturing and to force a real weight-management challenge, since printed
+          structure is heavier than traditional balsa or foam construction. I based this design
+          on the Cessna 172, one of the most widely flown aircraft in the world, and modeled
+          every component from the ground up in Fusion 360.
         </p>
         <p>
-          The school year has a habit of pushing the timeline out, but as of early 2024 the
-          airframe is nearly complete. The first version deliberately omits yaw control &mdash;
+          The school year has a habit of pushing the timeline out, but as of early 2025 the
+          airframe was nearly complete. The first version deliberately omits yaw control &mdash;
           no rudder servo. The goal is to prove the rest of the airframe can fly before adding
           more complexity.
         </p>
 
         <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
           <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
-            <img src="assets/images/3D%20Printed%20172%20Cessna/CessnaEarlyCad.JPG" alt="Cessna 172 CAD model in SolidWorks — early version">
+            <img src="assets/images/3D%20Printed%20172%20Cessna/CessnaEarlyCad.JPG" alt="Cessna 172 CAD model in Fusion 360 — early version">
           </div>
           <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
             <img src="assets/images/3D%20Printed%20172%20Cessna/CessnaLabLiftCalcs.JPG" alt="Lift force, takeoff speed, and mass budget calculations">
+          </div>
+        </div>
+
+        <h2>Interactive 3D Model</h2>
+        <p>
+          The airframe was modeled in Fusion 360 before any part was printed. Drag to
+          rotate, or move your mouse across it to explode the assembly into its
+          individual parts.
+        </p>
+
+        <div class="photo-grid photo-grid--1" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+            <div class="viewer">
+              <canvas id="cessna-canvas"></canvas>
+            </div>
+            <div class="viewer__badge">Drag to rotate &middot; move mouse to explode</div>
+            <div class="viewer__hint" id="cessna-hint">
+              <span>3D MODEL VIEWER<br>Drop cessna.glb<br>into /models to display here</span>
+            </div>
           </div>
         </div>
 
@@ -60,11 +82,18 @@ __NAV__
           weight let me estimate the center of gravity before committing to final assembly.
         </p>
         <p>
-          From the mass model, I estimated wing loading, predicted lift at various airspeeds
-          using a simplified lift equation, and calculated a conservative stall and takeoff
-          speed. Some aerodynamic constants are estimates where direct measurement isn't
-          practical at this scale, but the numbers are consistent with comparable RC aircraft.
+          From the mass model, I estimated wing loading and calculated a conservative stall and
+          takeoff speed. A university lab let me go further and test the actual airfoil profile,
+          taking pressure readings across seven points along the wing. That data became a real
+          lift curve I used to estimate lift at different airspeeds, rather than leaning purely
+          on textbook coefficients &mdash; and the numbers line up well with comparable RC aircraft.
         </p>
+        <div class="photo-grid photo-grid--1" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue); aspect-ratio: 2652/1152;">
+            <img src="assets/images/3D%20Printed%20172%20Cessna/Calculations.png" alt="Mass budget, lift/drag, and motor thrust calculation spreadsheet">
+          </div>
+        </div>
+
         <p>
           One known problem to solve before first flight: the CAD center of gravity matches the
           physical model well in X and Y but drifts noticeably on the Z axis. 3D-printed infill
@@ -72,12 +101,9 @@ __NAV__
           than the solid CAD model predicts. Ballast placement before flying will address this.
         </p>
 
-        <div class="photo-grid photo-grid--2" style="margin: 2rem 0;">
-          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue);">
+        <div class="photo-grid photo-grid--1" style="margin: 2rem 0;">
+          <div class="photo-cell has-media" style="--glow-a: var(--yellow); --glow-b: var(--blue); aspect-ratio: 16/9;">
             <video src="assets/images/3D%20Printed%20172%20Cessna/CessnaServoTest.MP4" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video>
-          </div>
-          <div class="photo-cell has-media" style="--glow-a: var(--blue); --glow-b: var(--yellow);">
-            <img src="assets/images/3D%20Printed%20172%20Cessna/ServoTest.GIF" alt="Servo deflection test on the control surfaces" style="width:100%;height:100%;object-fit:cover;display:block;">
           </div>
         </div>
 
@@ -97,7 +123,7 @@ __NAV__
           <h4>Quick Facts</h4>
           <dl class="sidebar-row">
             <dt>Based on</dt><dd>Cessna 172</dd>
-            <dt>Software</dt><dd>SolidWorks</dd>
+            <dt>Software</dt><dd>Fusion 360</dd>
             <dt>Material</dt><dd>FDM PLA</dd>
             <dt>Control</dt><dd>Roll + Pitch</dd>
             <dt>Yaw</dt><dd>Future version</dd>
@@ -118,3 +144,15 @@ __NAV__
   </div>
 
 __FOOTER__
+
+  <script type="module">
+    import { initViewer } from './js/viewer-init.js';
+    initViewer({
+      canvas: document.getElementById('cessna-canvas'),
+      hint: document.getElementById('cessna-hint'),
+      modelPath: 'models/cessna.glb',
+      accentColor: 0xffd60a,
+      explode: true,
+      distanceScale: 2.3
+    });
+  </script>

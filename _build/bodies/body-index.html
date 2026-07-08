@@ -22,13 +22,21 @@ __NAV__
   </section>
 
   <!-- ABOUT -->
-  <section>
+  <section id="about">
     <div class="container">
       <div class="about-grid">
 
         <div class="about-photo reveal">
           <div class="about-photo__frame">
-            <img src="assets/images/Headshot.jpeg" alt="Charlie Steinman">
+            <div class="feature-carousel">
+              <div class="fc-slide active"><img src="assets/images/Headshot.jpeg" alt="Charlie Steinman"></div>
+              <div class="fc-slide"><img src="assets/images/About/MeBazinga.jpg" alt="Charlie Steinman celebrating in a suit outside a Gothic university hall"></div>
+              <div class="fc-slide"><img src="assets/images/About/MeAndMolly.jpg" alt="Charlie Steinman holding his dog Molly on the Virginia Tech drillfield"></div>
+              <div class="fc-slide"><img src="assets/images/About/MeAndShadow.jpg" alt="Charlie Steinman holding his cat Shadow"></div>
+              <div class="fc-slide"><img src="assets/images/About/MeHiking.jpg" alt="Charlie Steinman hiking with a bag of trail snacks"></div>
+              <div class="fc-slide"><img src="assets/images/About/MeAndM3.jpg" alt="Charlie Steinman next to a BMW M3 at the BMW M Performance Driving School"></div>
+              <div class="fc-slide"><img src="assets/images/About/MeAndPookie.jpg" alt="Charlie Steinman dressed up for a formal with his girlfriend"></div>
+            </div>
           </div>
           <p class="about-photo__caption">Charlie Steinman &mdash; Blacksburg, VA</p>
         </div>
@@ -39,35 +47,34 @@ __NAV__
           <p>
             I'm a mechanical engineering student at Virginia Tech finishing an accelerated
             master's program with a focus on <strong>metal additive manufacturing</strong>
-            &mdash; specifically laser powder bed fusion and directed energy deposition.
-            Day-to-day that means a lot of time in NX and Creo running structural simulations,
-            but it started much earlier: tearing apart a dead lawn mower to reverse-engineer
-            the piston, designing a model engine in 8th grade just to see if I could.
+            &mdash; specifically laser powder bed fusion and the thermal history of parts.
+            That curiosity started long before any classroom: tearing apart a dead lawn
+            mower to reverse-engineer the piston, designing a model engine in 8th grade
+            just to see if I could.
+          </p>
+
+          <p>
+            Outside of coursework, I swam competitively for VT's club team, hike regularly,
+            and have a long-standing interest in cars &mdash; a day at the BMW M Performance
+            Driving School remains one of my favorite memories.
           </p>
 
           <p>
             In the summers between semesters I've had the chance to do that for real &mdash;
             nine concrete counterweight concepts at <strong>Caterpillar</strong> for a new
-            Small Wheel Loader, and component design for four <strong>Hendrick Motorsports</strong>
-            NASCAR Cup Series cars (5, 9, 24, and 48). Both internships pushed me to work
-            within real constraints — tolerances, schedules, supply chains — rather than
-            the relatively clean sandbox of class projects.
+            Small Wheel Loader, component design for four <strong>Hendrick Motorsports</strong>
+            NASCAR Cup Series cars (5, 9, 24, and 48), and two summers in
+            <strong>Northrop Grumman</strong>'s cleanrooms assembling the Cygnus ISS resupply
+            spacecraft. Each internship pushed me to work within real constraints &mdash;
+            tolerances, constraints, budget &mdash; rather than the relatively clean
+            sandbox of class projects.
           </p>
 
           <p>
-            Outside of coursework I'm the president and a chassis engineer on <strong>Virginia
-            Tech's BOLT electric motorcycle team</strong>, a teaching assistant for sophomore
-            thermodynamics, and a competitive swimmer. On weekends I'm usually working
-            on something that has nothing to do with my thesis: moped engine mods, an RC
-            plane I designed from scratch, or an ESP32 project that started as a gift and
-            turned into a whole electronics rabbit hole.
-          </p>
-
-          <p>
-            Long-term I'm interested in how additive manufacturing changes what's
-            actually possible to build &mdash; topology-optimized structures, novel alloy
-            combinations, geometry that couldn't be cast or machined. I want to work at
-            the edge of what's manufacturable, wherever that happens to be.
+            Long-term I'm interested in how additive manufacturing changes what's actually
+            possible to build: topology-optimized structures, functional grading of alloy
+            combinations, and geometry that couldn't be previously achieved. I want to work
+            at the edge of what's manufacturable, wherever that happens to be.
           </p>
 
           <div class="about-facts">
@@ -122,7 +129,7 @@ __NAV__
       </span>
       <span class="wip-item">
         <span class="wip-dot" style="background: var(--blue);"></span>
-        <span class="wip-label">Upcoming</span>
+        <span class="wip-label">Active</span>
         Northrop Grumman &mdash; Summer 2026
       </span>
       <span class="wip-item">
@@ -133,7 +140,7 @@ __NAV__
       <span class="wip-item">
         <span class="wip-dot" style="background: var(--blue);"></span>
         <span class="wip-label">Active</span>
-        Thermodynamics TA &mdash; Spring 2026
+        M.S. Thesis &mdash; Metal Additive Manufacturing
       </span>
       <span class="wip-item">
         <span class="wip-dot" style="background: var(--yellow);"></span>
@@ -153,12 +160,12 @@ __NAV__
       <!-- Duplicate copy for seamless loop -->
       <span class="wip-item">
         <span class="wip-dot" style="background: var(--blue);"></span>
-        <span class="wip-label">Active</span>
+        <span class="wip-label">Retired</span>
         BOLT 6 Electric Race Motorcycle
       </span>
       <span class="wip-item">
         <span class="wip-dot" style="background: var(--blue);"></span>
-        <span class="wip-label">Upcoming</span>
+        <span class="wip-label">Active</span>
         Northrop Grumman &mdash; Summer 2026
       </span>
       <span class="wip-item">
@@ -169,7 +176,7 @@ __NAV__
       <span class="wip-item">
         <span class="wip-dot" style="background: var(--blue);"></span>
         <span class="wip-label">Active</span>
-        Thermodynamics TA &mdash; Spring 2026
+        M.S. Thesis &mdash; Metal Additive Manufacturing
       </span>
       <span class="wip-item">
         <span class="wip-dot" style="background: var(--yellow);"></span>
@@ -206,8 +213,8 @@ __NAV__
         <div class="label">NASCAR Cup Series parts inspected for compliance</div>
       </div>
       <div class="stat reveal reveal-delay-2">
-        <div class="num"><span data-count-to="36" data-suffix=" hr">0</span></div>
-        <div class="label">print time for the scanned Hokiebird statue</div>
+        <div class="num"><span data-count-to="2">0</span></div>
+        <div class="label">Cygnus spacecraft supported at Northrop Grumman</div>
       </div>
       <div class="stat reveal reveal-delay-3">
         <div class="num"><span data-count-to="40" data-suffix="+">0</span></div>
@@ -281,7 +288,7 @@ __NAV__
   <section class="container">
     <div class="feature">
       <div class="feature__content reveal">
-        <span class="eyebrow eyebrow--yellow">Print &amp; Buy</span>
+        <span class="eyebrow eyebrow--yellow">Files / Prints</span>
         <h3>Take a piece home.</h3>
         <p>
           A growing collection of 3D-printable designs on MakerWorld, Printables, Thingiverse,
@@ -289,7 +296,7 @@ __NAV__
           prints, and custom orders all available.
         </p>
         <a class="feature__link" href="shop.html">
-          Visit Print &amp; Buy
+          Visit Files / Prints
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
         </a>
       </div>
@@ -305,8 +312,82 @@ __NAV__
   </section>
 
 
+  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+       SKILLS / PROFICIENCY BARS
+       â”€ data-pct sets the fill width (percentage, 0&ndash;100%)
+       â”€ Bar colors alternate yellow/blue via CSS nth-child
+       â”€ To add a skill: copy one .skill-bar-row and set data-pct
+       â”€ Labels on the left are plain text &mdash; edit freely
+       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <section class="section" id="skills">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow eyebrow--yellow">Skills</span>
+        <h2>Tools of the trade.</h2>
+      </div>
+
+      <div class="tools__grid tools__grid--4col">
+
+        <div class="tools__group reveal">
+          <h4>CAD &amp; Simulation</h4>
+          <div class="pill-row">
+            <span class="pill">Siemens NX</span>
+            <span class="pill">Teamcenter</span>
+            <span class="pill">Creo Parametric</span>
+            <span class="pill">Creo Simulate</span>
+            <span class="pill">SOLIDWORKS</span>
+            <span class="pill">Fusion 360</span>
+            <span class="pill">Onshape</span>
+            <span class="pill">AutoCAD</span>
+            <span class="pill">Inventor</span>
+          </div>
+        </div>
+
+        <div class="tools__group reveal reveal-delay-1">
+          <h4>Shop &amp; Fabrication</h4>
+          <div class="pill-row">
+            <span class="pill">FDM / PBF Additive</span>
+            <span class="pill">3-Axis CNC</span>
+            <span class="pill">Mill / Lathe</span>
+            <span class="pill">MIG Welding</span>
+            <span class="pill">TIG Welding</span>
+            <span class="pill">Stick Welding</span>
+            <span class="pill">Laser / Water Cutting</span>
+            <span class="pill">Metal Casting</span>
+            <span class="pill">Woodworking</span>
+          </div>
+        </div>
+
+        <div class="tools__group reveal reveal-delay-2">
+          <h4>Analysis</h4>
+          <div class="pill-row">
+            <span class="pill">FEA (Linear &amp; NL)</span>
+            <span class="pill">Bolted Joint Analysis</span>
+            <span class="pill">GD&amp;T</span>
+            <span class="pill">3D Scanning &amp; Mesh</span>
+            <span class="pill">ISO Standards</span>
+            <span class="pill">Structural Analysis</span>
+          </div>
+        </div>
+
+        <div class="tools__group reveal reveal-delay-3">
+          <h4>Code &amp; Electronics</h4>
+          <div class="pill-row">
+            <span class="pill">MATLAB</span>
+            <span class="pill">C / C++</span>
+            <span class="pill">Java</span>
+            <span class="pill">Arduino / ESP32</span>
+            <span class="pill">Microsoft Office</span>
+            <span class="pill">Google Workspace</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- TIMELINE -->
-  <section class="section">
+  <section class="section" id="timeline">
     <div class="container">
       <div class="section-head reveal">
         <span class="eyebrow eyebrow--blue">Journey</span>
@@ -315,7 +396,7 @@ __NAV__
 
       <div class="timeline-h">
 
-        <!-- 1. VT Enrolled (above) → about.html -->
+        <!-- 1. VT Enrolled (above) → index.html#about -->
         <a class="tl-h-col reveal" href="index.html">
           <div class="tl-h-top">
             <div class="tl-h-card">
@@ -393,7 +474,7 @@ __NAV__
           </div>
         </a>
 
-        <!-- 7. VT Graduation (above) → about.html -->
+        <!-- 7. VT Graduation (above) → index.html#about -->
         <a class="tl-h-col reveal" href="index.html">
           <div class="tl-h-top">
             <div class="tl-h-card">
@@ -423,81 +504,8 @@ __NAV__
     </div>
   </section>
 
-  <!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-       SKILLS / PROFICIENCY BARS
-       â”€ data-pct sets the fill width (percentage, 0&ndash;100%)
-       â”€ Bar colors alternate yellow/blue via CSS nth-child
-       â”€ To add a skill: copy one .skill-bar-row and set data-pct
-       â”€ Labels on the left are plain text &mdash; edit freely
-       â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-  <section class="section">
-    <div class="container">
-      <div class="section-head reveal">
-        <span class="eyebrow eyebrow--yellow">Skills</span>
-        <h2>Tools of the trade.</h2>
-      </div>
-
-      <div class="tools__grid" style="grid-template-columns: repeat(4, 1fr);">
-
-        <div class="tools__group reveal">
-          <h4>CAD &amp; Simulation</h4>
-          <div class="pill-row">
-            <span class="pill">Siemens NX</span>
-            <span class="pill">Teamcenter</span>
-            <span class="pill">Creo Parametric</span>
-            <span class="pill">Creo Simulate</span>
-            <span class="pill">SOLIDWORKS</span>
-            <span class="pill">Fusion 360</span>
-            <span class="pill">AutoCAD</span>
-            <span class="pill">Inventor</span>
-          </div>
-        </div>
-
-        <div class="tools__group reveal reveal-delay-1">
-          <h4>Shop &amp; Fabrication</h4>
-          <div class="pill-row">
-            <span class="pill">FDM / PBF Additive</span>
-            <span class="pill">3-Axis CNC</span>
-            <span class="pill">Mill / Lathe</span>
-            <span class="pill">MIG Welding</span>
-            <span class="pill">TIG Welding</span>
-            <span class="pill">Stick Welding</span>
-            <span class="pill">Laser / Water Cutting</span>
-            <span class="pill">Metal Casting</span>
-            <span class="pill">Woodworking</span>
-          </div>
-        </div>
-
-        <div class="tools__group reveal reveal-delay-2">
-          <h4>Analysis</h4>
-          <div class="pill-row">
-            <span class="pill">FEA (Linear &amp; NL)</span>
-            <span class="pill">Bolted Joint Analysis</span>
-            <span class="pill">GD&amp;T</span>
-            <span class="pill">3D Scanning &amp; Mesh</span>
-            <span class="pill">ISO Standards</span>
-            <span class="pill">Structural Analysis</span>
-          </div>
-        </div>
-
-        <div class="tools__group reveal reveal-delay-3">
-          <h4>Code &amp; Electronics</h4>
-          <div class="pill-row">
-            <span class="pill">MATLAB</span>
-            <span class="pill">C / C++</span>
-            <span class="pill">Java</span>
-            <span class="pill">Arduino / ESP32</span>
-            <span class="pill">Microsoft Office</span>
-            <span class="pill">Google Workspace</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
   <!-- CONTACT -->
-  <section class="contact-section">
+  <section class="contact-section" id="contact">
     <div class="container">
 
       <div class="section-head reveal">
