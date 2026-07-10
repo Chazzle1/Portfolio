@@ -1469,14 +1469,18 @@
 
     @media (max-width: 760px) {
       .about-grid { grid-template-columns: 1fr; }
-      /* Sticky is a two-column-layout trick — in a single stacked column it just
-         pins the photo in place while the bio text scrolls up over it. */
-      .about-photo { position: static; top: auto; }
     }
 
     .about-photo {
       position: sticky;
       top: calc(var(--nav-h) + 2rem);
+    }
+
+    /* Sticky is a two-column-layout trick — in a single stacked column it just
+       pins the photo in place while the bio text scrolls up over it.
+       Must come after the base rule above to actually win the cascade. */
+    @media (max-width: 760px) {
+      .about-photo { position: static; top: auto; }
     }
 
     .about-photo__frame {
@@ -2564,7 +2568,7 @@
 
         <h2>Admin Lead</h2>
         <p>
-          My senior year I was promoted to Admin Lead (President). The role meant owning
+          My senior year I was promoted to Admin Lead. The role meant owning
           recruiting, community outreach, safety compliance, and all of the organizational
           infrastructure behind a 100+ person student engineering team, but I stayed involved
           in engineering decisions throughout rather than stepping away from the technical

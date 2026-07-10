@@ -1469,14 +1469,18 @@
 
     @media (max-width: 760px) {
       .about-grid { grid-template-columns: 1fr; }
-      /* Sticky is a two-column-layout trick — in a single stacked column it just
-         pins the photo in place while the bio text scrolls up over it. */
-      .about-photo { position: static; top: auto; }
     }
 
     .about-photo {
       position: sticky;
       top: calc(var(--nav-h) + 2rem);
+    }
+
+    /* Sticky is a two-column-layout trick — in a single stacked column it just
+       pins the photo in place while the bio text scrolls up over it.
+       Must come after the base rule above to actually win the cascade. */
+    @media (max-width: 760px) {
+      .about-photo { position: static; top: auto; }
     }
 
     .about-photo__frame {
@@ -2526,15 +2530,15 @@
     <div class="feature">
       <div class="feature__content reveal">
         <span class="eyebrow eyebrow--blue">BOLT Electric Race Motorcycle &middot; Oct 2022&ndash;May 2026</span>
-        <h3>Chassis Design, Fairings &amp; Team President</h3>
+        <h3>Chassis Design, Fairings &amp; Admin Lead</h3>
         <p>
           I joined Virginia Tech's BOLT electric motorcycle race team as a chassis engineer,
-          designing and simulating the Emrax 248 (400kW) motor mount and switching its
+          designing and analyzing the Emrax 248 (400kW) motor mount and switching its
           material from steel to aluminum for 6 lbs of weight savings. Alongside the chassis
           work, I took on primary ownership of BOLT VI's bodywork &mdash; modeling the
           fairings in CAD, splitting them into printable sections, and carrying each panel
           through 3D printing, wet carbon fiber layup, bonding, and paint. My senior year I
-          stepped into the Admin Lead (President) role, leading a team of 100+ engineers
+          stepped into the Admin Lead role, leading a team of 100+ engineers
           with a mid-five-figure build budget and growing
           membership from 55 to 120.
         </p>

@@ -1469,14 +1469,18 @@
 
     @media (max-width: 760px) {
       .about-grid { grid-template-columns: 1fr; }
-      /* Sticky is a two-column-layout trick — in a single stacked column it just
-         pins the photo in place while the bio text scrolls up over it. */
-      .about-photo { position: static; top: auto; }
     }
 
     .about-photo {
       position: sticky;
       top: calc(var(--nav-h) + 2rem);
+    }
+
+    /* Sticky is a two-column-layout trick — in a single stacked column it just
+       pins the photo in place while the bio text scrolls up over it.
+       Must come after the base rule above to actually win the cascade. */
+    @media (max-width: 760px) {
+      .about-photo { position: static; top: auto; }
     }
 
     .about-photo__frame {
@@ -2519,11 +2523,19 @@
       <span class="g2"></span>
     </div>
     <p class="hero__eyebrow">Mechanical Engineering &middot; Virginia Tech &middot; Class of 2026</p>
+
+    <!-- Previous headline — kept here in case we want to switch back:
     <h1>Designs that go from <span class="accent-y">sketch</span> to <span class="accent-b">shop floor</span>.</h1>
     <p>
       I take projects from a rough idea to a finished, working part &mdash; scanning a statue
       and reprinting it at scale, running FEA on a NASCAR motor mount, or wiring an ESP32
       to drive an LED matrix. This is a collection of the work I'm proudest of.
+    </p>
+    -->
+    <h1>Charlie Steinman's Mechanical Engineering Portfolio</h1>
+    <p>
+      CAD, FEA, and hands-on fabrication across internships, a competition race team,
+      and personal builds.
     </p>
     <div class="hero__scroll">SCROLL<br>&darr;</div>
   </section>
@@ -2555,9 +2567,6 @@
             I'm a mechanical engineering student at Virginia Tech finishing an accelerated
             master's program with a focus on <strong>metal additive manufacturing</strong>
             &mdash; specifically laser powder bed fusion and the thermal history of parts.
-            That curiosity started long before any classroom: tearing apart a dead lawn
-            mower to reverse-engineer the piston, designing a model engine in 8th grade
-            just to see if I could.
           </p>
 
           <p>
@@ -2744,7 +2753,7 @@
     <div class="feature feature--reverse">
       <div class="feature__content reveal">
         <span class="eyebrow eyebrow--blue">Internships</span>
-        <h3>Built for the shop floor.</h3>
+        <h3>From the racetrack to orbit.</h3>
         <p>
           Cleanroom satellite assembly at Northrop Grumman (Cygnus ISS resupply), structural
           design and FEA at Caterpillar (Small Wheel Loader counterweight), and component
@@ -2968,14 +2977,14 @@
           <div class="tl-h-bottom"></div>
         </a>
 
-        <!-- 6. BOLT Admin/President (below) -->
+        <!-- 6. BOLT Admin Lead (below) -->
         <a class="tl-h-col reveal reveal-delay-1" href="detail-bolt.html">
           <div class="tl-h-top"></div>
           <div class="tl-h-dot-wrap"><div class="tl-h-dot" style="background: var(--yellow);"></div></div>
           <div class="tl-h-bottom">
             <div class="tl-h-card">
               <div class="tl-h-kicker">Fall &#39;25 &middot; Leadership</div>
-              <div class="tl-h-name">BOLT President</div>
+              <div class="tl-h-name">BOLT Admin Lead</div>
               <div class="tl-h-sub">55&rarr;120 members</div>
             </div>
           </div>
